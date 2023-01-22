@@ -1,0 +1,12 @@
+function dig(range, depth, field) {
+  var result = []
+  for(var i = range[0]; i < range[1]; i+= depth) {
+   result.push( { value: field(i), x: i, y: 2*i+1 } )
+    }; return result
+  }
+ var Result = dig([-1,0], 0.05, function(x) {
+    var y = 2*x+1
+    var R1 = Math.sqrt( (3-x)*(3-x) + (1-y)*(1-y) )
+    var R2 = Math.sqrt( (4-x)*(4-x) + (-6-y)*(-6-y) )
+    return Math.pow((R1 + R2), 2)
+   }); Result

@@ -1,0 +1,27 @@
+  class CloudSaver {
+  constructor(id) {
+  this.key = id + ""
+  this.save = function(items) {
+   this.overview(true)
+   for(var i = 0; i < items.length; i++) {
+   localStorage.setItem(this.key + i, items[i])
+     }
+   }
+  this.get = function() { 
+  var result = []
+  var length = this.overview()
+  for(var i = 0; i < this.overview(); i++) {
+   result.push( localStorage.getItem(this.key+i) )
+     }
+  return result
+   }
+  this.overview = function(del) {
+   var length = 0
+   for(var i = 0; localStorage.getItem(this.key+i) != null; i++) {
+    length++
+    if(del) { localStorage.setItem(this.key+i, "") }
+           }
+     return length
+        }
+     }
+   }

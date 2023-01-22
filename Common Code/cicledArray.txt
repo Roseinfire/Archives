@@ -1,0 +1,17 @@
+class cicledArray {
+  constructor(elements) {
+    const that = this
+    this.item = 0
+    this.array = elements
+    this.select = function(i, clockwise) {
+     if(clockwise==true) { return cicle(i) }
+     else if(clockwise==false) { return cicle(-i) }
+     else { return that.array(i) }
+       }
+     function cicle(n) {
+      var l = that.array.length
+      that.item = ((that.item+n)%l+l)%l
+      return that.array[that.item]
+        }
+     }
+  }

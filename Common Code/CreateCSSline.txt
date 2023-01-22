@@ -1,0 +1,13 @@
+  function createCSSline(head, strings) {
+   var text = `
+    ` + head + " {"
+    for(var i = 0; i < strings.length; i++) {
+    text = text + `
+     ` + strings[i] + ";"
+      }; text += ` 
+     }`
+   var st = document.createElement("style")
+   st.type="text/css"
+   st.innerHTML = text
+   document.head.append(st)
+    }

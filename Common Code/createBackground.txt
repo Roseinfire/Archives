@@ -1,0 +1,32 @@
+   function createBackgroundGridImage(width, R, G, B, A) {
+       var context = document.createElement('canvas').getContext('2d')
+       context.canvas.width= width
+       context.canvas.height= width
+       var imageData = context.getImageData(0,0, width, width)
+       var Data = imageData.data
+       function t(x) {
+         x = x/4 
+         if( x % width == 0) { return true }
+         else if( x > width*(width-1) ) { return true }
+        };
+  
+     for(var i = 0; i < Data.length; i+=4) {
+      if( t(i) ) { 
+       Data[i] = R
+       Data[i+1] = G
+       Data[i+2] = B
+       Data[i+3] = A * 255
+        }
+      }; imageData.data = Data
+  
+    context.putImageData(imageData, 0, 0)
+  
+    var src = context.canvas.toDataURL()
+   
+       function dataToBlob(dataURI, dataTYPE) {
+        var binary = atob(dataURI.split(',')[1]), array = [];
+        for(var i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));
+        return new Blob([new Uint8Array(array)], {type: dataTYPE});
+               }
+   return URL.createObjectURL( dataToBlob(src, 'image/png') )
+}

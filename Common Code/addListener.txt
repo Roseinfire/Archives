@@ -1,0 +1,53 @@
+ document.addEventListener("mousedown",function(e) {
+  if(!eventBase.active) {
+  var object = e.target
+  var downs = EventBase.getClass("mousedown")
+  for(var i = 0; i < downs.length; i++) {
+   if(downs[i].object == object) { EventBase.active = object; downs[i].event(e) }
+     } }
+    else {  }
+  })
+ document.addEventListener("mousemove",function(e) {
+  if(EventBase.active) {
+  var moves = EventBase.getClass("mousemove")
+  for(var i = 0; i < moves.length; i++) {
+   if(moves[i].object == EventBase.active) { moves[i].event(e) }
+    } }
+})
+ document.addEventListener("mouseup", function(e) {
+  var ups = EventBase.getClass("mouseup")
+  if(EventBase.active) {
+  for(var i = 0; i < ups.length; i++) {
+   if(ups[i].object == EventBase.active) { ups[i].event(e); EventBase.restore() }
+    } }
+})
+class EventDataBase  {
+  constructor() {
+    const that = this
+    this.DataBase = []
+    this.setItem = function(Class, item) {
+     var t = { type: Class, item: item }
+     that.DataBase.push(t)
+       }
+    this.getClass = function(Class) {
+     var Result = []
+     for(var i = 0; i < that.DataBase.length; i++) {
+      if(that.DataBase[i].type == Class) { Result.push(that.DataBase[i].item) }
+         }
+    return Result
+         }
+    this.restoreDefault = function() { that.DataBase = [] }
+     }
+   }
+
+  HTMLElement.prototype.addListener = function(down, move, up) {
+   const object = this
+    EventBase.setItem("mousedown",{ object: object, event: function(e) { down(e) } })
+    EventBase.setItem("mousemove",{ object: object, event: function(e) { move(e) } })
+    EventBase.setItem("mouseup",{ object: object, event: function(e) { up(e) } })
+   }
+   
+   var EventBase = new EventDataBase()
+   EventBase.restore = function() {  this.active = {}  }  
+   EventBase.restore()
+  

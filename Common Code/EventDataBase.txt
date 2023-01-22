@@ -1,0 +1,19 @@
+
+ class EventDataBase  {
+  constructor() {
+    const that = this
+    this.DataBase = []
+    this.setItem = function(Class, item) {
+     var t = { type: Class, item: item }
+     that.DataBase.push(t)
+       }
+    this.getClass = function(Class) {
+     var Result = []
+     for(var i = 0; i < that.DataBase.length; i++) {
+      if(that.DataBase[i].type == Class) { Result.push(that.DataBase[i].item) }
+         }
+    return Result
+         }
+    this.restoreDefault = function() { that.DataBase = [] }
+     }
+   };  var EventBase = new EventDataBase()
