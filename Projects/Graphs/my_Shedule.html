@@ -1,0 +1,272 @@
+<html>
+<head>
+<title>my_Shedule</title>
+<link rel="icon" href="data:image/png;base64,iVBORw0
+KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAA
+AAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJc
+EhZcwAADsIAAA7CARUoSoAAAAA7SURBVDhPY/wPBAxk
+AiYoTRYYZJoZGRnBGJ2NDjA0gxSCwhCE0dnoYJAGGKEk
+MEidTQhQpHmgMgYDAwA0/xcbumIIfAAAAABJRU5ErkJggg==" />
+<style type="text/css">
+.buttons {
+width: 150px;
+height: 20px;
+padding: 5px;
+border: solid;
+border-width: 1px;
+text-align: center;
+cursor: pointer;
+}
+.up:active {
+border-radius: 20px;
+}
+#ax {
+height: 500px;
+width: 500px;
+position: absolute;
+background-color:rgba(131,133,155,0.2);
+}
+.up {
+width: 300px;
+height: 25px;
+margin-bottom: 10px;
+margin-top: 10px;
+margin-left: 50px;
+border: solid;
+text-align: center;
+cursor: pointer;
+background-color: white;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+}
+.b {
+margin-left: 50px;
+}
+#j1 {
+font-size: 115%;
+width: 300px;
+height: 25px;
+margin-bottom: 10px;
+margin-top: 10px;
+margin-left: 50px;
+border: solid;
+text-align: center;
+cursor: pointer;
+border-radius: 15px;
+border-width: 1px;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+background-color: white;
+}
+#sur {
+background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAABkCAIAAABLivQMAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAK9SURBVGhD3dU5VsMwFIXhJAUFNCyBHbB2lsIKoKGnAM6BJtycZzxofJMlkb/Bja2nL7I5fn+8HP66uXuYrjr18/lKFyf6M1qbseZhu7Re/T9ooV5gwbqnr/fn6XKkjufzORZq/ErGA1x+xNHAgHLRwlVHsOTS05EfB4w4Ji3UBSy36PKBGAFshli0UGOwwnKbz2lfsDXBRgs1AysvFP7z6QUWbD7UQg3AqkuEWqg9WLzthBbaFYzz8IQW6v4NS2uh/cCCJycfm9ZCO4HFu02W1UJ7gHGoUFYLuYMxqVBJC/mCMalQSQs5gvGpUEULeYHxqVBFC7mAiahQXQvZwURUqK5lT0qFWGPpDlMuztOUWnwABRXijuUFxnyO/mxxGHRUSDCWHYz/BL0WKmOoqZBsLAuY6F6TFsqRWKiQeCwdmPQuqxaKYYxUSDOWdOsKYActtOaxUyHlWHwA3Vn00UKE5EKF9GNxGHRUyE0LeVEh01hlDDUV8tRyzDpWjsRCha5UC8UwRirkMFb8AtpfySv9EXMwRrBr1CqTWMA8tewv4Jx+LA6GGsxNi6i8wJRj8Rl0YD5aayQXMM1YUgAFmINWzGMHE4+lOyvSu6xaORgjmGwsHRUlutekVSaxgAnGslBR/CfotTgYajDuWHYqivkc09nipANTjmU5zhww1ljGX1CxB42WhYqq7rM+lsthl+5ErGWnosq7rYzlQkWJ9iPT8qKiCnsujeVIJU2gZaeKn/D+9jRdbcuO1Ybq9v5xutrG1fI6VUyw9FgtT1USjKXl+wJywBJjtX8BY7C6li8VVQULx+r1rQrAKlp7UFFlsM1YHT/raA1W0tqPiiqALWP1paJmsKzW3lRUDmwaawQqisDSWm2oqCTYZaxxqCiAJbRaUlHxiqfRqKhQqz0VFaybPvLd24zVi4paVj8cfgG5WWI46E4TAwAAAABJRU5ErkJggg==')
+}
+#formula {
+margin-left: 50px;
+margin-top: 50px;
+height: 200px;
+width: 300px;
+}
+</style>
+</head>
+<body id="sur" style="background-color: white; margin: 0">
+<div id="f">
+<div id="ax">
+<!--p class="b"><input type="text" id="r1" ></input></p-->
+<!--p class="b"><input type="text" id="r2"></input></p-->
+<!--p class="b"><input type="text" id="r3"></input></p-->
+<textarea id="formula" style=""></textarea>
+<div class="up" style="border-width: 1px;" id="t1">Get result</div>
+<!--div class="up" style="border-width: 1px;" id="t2">y = x * x</div-->
+<div class="up" style="border-width: 1px;" id="t3">Clear canvas</div>
+<div id="j1"></div>
+</div>
+<canvas id="draw"  width="500" height="500"></canvas>
+</div>
+<script type="text/javascript">
+  const size = 1/10
+  const animation = 2
+  function plus(a, b) {
+  function deldot(n) {
+   n = n.toString()
+   var res = ""
+   var s = 0;
+   for(var i = 0; i < n.length; i++) {
+    if(n[i] != ".") { res += n[i] }
+    else { s = n.length-i-1 }
+        }
+    return { n: res, size: s }
+     }
+    var A = deldot(a)
+    var B = deldot(b)
+    var C = 10
+    if(A.size >= B.size) { C = Math.pow(C, A.size) } else { C = Math.pow(C, B.size) }
+    return (a * C + b * C) / C
+    }
+  
+var y = undefined
+window.onload = function() {
+document.getElementById('formula').value = localStorage.getItem("LastFormula")
+ResizeElements()
+}
+window.onresize = function() {
+ResizeElements()
+}
+function ResizeElements() {
+var g = document.getElementById('f')
+g.style.height = '500px'
+g.style.marginTop = (innerHeight - g.offsetHeight)/2 + 'px'
+g.style.marginLeft = (innerWidth - g.offsetWidth + 120)/2 + 'px'
+  }
+var  d = document.getElementById('draw')
+var px = d.getContext('2d')
+d.style.marginLeft = (innerWidth - 500)/2 - 300 + 'px'
+ document.getElementById("ax").style.marginLeft=(innerWidth - 500)/2 + 200 + 'px'
+ restoreXY()
+function restoreXY() {
+var im = new Image()
+im.src= `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAA
+AAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAjSUR
+BVDhPY/hPLph589WoZlLAqGYSwahmEsEQ1gzEZKKbrwDBnZMG0du/CgAAAABJRU5ErkJggg==`
+
+im.onload = function() {
+px.clearRect(0,0,500,500)
+for(var x = 0 - im.width/2; x < innerWidth; x += im.width) {
+for(var y = 0 - im.height/2; y < innerHeight; y += im.height) {
+px.drawImage(im,x,y)
+} } 
+px.strokeStyle = 'black'; px.lineWidth = 1
+px.beginPath()
+px.moveTo(250,0)
+px.lineTo(250,500)
+px.stroke()
+px.beginPath()
+px.moveTo(0,250)
+px.lineTo(500,250)
+px.stroke() 
+} }
+//______________Clicks________________
+var us = document.getElementById('t2')
+document.getElementById('t1').onclick = function(e) { if(e.shiftKey) { getSin() } else { getSin(animation) } }
+//us.onclick = function() { tryChange() }
+document.getElementById('t3').onclick = function() { restoreXY() }
+document.getElementById('j1').onclick = function(e) { 
+if(e.layerX > this.offsetWidth) { 
+getSinPoints(1)
+  }
+else {
+getSinPoints(-1)
+     }
+ }
+//__________________________________
+
+function getSin(animation) { 
+   px.beginPath()
+   px.lineWidth = "2px"
+   px.strokeStyle= "brown"
+try {
+ var t = correct(document.getElementById('formula').value)
+  if(!animation) { 
+ for(var i = -15;  i < 15;  i = plus(i, size)) { paint(i) }
+  }
+  else {
+  var i = -15
+  function p() {
+   if(i < 15) { i = plus(i, size); paint(i); setTimeout(p, animation) }
+   else { console.log("animation ends") }
+     }
+    p()
+   }
+ function paint(x) {
+  y = NaN; eval(t);
+  if( y != NaN && y != Infinity && y != -Infinity ) {
+  px.lineTo(d.width/2 + 20 * x,d.height/2 - 20 * y)
+   }
+  else { px.beginPath() }
+  px.stroke()
+        }
+      }
+  catch { console.log("invalid input") }
+ }
+var C = 0;
+function getSinPoints(arg) {
+C+=arg
+var x = C
+var t = correct(document.getElementById('formula').value)
+eval(t)
+var out = '(' + x + '; ' + eval(y.toFixed(4)) + ')'
+ document.getElementById('j1').innerHTML = out }
+
+  const __about__ = `
+Input your function. Example: "y = 2 * x"
+If you want use Math function (example: sin x),
+Then please write: ".sin(x)".
+If you want to write x * x * x,
+Then write this: " x^3 "
+ Warning: space must be!
+Click to button under input, to get points.`
+
+  function correct(value) {
+var result = []
+/*________ Level_1______*/
+for(var i = 0; i < value.length; i++) {
+if(value[i] == "!" && isMath(i) ) { result.push("Math.") }
+else { result.push(value[i]) }
+}
+  function isMath(p) {
+  var res = ""
+  for(var e = p; e < value.length; e++) {
+    if(value[e] == " ") { break }
+    else { res += value[e] }
+      }
+   try { eval("Math." + res); return true }
+   catch { return false }
+    }
+/*_________Level_2________*/
+var copy = []
+for(var i = 0; i < result.length; i++) {
+if(result[i] == "^") {
+
+var s1=""
+var e = null
+for(var e = 1; e < result.length; e++) {
+if(result[i-e] == " ") { break }
+else if(result[i-e]) { s1+=result[i-e].readFromEnd() }
+ }
+ s1 = s1.readFromEnd()
+var s2 = ""; var st = false
+for(e = 1; e < result.length; e++ ) { 
+if(result[i+e] == " ") { i=i+e; st=true; break }
+else if(result[i+e]) { s2 = s2+ result[i+e] }
+  }
+if(!st) { i = i+e } //<----------Very Rare!!!
+copy = copy.delete(s1.length)
+console.log(copy)
+copy.push("Math.pow(" + s1 + "," + s2 + ")")
+ }
+else { copy.push(result[i]) }
+ }
+  result = copy
+
+var Result=""
+ for(var i = 0; i < result.length; i++) { Result = Result+result[i] }
+ console.log(Result)
+ return Result
+   }
+
+window.onbeforeunload = function() {
+localStorage.setItem("LastFormula",document.getElementById('formula').value)
+}
+String.prototype.readFromEnd=function() { var res=""; for(var i = 1; i < this.length+1; i++) { res += this[this.length-i] }; return res }
+Array.prototype.delete = function(pos) {
+var arr = new Array()
+for(var i = 0; i < this.length-pos; i++) {
+arr.push(this[i])
+}
+return arr
+ }
+</script>
+</body>
+</html>

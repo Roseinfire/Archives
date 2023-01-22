@@ -1,0 +1,71 @@
+class Loop {
+ constructor(size, width, height) {
+ const that = this
+ const Size = size
+ const Width = width
+ const Height = width
+ this.addImage = function(img) {
+ img.ondragstart = function() { return false }
+ img.addEventListener("mousedown",function(e) {
+  if(e.altKey) { that.use(this, e.x, e.y); } 
+    })
+  }
+ this.addCanvas = function(canv) {
+  canv.addEventListener("mousedown", function(e) {
+  var img = new Image()
+  img.src = this.toDataURL()
+  console.log("click")
+  if(e.altKey) { that.use(img, e.x, e.y); } 
+    })
+   }
+ this.use = function(img, x, y) {
+ that.canvas = document.createElement("canvas")
+ that.canvas.getContext("2d").imageSmoothingQuality='high'
+ that.canvas.width=Width
+ that.canvas.height=Height
+ that.canvas.style=`border: 2px solid; position: fixed; top: 0; left: 0; border-radius: 50%; background-color: white; z-index: 200`
+ that.canvas.style.marginLeft=(x - that.canvas.width/2) + 'px'
+ that.canvas.style.marginTop=(y - that.canvas.height/2) + 'px'
+  var pos = img.getBoundingClientRect()
+  that.data = { img: img, left: pos.x, top: pos.y }
+  document.body.append(that.canvas)
+  that.draw(x, y)
+      }
+ this.draw = function(x, y) {
+  if(that.canvas) {
+  document.body.style.cursor='none'
+  that.canvas.style.marginLeft=(x - that.canvas.width/2) + 'px'
+  that.canvas.style.marginTop=(y - that.canvas.height/2) + 'px'
+   var image = that.data.img
+   var a1 = that.canvas.width/2 - (x - that.data.left) * Size
+   var a2 = that.canvas.height/2 - (y - that.data.top) * Size
+   var ctx = that.canvas.getContext("2d")
+   ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height)
+   ctx.drawImage(image,a1,a2,image.width*Size,image.height*Size)
+         }
+       }
+  this.drop = function() {
+   if(that.canvas) {
+    document.body.removeChild(that.canvas)
+    document.body.style.cursor='default'
+    that.canvas = undefined
+        }
+      }
+    }
+  }
+ var loop = new Loop(2, 320, 320)
+ var images = document.getElementsByTagName("img")
+  for(var i = 0; i <= images.length; i++) {
+    loop.addImage(images[i])
+    }
+  var canvases = document.getElementsByTagName("canvas")
+    for(var i = 0; i <= canvases.length; i++) {
+    console.log(canvases[i])
+    loop.addCanvas(canvases[i])
+    }
+  document.onmousemove = function(e) {
+  loop.draw(e.x, e.y)
+   }
+  document.onmouseup = function() {
+  loop.drop()
+   }

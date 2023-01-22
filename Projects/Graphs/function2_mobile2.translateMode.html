@@ -1,0 +1,535 @@
+<html>
+<head>
+<title>my_Shedule</title>
+<link rel="icon" href="data:image/png;base64,iVBORw0
+KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAA
+AAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJc
+EhZcwAADsIAAA7CARUoSoAAAAA7SURBVDhPY/wPBAxk
+AiYoTRYYZJoZGRnBGJ2NDjA0gxSCwhCE0dnoYJAGGKEk
+MEidTQhQpHmgMgYDAwA0/xcbumIIfAAAAABJRU5ErkJggg==" />
+<style type="text/css">
+* {
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+}
+#formula {
+height: 110px;
+font-size: 240%;
+text-align: center;
+margin-top: 40px;
+margin-bottom: 30px;
+border: 1px solid;
+}
+#formula:focus {
+border: 1px solid black;
+}
+#hander>div {
+margin-top: 30px;
+text-align: center;
+font-size: 230%;
+border: 1px solid;
+height: 80px;
+padding-top: 30px;
+cursor: pointer;
+border-bottom-width: 2px;
+}
+#hander>div:active {
+border-top-width: 2px;
+border-bottom-width: 1px;
+}
+#hander>p {
+height: 30px;
+color: grey;
+text-align: center;
+font-size: 180%;
+padding-bottom: 20px; 
+margin-top: 25px; 
+border-bottom: 1px solid;
+}
+#systems>div {
+backround-color: rgba(210,161,113,1);
+position: fixed;
+left: 0; top: 0;
+z-index: 4;
+}
+#systems>p {
+position: fixed;
+top: 0; left: 0;
+z-index: 5;
+width: auto;
+background-color: white;
+border: 1px solid;
+padding: 5px;
+}
+</style>
+</head>
+<body style="margin: 0">
+<!------------Directed By: Ниценко Всеволод-----------!> 
+<input class="ravn" id="formula" readonly/>
+<canvas id="line" style="border-bottom: 1px dotted grey;" height="2"></canvas>
+<canvas id="canvs" style="border: 1px solid; margin-top: 20px;"></canvas>
+<div id="hander">
+<div class="ravn" onclick="getResult()">Get Result</div>
+<div class="ravn" onclick="clearCanv()" style="">Clear</div>
+<div class="ravn" id="points" style="border-radius: 50px">Points</div>
+<p class="ravn" onclick="about()">How to Use?</p>
+<div id="systems" style="display: none">
+<div class="mov"></div>
+<div class="mov"></div>
+<p id="pointer" onclick="closeControls"></p>
+  </div>
+</div>
+<script type="text/javascript">
+window.onload=function() {
+input.value="y = ..."
+build()
+}
+//window.onresize=function() { build() }
+
+function get(name) { return document.getElementById(name) }
+function getSize() {
+var f = Math.floor((innerWidth-20)/30)
+return f
+}
+function build() {
+canv.width=getSize() * 30
+canv.height=canv.width
+canv.style.marginLeft=(innerWidth-canv.offsetWidth)/2+'px'
+minicanv.width=canv.width
+minicanv.style.marginLeft=(innerWidth-canv.offsetWidth)/2+'px'
+var g = document.getElementsByClassName('ravn')
+var X=0
+for(var i = 0; i < g.length; i++) {
+g[i].style.marginLeft="20px"
+g[i].style.width=(innerWidth-40)+'px'
+X++
+ }
+restoreXY()
+return X + ' elements.'
+}
+var canv=get('canvs')
+var ctx=canv.getContext('2d')
+var minicanv=get('line')
+var minictx=minicanv.getContext('2d')
+</script>
+<script type="text/javascript">
+function getResult() {
+var x = -16
+y = 'not known'
+input.blur()
+input.readOnly=true
+lastMode=["something"]; console.log(x + ' :at getResult')
+var con = correct(input.value)
+handleResult(con)
+}
+var lastMode=["something"]
+var x = -16
+function handleResult(form) {
+if(form != 'y = ...') {
+if(lastMode[0] != "something") {
+x = Rabbit(x,0.1,'+')
+eval(form)
+if(x < 15) { 
+eval(form)
+minictx.fillStyle="rgba(210,161,113,1)" //rgba(251,202,0,1); rgba(240,160,20,0.8)
+minictx.fillRect(0,0,canv.width/2 + x*getSize(),10)
+ctx.beginPath();
+ctx.lineCap="round"
+ctx.strokeStyle="grey"
+ctx.moveTo(canv.width/2 + lastMode[0] * getSize(),canv.height/2 - lastMode[1] * getSize())
+ctx.lineTo(canv.width/2 + x * getSize(),canv.height/2 - y * getSize())
+ctx.stroke()
+lastMode[0]=x
+lastMode[1]=y
+setTimeout(function() { handleResult(form) },5) }
+else { x = 0-16; console.log(x + ' :at end');  handleMove('end'); console.log('Ready!') }
+  }
+else { 
+try {
+eval(form); console.log(x + ' :at eval')
+if(y != 'not known') {
+lastMode[0]=x; console.log(x + ' :lastMode1')
+lastMode[1]=y; console.log(x + ' :lastMode2')
+handleMove('start'); console.log(x + ' :at call')
+console.log('started..')
+setTimeout(function() { handleResult(form) },5)
+  }
+else { console.log('Closed!!') }
+}
+catch {
+alert('Invalid input!')
+}
+    }
+  }
+}
+function handleMove(n) {
+if(n == 'start') { console.log(x + ' :at start') }
+else if(n == 'end') {
+setTimeout(function() { minictx.clearRect(0,0,minicanv.width,10); console.log(x + ' :at ended') },200)
+  }
+}
+var px=0
+function isGraf(X,Y) {
+var data=""
+var savedX=x
+var type=correct(input.value)
+try {
+x=X; eval(type)
+if(y == Y) { data='point on line!' }
+else { data='point.' }
+x=savedX
+return data
+   }
+catch {
+return 'Invalid input.'
+  }
+}
+get('points').onclick=function(e) {
+var savedX=x
+var type=correct(input.value)
+function ns(n) {
+var d=false
+for(var i = 0; i < n.length; i++) {
+if(n[i] == '.') { d=true }
+ }
+if(d == true) { return nols(y.toFixed(4)) }
+else { return y }
+}
+try {
+if(e.layerX > get('points').offsetWidth*7/8) { px++; x=px; eval(type) 
+}
+else if(e.layerX < get('points').offsetWidth*3/8) {
+px=0;x=px; eval(type)
+}
+  else { px--; x=px; eval(type) }
+get('points').innerHTML='(' + x + '; ' +  eval( y.toFixed(4) ) + ')'
+x=savedX
+   }
+catch {
+alert('Please input a formula.')
+  }
+} 
+document.ondblclick=function() {
+return false
+}
+canv.onclick=function(e) {
+function getX() {
+var i=0;
+for(i = i; i*getSize() < e.layerX; i++) {}
+var middle=(i*getSize() + (i-1)*getSize())/2
+//ctx.fillRect(middle,0,1,canv.height)
+if(e.layerX > middle) {
+//console.log('bigger then size')
+return i-15
+}
+else {
+console.log('else')
+return i-16
+}
+  }
+function getY() {
+var i=0;
+for(i = i; i*getSize() < e.layerY; i++) {}
+var middle=(i*getSize() + (i-1)*getSize())/2
+//ctx.fillRect(0,middle,canv.width,1)
+if(e.layerY > middle) {
+console.log('bigger then size')
+return 0 - (i-15)
+}
+else {
+console.log('else')
+return 0-(i-16)
+}
+  }
+var FX=getX()
+var FY=getY()
+var savedX=x
+  x = FX
+alert('( '+FX+'; ' + FY+' ) / ' + isGraf(FX,FY))
+  x = savedX
+/*var totalX=(getX()+15)*getSize()
+var totalY=(0 - (getY()-15))*getSize()
+var d = document.getElementsByClassName('mov')
+d[0].style.margiLeft=totalX + 'px'
+d[0].style.width="1px"
+var f = getY()
+if(f < 0) {  }
+d[0].style.height=""*/
+}
+</script>
+<script type="text/javascript">
+
+function Rabbit(num1, num2, operator) {
+  num1 = parseFloat(num1);
+  num2 = parseFloat(num2);
+  if (isNaN(num1) || isNaN(num2)) { // Values validation
+    return Number.NaN;
+  }
+
+  var strNum1 = num1 + '',
+    strNum2 = num2 + '',
+    dpNum1 = !!(num1 % 1) ? (strNum1.length - strNum1.indexOf('.') - 1) : 0, // Get total decimal places of num1
+    dpNum2 = !!(num2 % 1) ? (strNum2.length - strNum2.indexOf('.') - 1) : 0, // Get total decimal places of num2
+    multiplier = Math.pow(10, dpNum1 > dpNum2 ? dpNum1 : dpNum2), // Compare dpNum1 and dpNum2, then find value of 10 to the power of the largest between them.
+    tempNum1 = Math.round(num1 * multiplier), // Multiply num1 by multiplier to eliminate all decimal places of num1.
+    tempNum2 = Math.round(num2 * multiplier), // Multiply num2 by multiplier to eliminate all decimal places of num2.
+    result;
+
+  switch (operator.trim()) {
+    case '+':
+      result = (tempNum1 + tempNum2) / multiplier;
+      break;
+    case '-':
+      result = (tempNum1 - tempNum2) / multiplier;
+      break;
+    case '*':
+      result = (tempNum1 * tempNum2) / (multiplier * multiplier);
+      break;
+    case '/':
+      result = (tempNum1 / tempNum2);
+      break;
+    case '%':
+      result = (tempNum1 % tempNum2) / multiplier;
+      break;
+    default:
+      result = Number.NaN;
+  }
+
+  return result;
+}
+function generateImage() {
+var CANV = document.createElement('canvas')
+var CTX = CANV.getContext('2d')
+CANV.width=getSize()
+CANV.height=getSize()
+var f = CTX.getImageData(0,0,CANV.width,CANV.height)
+var h = f.data
+function t(x) { 
+for(var i= 0; i < CANV.height; i++) {
+if(i * CANV.width * 4 == x) { return true }
+}
+ }
+for(var i =0; i < h.length; i+=4) {
+if(i > h.length-CANV.width*4) { 
+h[i]=153
+h[i+1]=217
+h[i+2]=234
+h[i+3]=255
+    }
+else if(t(i) == true) {
+h[i]=153
+h[i+1]=217
+h[i+2]=234
+h[i+3]=255
+}
+  }
+f.data=h
+CTX.putImageData(f,0,0)
+var sourse=CANV.toDataURL()
+       function dataToBlob(dataURI, dataTYPE) {
+        var binary = atob(dataURI.split(',')[1]), array = [];
+        for(var i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));
+        return new Blob([new Uint8Array(array)], {type: dataTYPE});
+               }
+   var s = dataToBlob(sourse,'image/png')
+   return URL.createObjectURL(s)
+}
+function restoreXY() {
+ var image=new Image()
+ image.src=generateImage()
+ var f = ctx.fillStyle
+ ctx.fillStyle="white"
+ ctx.fillRect(0,0,canv.width,canv.height)
+ ctx.fillStyle=f
+ image.onload=function() {
+ctx.clearRect(0,0,canv.width,canv.height)
+ for(var x = 0; x < canv.width; x+= image.width) { 
+ for(var y = 0; y < canv.height; y+= image.height) {  ctx.drawImage(image,x,y) } }
+var f = ctx.strokeStyle
+ctx.strokeStyle="black"
+ctx.lineWidth=2
+ctx.moveTo(canv.width/2,0)
+ctx.lineTo(canv.width/2,canv.height)
+ctx.moveTo(0,canv.height/2)
+ctx.lineTo(canv.width,canv.height/2)
+ctx.stroke()
+ctx.strokeStyle=f
+  }
+}
+function clearCanv() {
+ctx.beginPath()
+restoreXY()
+}
+function about() {
+var opened=window.open("")
+opened.document.write(`
+<html>
+<head>
+<title>about</title>
+<style type="text/css">
+p.stroke {
+border-bottom: 1px dotted rgba(124,189,222,1);
+padding-top: 45px;
+padding-bottom: 45px;
+text-align: center;
+padding-top: 2px;
+font-size: 115%;
+margin-top: 30px;
+}
+.manifest {
+padding-top: 40px;
+padding-bottom: 40px; 
+border-bottom: 2px solid black;
+color: #545d6d;
+text-align: center;
+font-size: 220%;
+ }
+.content {
+border-bottom: 1px solid;
+color: grey;
+font-size: 120%;
+text-align: center;
+padding-bottom: 32px;
+ </style>
+</head>
+<body margin="0">
+<p class="manifest">Manifest:</p>
+<p class="stroke" style="margin-top: 50px;">To write sin of cos, please use "!"</p>
+<p class="stroke">Use "^" separating with a space.</p>  
+<p class="stroke">Exapmle: y = !cos( x^x )</p>
+<p class="stroke">Y = y</p>
+<p class="stroke"># = x</p>
+<p class="stroke">H = '(' or ')'</p>
+<p class="stroke">". " on end = Result!</p>
+<p class="stroke">"!!" on end = Clear.</p>
+<p class="stroke"> Click to "Points" to get values: (x,y)</p>
+<p class="stroke"> on right end = your function's point +1</p>
+<p class="stroke"> on middle = your function's point -1</p>
+<p class="stroke"> on left end = your function's point 0</p>
+<p class="content" style="margin-top: 55px;">Directed By: Ниценко Всеволод</p>
+<p class="content" style="margin-top: 25px;">Send an error: 14box14@gmail.com</p>
+</body>
+</html>
+`)
+}
+function nols(a) { 
+var f=""
+function raw(k) {
+var v = ':'+k
+for(var i = 1; i < v[v.length-i] != '.'; i++) { 
+if(v[v.length-i] != '0') { return i-1 }
+   }
+return 0
+     }
+
+var h = raw(a);
+for(var e = 0; e < a.length-h; e++) {
+f=f+a[e]
+}
+return f
+ }
+</script>
+<script type="text/javascript">
+var input = get('formula')
+input.onclick=function() {
+if(input.value == "y = ...") { input.value="y = " }
+input.readOnly=false
+}
+var lastText = "y = " 
+input.oninput=function() {
+var f = input.value
+putValue()
+if(isDone() == true) { setTimeout(function() { getResult() },200) }
+}
+function putValue() {
+var F=""
+var E=""
+for(var i = 0; i < input.value.length; i++) {
+var n = input.value[i]
+ if(n == 'Y') { F="y" }
+else if(n == '#') { F='x' }
+else if(n == 'H') { F=ss(input.value); }
+else { F=n }
+ E=E+F
+    }
+input.value=E
+}
+function isDone() {
+var h = input.value[input.value.length-2]+input.value[input.value.length-1]
+if(h == '. ') { 
+var F=""
+for(var i= 0; i < input.value.length-2; i++) { F=F+input.value[i] }
+input.value=F
+return true 
+   }
+else if(h == '!!') {
+var F=""
+for(var i= 0; i < input.value.length-2; i++) { F=F+input.value[i] }
+input.value=F
+clearCanv()
+return false
+  }
+}
+function ss(v) {
+var v1=0
+var v2=0
+for(var i = 0; i < v.length; i++) {
+if(v[i] == '(') { v1++ }
+else if(v[i] == ')') { v2++ }
+ }
+if(v1 > v2) { return ')' }
+else if(v1 <= v2) { return '(' }
+}
+
+  function correct(value) {
+var result = []
+/*________ Level_1______*/
+for(var i = 0; i < value.length; i++) {
+if(value[i] == "!") { result.push("Math.") }
+else { result.push(value[i]) }
+}
+/*_________Level_2________*/
+var copy = []
+for(var i = 0; i < result.length; i++) {
+if(result[i] == "^") {
+
+var s1=""
+var e = null
+for(var e = 1; e < result.length; e++) {
+if(result[i-e] == " ") { break }
+else if(result[i-e]) { s1+=result[i-e].readFromEnd() }
+ }
+ s1 = s1.readFromEnd()
+var s2 = ""; var st = false
+for(e = 1; e < result.length; e++ ) { 
+if(result[i+e] == " ") { i=i+e; st=true; break }
+else if(result[i+e]) { s2 = s2+ result[i+e] }
+  }
+if(!st) { i = i+e } //<----------Very Rare!!!
+copy = copy.delete(s1.length)
+console.log(copy)
+copy.push("Math.pow(" + s1 + "," + s2 + ")")
+ }
+else { copy.push(result[i]) }
+ }
+  result = copy
+
+var Result=""
+ for(var i = 0; i < result.length; i++) { Result = Result+result[i] }
+ console.log(Result)
+ return Result
+   }
+
+
+String.prototype.readFromEnd=function() { var res=""; for(var i = 1; i < this.length+1; i++) { res += this[this.length-i] }; return res }
+Array.prototype.delete = function(pos) {
+var arr = new Array()
+for(var i = 0; i < this.length-pos; i++) {
+arr.push(this[i])
+}
+return arr
+ }
+</script>
+</body>
+</html>

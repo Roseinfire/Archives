@@ -1,0 +1,264 @@
+<html>
+<head>
+<title>united</title>
+  <script database="base-only" src="file:///C:/html/0.Local-Server-JS/Script.txt"></script>
+<style type="text/css">
+input {
+text-align: center;
+height: 34px;
+width: 80%;
+}
+button {
+margin-top: 15px;
+width: 80%;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+div {
+margin-top: 15px;
+padding-top: 0px;
+padding-bottom: 10px;
+border: 1px solid rgb(121 85 72);
+width: 80%;
+margin-left: 10%;
+background-color: white
+}
+p {
+font-size: 120%;
+}
+</style>
+</head>
+<body style="margin: 0; text-align: center;">
+
+<input placeholder="H2O" formnovalidate/>
+<button>View Element  /  See Result</button>
+<div><p style="padding-top: 10px; color: grey;" >Mr = [ 18.0 ]</p></div>
+
+<script type="text/javascript">
+var Elements = [['H',"1","a",1,'водород'],
+['He',"1","a",4,'гелий'],
+['Li',"2","a",6.9,'литий'],
+['Be',"2","a",9,'бериллий'],
+['B',"2","a",10.8,'бор'],
+['C',"2","a",12,'углерод'],
+['N',"2","a",14,'азот'],
+['O',"2","a",16,'кислород'],
+['F',"2","a",19,'фтор'],
+['Ne',"2","a",20.1,'неон'],
+['Na',"3","a",22.9,'натрий'],
+['Mg',"3","a",24.3,'магний'],
+['Al',"3","a",26.9,'алюминий'],
+['Si',"3","a",20.1,'кремний'],
+['P',"3","a",28,'фосфор'],
+['S',"3","a",32,'сера'],
+    ['CL',"3","a",35.5,'хлор'],
+['Ar',"3","a",39.9,'аргон'],
+['K',"4","a",39,'калий'],
+['Ca',"4","a",40,'кальций'],
+['Sc',"4","b",45,'скандий'],
+['Ti',"4","b",47.9,'титан'],
+['V',"4","b",50.9,'ванадий'],
+['Cr',"4","b",52,'хром'],
+['Mn',"4","b",54.9,'марганец'],
+['Fe',"4","b",55.8,'железо'],
+['Co',"4","b",58.9,'кобальт'],
+['Ni',"4","b",58.7,'никель'],
+['Cu',"5","b",63.5,'медь'],
+['Zn',"5","b",65.4,'цинк'],
+['Ca',"5","a",69.7,'галий'],
+['Ge',"5","a",72.6,'германий'],
+['As',"5","a",74.9,'мышьяк'],
+['Se',"5","a",79,'селен'],
+['Br',"5","a",79.9,'бром'],
+['Kr',"5","a",83.8,'криптон'],
+['Rb',"6","a",85.4,'рубидий'],
+['Sr',"6","a",87.6,'стронций'],
+['Y',"6","b",88.9,'иттрий'],
+['Zr',"6","b",91.2,'цирконий'],
+['Nb',"6","b",92.9,'ниобий'],
+['Mo',"6","b",95.9,'молибден'],
+['Tc',"6","b",'98','технеций'],
+['Ru',"6","b",101,'рутений'],
+['Rh',"6","b",102.9,'родий'],
+['Pd',"6","b",106.4,'палладий'],
+['Ag',"7","b",107.8,'серебро'],
+['Cd',"7","b",112.4,'кадмий'],
+['In',"7","a",114.8,'индий'],
+['Sn',"7","a",118.7,'олово'],
+['Sb',"7","a",121.7,'сурьма'],
+['Te',"7","a",127,'теллур'],
+['I',"7","a",126.9,'йод'],
+['Xe',"7","a",131.3,'ксенон'],
+['Cs',"8","a",132.9,'цезий'],
+['Ba',"8","a",137.3,'барий'],
+//-------La-Lu------------------------------
+['La',"8","a",138.9,'лантан'],
+['Ce',"8","a",140.1,'церий'],
+['Pr',"8","a",140.9,'празеодим'],
+['Nd',"8","a",144.2,'неодим'],
+['Pm',"8","a",145,'прометий'],
+['Sm',"8","a",152,'самарий'],
+['Eu',"8","a",160,'европий'],
+['Gd',"8","a",157.26,'гадолиний'],
+['Tb',"8","a",158.9,'тербий'],
+['Dy',"8","a",152.5,'диспозий'],
+['Ho',"8","a",164.9,'гольмий'],
+['Er',"8","a",167.2,'эрбий'],
+['Tm',"8","a",168.9,'тулий'],
+['Yb',"8","a",173,'иттербий'],
+['Lu',"8","a",175,'лютерий'],
+//----------------------------------------
+['Hf',"8","b",178.5,'гафний'],
+['Ta',"8","b",180.9,'тантал'],
+['W',"8","b",183.9,'вольфрам'],
+['Re',"8","b",186.2,'ренний'],
+['Os',"8","b",190.2,'осмий'],
+['Ir',"8","b",192.2,'ирридий'],
+['Pt',"8","b",195,'платина'],
+['Au',"9","b",197,'золото'],
+['Hg',"9","b",200.6,'ртуть'],
+['TI',"9","a",204.4,'талий'],
+['Rb',"9","a",207.2,'свинец'],
+['Bi',"9","a",208.9,'висмут'],
+['Po',"9","a",209,'полоний'],
+['At',"9","a",210,'астат'],
+['Rn',"9","a",222,'радон'],
+['Fr',"10","a",223,'франций'],
+['Ra',"10","a",226,'радий'],
+['Ac',"10","a",227,'актиний'],
+['Th',"10","a",232,'торий'],
+['Pa',"10","a",231,'протактиний'],
+['U',"10","a",238,'уран'],
+['Np',"10","a",237,'нептуний'],
+['Pu',"10","a",244,'плутоний'],
+['Am',"10","a",243,'америций'],
+['Cm',"10","a",247,'кюрий'],
+['Bk',"10","a",247,'берклий'],
+['Cf',"10","a",251,'калифорний'],
+['Es',"10","a",252,'эйнштейний'],
+['Fm',"10","a",257,'фермий']
+['Md',"10","a",258,'менделевий'],
+['No',"10","a",259,'нобелий'],
+['Lr',"10","a",260,'лоуренций'],
+//-----------------------------------
+['Rf',"10","b",261,'резефондий'],
+['Db',"10","b",262,'дубний'],
+['Sg',"10","b",266,'сиборгий'],
+['Bh',"10","b",267,'борий'],
+['Hs',"10","b",269,'хассий'],
+['Mt',"10","b",168,'мейнтерий'],
+['Ds',"10","b",271,'дармшматий']]
+//------Ac-Lr---------------------------
+var La=[['Rf',"10","b",261],
+['Db',"10","b",262],
+['Sg',"10","b",266],
+['Bh',"10","b",267],
+['Hs',"10","b",269],
+['Mt',"10","b",168],
+['Ds',"10","b",271]]
+</script>
+<script type="text/javascript">
+function got() {
+var f = document.getElementsByTagName('input')[0].value
+var E=""
+var elements=[]
+for(var i = 0; i < f.length+1; i++) {
+var s1 = num(f[i+1])
+var s2= num(f[i+2])
+var n = f[i] + f[i+1]
+if(getElement(n) != false) { E=f[i] + f[i+1]; elements.push([E,s2]) }
+else if(getElement(f[i]) != false) { E=f[i]; elements.push([E,s1]) }
+/**/
+function full() {
+
+}
+  }
+function num(x) { for(var e = 0; e <= 9; e++) { if(e.toString() == x) { return e } } return 1 }
+console.log(elements)
+return elements
+}
+function handle(arr) {
+var S = 0
+console.log(arr)
+for(var i = 0; i < arr.length; i++) {
+S=S+getElement(arr[i][0])[3] * arr[i][1]
+var p = document.createElement('p')
+p.data=getElement(arr[i][0])[3] + " * "+ arr[i][1]
+document.getElementsByTagName('div')[0].append(p)
+  }
+for(var i = 0; i < arr.length; i++) {
+var f = document.getElementsByTagName('p')[i+1]
+f.innerHTML = arr[i][0] + ' (' + f.data + ') : ' + (eval(f.data)/S*100).toFixed(2) + '%'
+   }
+return S
+}
+function gotResult() {
+document.getElementsByTagName('div')[0].innerHTML=""
+document.getElementsByTagName('input')[0].blur()
+var p = document.createElement('p')
+p.style="padding-bottom: 10px; border-bottom: 1px dotted"
+document.getElementsByTagName('div')[0].append(p)
+p.innerHTML = 'Mr = [ ' + handle(got()).toFixed(1) + ' ]'
+}
+function getElement(n,ant) {
+try {
+for(var i = 0; i < Elements.length; i++) {
+if(n == Elements[i][0]) { if(!ant) { return Elements[i] } else { return i+1 } }
+ }
+}
+catch {
+return false
+}
+  }
+document.onkeydown=function(e) {
+if(e.key == 'Enter') { gotResult() }
+}
+function getElementByCode(code) {
+ return Elements[code-1] 
+}
+window.onload=function() {
+var t = document.getElementsByTagName('input')[0]
+t.style.marginTop=/*(innerHeight - 300)/2 + 'px'*/ '50px'
+}
+document.getElementsByTagName('button')[0].onclick=function(e) {
+this.blur()
+if(e.layerX - innerWidth*0.1 > this.offsetWidth/2) { gotResult() }
+else { findElement(document.getElementsByTagName('input')[0].value) }
+}
+function  findElement(Code) {
+try {
+var code = eval(Code)
+handleSearch(getElementByCode(code))
+ }
+catch { handleSearch(getElement(Code)) }
+}
+var names = ['название','период','подгруппа','масса','имя']
+function handleSearch(arr) {
+var cont = document.getElementsByTagName('div')[0]
+cont.innerHTML = ""
+for(var i = 0; i < arr.length; i++) { 
+var p = document.createElement('p')
+p.innerHTML = names[i] + '|| ' + arr[i]
+cont.append(p)
+ }
+var p = document.createElement('p')
+p.innerHTML = 'номер || ' + getElement(arr[0],true)
+cont.append(p)
+}
+document.getElementsByTagName('button')[0].ondblclick=function() {
+getName(document.getElementsByTagName('input')[0].value)
+}
+function getName(n) {
+  try {
+for(var i = 0; i < Elements.length-1; i++) {
+if(Elements[i][4] == n) { console.log(Elements[i]);
+handleSearch(Elements[i])
+ return false }
+  }
+return false
+ }
+catch {  }
+}
+</script>
+</body>
+</html>

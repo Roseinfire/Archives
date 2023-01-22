@@ -1,0 +1,23 @@
+function countNegative(arr) {
+var res = []
+for(var i = 1; i < arr.length; i++) {
+res.push(arr[i]-arr[i-1])
+  }
+return res
+} 
+function generateArr(f, l) {
+var res = []
+for(var i = 0; i < l; i++) {
+try { res.push( eval(f) ) } catch {}
+    }
+return res
+ }
+var four = generateArr("Math.pow(i, 3)", 10)
+Console.log(four)
+var four_1 = countNegative(four) 
+Console.log( four_1)
+var four_2 = countNegative( four_1 )
+Console.log( four_2 ) 
+
+/* var t = generateArr("Math.pow(i, 2)*3", 10)
+Console.log( countNegative(t) )*/

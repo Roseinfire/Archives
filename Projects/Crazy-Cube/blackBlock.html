@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+ <html>
+   <head> 
+      <title></title>
+      <link rel="icon" id="favicon"/>
+      <style type="text/css">
+      #block {
+       background-color: black;
+       margin-top: 30px;
+         }
+      .inf {
+       text-align: right;
+       font-size: 105%;
+       width: 75%;
+        }
+      #fun {
+      font-size: 135%;
+      margin-top: 50px;
+      margin-left: 150px;
+       }
+      </style>
+     </head>
+   <body>
+  <p class="inf" id="s">Score: 0</p>
+  <p class="inf" id="r">Record: 0</p>
+  <div id="block"></div>
+  <p id="fun">So i haven't Internet!</p>
+  <script type="text/javascript">
+       var interval = null
+       var setTime = 8
+       var width = 100
+       var score = 0
+       var record = 0
+       var t = 100
+       var b = document.getElementById("block")
+       b.style.width = width + "px"; b.style.height = width+"px"
+       var margin = (innerWidth - width)/2
+       var m = -2;
+       function change() {
+         m = -1 * m
+         }
+       function move() {
+        if(m > 0) { m += 1/100 }
+        score += 1
+        if(score % t == 0) { document.getElementById("s").innerHTML = "Score: " + score/t };
+        margin += m
+        b.style.marginLeft = margin + "px"
+        if(margin <= 0 || margin >= innerWidth - width) {
+     stop(); margin = (innerWidth - width)/2; setTimeout(stop, 300); m = 2 * (m / Math.abs(m)); score = 0;
+           }
+         }
+       move()
+       function stop() {
+       if(score > record) { record = score; } 
+       document.getElementById("r").innerHTML = "Record: " + (record - record%t)/t;
+       if(!interval) { interval = setInterval(move, setTime) }
+       else { clearInterval(interval); interval = null }
+         }
+       document.onkeydown = function(e) {
+       if(e.code == "Space") { change(); if(!interval) { stop() } }
+         }
+     </script>
+   </body>
+ </html>

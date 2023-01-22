@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+ <html>
+   <head> 
+      <title>Console</title>
+   <script database="base-only" type="text/javascript" src="file:///Users/Data/Documents/html/base/Script.txt"></script>
+      <link rel="icon" id="favicon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAF0lEQVQoU2NkIBIwEqmOYVQh3pAiOngACmkAC5eMKzgAAAAASUVORK5CYII="/>
+      <style type="text/css">
+* {
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+}
+   .c {
+  border-bottom: 1px solid;
+  padding-top: 9px;
+  padding-bottom: 9px;
+ text-align: center;
+ margin: 8px;
+ font-family: consolas;
+     }
+.c:active {
+background-color: antiquewhite;
+cursor: default;
+ }
+c:hover {
+cursor: default;
+}
+ textarea {
+ top: -3px;
+ left: -3px;
+ font-size: 105%;
+ font-family: consolas;
+ background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJUlEQVQoU2P8////fwYC4M2bNwyMowpxhRJpwfP69WuCAQ6yCQDy10CLqlauUwAAAABJRU5ErkJggg==')
+}
+.arrs {
+  border-bottom: 1px solid brown;
+  padding-top: 15px;
+  padding-bottom: 8px;
+ text-align: center;
+ font-family: consolas;
+margin: 0;
+display: none;
+cursor: default;
+background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY/j//z8ABf4C/qc1gYQAAAAASUVORK5CYII=');
+ }
+  .contrl {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background-color: rgb(225 234 150 / 54%);
+  font-size: 85%;
+  border-bottom: 1px solid;
+  margin-top: 4px;
+  border-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  margin-left: 25px;
+   }
+  .contrl:hover {
+  background-color: rgb(225 234 150 / 68%);
+   }
+  #form {
+  position: fixed;
+  padding: 25px;
+  background-color: white;
+  z-index: 2;
+  font-family: fantasy;
+   }
+  #conts {
+  position: fixed;
+  text-align: center; 
+  z-index: 10; 
+  background-color: white;
+  padding-bottom: 25px;
+  padding-top: 15px;
+   }
+      </style>
+     </head>
+<body style="margin: 0;">
+  <script type="text/javascript">
+  var ResizeEvents = []
+  window.onresize = function() {
+  for(var i = 0; i < ResizeEvents.length; i++) {
+   ResizeEvents[i]()
+      }
+ document.getElementById("res").style.width=innerWidth/2 + "px"
+ document.getElementById("form").style.marginLeft = innerWidth/2 + "px"
+ document.getElementById("form").style.width= innerWidth/2 + "px"
+ document.getElementById("form").style.height= (innerHeight-45)+ "px"
+    }
+    window.onload = function() {  window.onresize()  }
+    </script>
+  <div id="panel">
+   <div style="" id="conts">
+    <div class="contrl">execute</div>
+    <div class="contrl">clear</div>
+    <div class="contrl">input</div>
+   </div>
+  <script type="text/javascript">
+  document.getElementsByClassName("contrl")[0].onclick = function() { Console.run(Console.value) }
+  document.getElementsByClassName("contrl")[1].onclick = function() { Console.clear() }
+  document.getElementsByClassName("contrl")[2].onclick = function() { Console.input("Result") }
+  ResizeEvents.push(function() {
+    var cs = document.getElementsByClassName("contrl")
+    for(var i = 0; i < cs.length; i++) { cs[i].style.width = innerWidth*1/3 + "px" } 
+    document.getElementById("conts").style.width = innerWidth/2 -4+ "px"
+  })
+     </script>
+    </div>
+  <textarea id="form"></textarea>
+  <div id="res" style="position: absolute; padding-top: 135px; "></div>
+    <script type="text/javascript">
+  var fs = {} // functions
+  document.getElementById("form").oninput = function() { Console.value = this.value }
+ var Console = {
+   value: "",
+   base: function(data,full) {
+     switch(typeof data) {
+      case "string": 
+       var ed = ""
+       for(var i = 0; i < data.length; i++) {
+        if(data[i] == `
+        `) { ed = ed+"<br/>" }
+        else { ed = ed + data[i] } 
+       }
+     return ['"' + ed + '"']
+  break
+  case "object":
+    if(full && data.length) {
+     var result=["Array(" + data.length + ")"]
+     for(var i = 0; i < data.length; i++) {
+     result.push( Console.base(data[i]) )
+    }
+   return result
+  }
+ else if(full) {
+   var all = Object.getOwnPropertyNames(data)
+   var result = ["Object {" + all.length + "}"]
+   for(var i = 0; i < all.length; i++) {
+    result.push(all[i] + ": " + Console.base( eval("data." + all[i]) ) )
+    }
+  return result
+ }
+ else {
+   return ["[Object]"]
+ }
+ break
+ case "function": 
+   return "f()"
+ break
+     }
+return [data]
+  },
+createList: function(p) {
+  p.onclick=function() {
+  for(var i = 0; i < this.children.length; i++) {
+  if(!this.study) { this.children[i].style.display="block"; this.style.borderWidth="0px" }
+ else { this.children[i].style.display="none"; this.style.borderWidth="1px" }
+     }
+  this.study = !this.study
+   }
+ },
+  log: function(inf) {
+ var all = Console.base(inf,true)
+  var ph = document.createElement("p")
+   ph.className="c"
+   ph.innerHTML = all[0]
+// Lists
+ if(all.length > 1) {
+   ph.style.cursor="pointer"
+   ph.style.backgroundColor="white"
+   Console.createList(ph)
+ }
+ for(var i = 1; i < all.length; i++) {
+  var p = document.createElement("p")
+  p.className="arrs"
+  p.innerHTML=all[i]
+  ph.append(p)
+    }
+  document.getElementById("res").append(ph)
+ },
+  err: function(data) {
+   var p = document.createElement("p")
+   p.className="c"
+   p.style.backgroundColor="#ff0000a6"
+   p.style.color="white"
+   p.innerHTML=data
+   document.getElementById("res").append(p) 
+  },
+  ans: function(text) {
+   var p = document.createElement("p")
+   p.className="c"
+   p.style.color="gray"
+   p.innerHTML=Console.base(text)[0]
+   document.getElementById("res").append(p)
+  },
+  clear: function() {
+  res.innerHTML=""
+    },
+  run: function(code) {
+  try {
+   var f = eval(code); Console.ans(f) } catch(e) { Console.err(e) }
+    },
+ warn: function(data) {
+ var p = document.createElement("p")
+ p.className="c"
+ p.style.backgroundColor= "rgb(249 162 55 / 12%)" //"rgb(255 222 103 / 0.58)"
+ var all = Console.base(data)
+ p.innerHTML=all[0]
+  document.getElementById("res").append(p)
+},
+  input: function(button,type) {
+var p = document.createElement("p")
+  var input = document.createElement("input")
+  input.style.width = "65%"
+  input.style.height= "28px"
+  input.style.marginLeft="60px"
+  if(type) { input.type=type }
+  input.onclick = function() { thand = {}; thand.own = this; thand.got = p }
+  input.onblur = function() { thand = false }
+  p.append(input)
+   var b = document.createElement("button")
+   b.style.height="34px"
+   b.style.marginLeft="8px"
+   b.innerHTML=button
+   b.holder=input
+   b.Parent=p
+  p.append(b)
+  b.onclick=function() {
+  var a = eval(this.holder.value)
+  res.removeChild(this.Parent)
+  Console.warn(a)
+       }
+ document.getElementById("res").append(p)
+     }
+   }
+  document.onkeydown=function(e) {
+   if(e.key == "Delete" && e.ctrlKey) { e.preventDefault(); Console.clear() }
+   if(e.key == "Enter" && e.ctrlKey) { Console.run(document.getElementById("form").value) }
+     else if(e.key == "Enter") { tinput() }
+   if(e.code == "KeyI" && e.ctrlKey) { Console.input("Result","text") }
+  }
+   var thand = false
+   function tinput() {
+   if(thand) {
+    try {
+     var result = eval(thand.own.value)
+     document.getElementById("res").removeChild(thand.got); Console.warn(result)
+        }
+   catch { Console.ans("it can't be executed") } 
+      }
+   else { console.log("f") }
+    }
+     </script>
+   </body>
+ </html>

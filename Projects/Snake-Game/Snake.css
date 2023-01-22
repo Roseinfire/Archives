@@ -1,0 +1,22 @@
+  * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      }
+  .classes {
+      font-size: 180%;
+      margin: 4px;
+      }
+  #overg {
+      position: fixed;
+      z-index: 1000;
+      display: none;
+      }
+  #stoper {
+      margin-top: 20px;
+      width: 100px;
+      }
+  #sk {
+      position: fixed;
+      z-index: 100;
+      }
