@@ -9,7 +9,7 @@ Published projects will be renovated and marked as `Early Projects`
 ## Published:
 * EasyStats
 * DataURl-Finder
-## Planned renovations:
+## Planned remakes:
 ### Games
 * Crazy-Cube
 * Snake-Game
