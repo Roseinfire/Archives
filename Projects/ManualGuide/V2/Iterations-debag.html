@@ -1,0 +1,14 @@
+<html>
+  <body>
+  <script src="iterations.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  var text = `
+ &list: ( text-align: center; font-size: 120% )   
+ # example1 *p @list { href = "https://link-to.com" }
+   !# example2 *p @list
+        !# example3 *p @list
+        `
+    read(text, true)
+  </script>
+  </body>
+  </html>

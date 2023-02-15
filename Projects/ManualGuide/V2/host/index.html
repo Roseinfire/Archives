@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+ <html>
+   <head> 
+      <title>ConnectMe</title>
+     </head>
+   <body style="text-align: center">
+    <div style="margin-top: 150px"> <p>Use scriptlink form to connect ManualGuide</p> <button>copy scriptlink</button> </div>
+    <p>for more information see <a href="https://github.com/Roseinfire/ManualGuide">https://github.com/Roseinfire/ManualGuide</a> </p>
+    <script>document.getElementsByTagName("button")[0].onclick=function() {
+       var form = "<html><head>" + `
+   <meta charset="UTF-8">` + `
+      <scr` + `ipt src="https://roseinfire.github.io/ManualGuide/ConnectManualGuide.js"></scr`+"ipt>" +`
+      </head>` + `
+            <p id="content" style="display: none">
+                 
+            </p>` + `
+         <p style="text-align: center; font-size: 110%">Probably no Internet</p>
+    </ht`+"ml>"
+          navigator.clipboard.writeText(form);
+          this.innerHTML = "successfull"
+       }
+     </script>
+   </body>
+ </html>

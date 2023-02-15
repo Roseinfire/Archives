@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+ <html>
+   <head> 
+      <title>Manual Guide</title>
+      <style type="text/css">
+        .paper {
+             background-color: white;
+             border-radius: 20px;
+             padding-bottom: 10px;
+             padding-top: 15px;
+             border: 1px dotted;
+          }
+         #Info {
+               cursor: pointer;
+               text-align: center;
+               font-size: 104%;
+               margin-top: 8px;
+               mardin-bottom: 20px;
+               padding-top: 10px;
+               padding-bottom: 10px;
+           }
+         #Info:active {
+               border-bottom: 2px solid;
+           }
+         #load {
+             color: rgb(217, 206, 206);
+             font-size: 40px;
+             text-align: center;
+              }
+      </style>
+     </head>
+   <body style="background-color: white;">
+  <div id="content" style="display: none">
+    <div class="paper"> Document Empy </div>
+    <div class="paper" id="Info">Learn more</div>
+  </div>
+  <div id="load">Loading..</div>
+    <script type="text/javascript">
+       var hand = document.getElementsByClassName("paper")[0]
+       var resizebase = new Array()
+       function onResize(e, f) { resizebase.push({ func: f, elem: e }); return resizebase }
+       window.onresize = function() {
+        for(var i = 0; i < resizebase.length; i++) { resizebase[i].func(resizebase[i].elem); } 
+         }
+         var paperWidth = 1920
+         onResize(document.getElementsByClassName("paper")[0], function(e) { 
+           var k = innerWidth/paperWidth
+           if(innerWidth > paperWidth) { k = 1/k }
+           if(innerHeight < innerWidth) {
+           e.style.marginLeft = (innerWidth-innerHeight)/2*k + "px"
+           e.style.width = (innerWidth-2*e.offsetLeft)+"px";
+           document.getElementsByClassName("paper")[1].style.width = (innerWidth-2*e.offsetLeft)+"px"
+           document.getElementsByClassName("paper")[1].style.marginLeft = (innerWidth-innerHeight)/2*k + "px"
+            } else {
+               e.style.width = innerWidth-80+"px"
+               e.style.marginLeft = 40 + "px"
+               document.getElementsByClassName("paper")[1].style.width = (innerWidth - 80) +"px"
+               document.getElementsByClassName("paper")[1].style.marginLeft = 40 + "px"
+              }
+             if(e.offsetHeight < innerHeight) { 
+                e.style.marginTop = (innerHeight-e.offsetHeight - document.getElementsByClassName("paper")[1].offsetHeight)/2 + "px" 
+              } else { e.style.marginTop = "20px" }
+          })
+        onResize(document.getElementById("load"), function(e) { 
+              e.style.marginTop = (innerHeight-e.offsetHeight)/2 + "px"
+              })
+        document.getElementsByClassName("paper")[1].onclick = function() {
+           window.open("https://github.io/Roseinfire")
+          }
+         function background(color, imageSource, paper_width) {
+           var background=document.body
+           background.style.backgroundColor = color
+           if(imageSource) { background.style.backgroundImage = "url('" + imageSource + "')" }
+           if(paper_width) { paperWidth = paper_width }
+             };
+     </script>
+    <script type="text/javascript">
+       var loads = 0
+        function awaitload(endkey) {
+          window.onresize()
+          if(!loads) { document.getElementsByClassName("paper")[0].innerHTML = "" }
+          if(!endkey) { loads++ }
+          else { loads-- }
+          if(!loads) {
+                          function get(name) { 
+                                var list = __manual__.attributes
+                                for(var i = 0; i < list.length; i++) { if(list[i].name == name) { return list[i].value } } 
+                                return undefined
+                                  }
+                         var color = get("color")
+                         var image = get("image")
+                        background(color,  image, __manual__.width)
+                        document.getElementById("content").style.display = "block";
+                        document.getElementById("load").style.display = "none"
+                        window.onresize()
+                      }
+              }
+     class keyword {
+       constructor(start=[], end=[], recall=function() {}) {
+          this.start = function(compl) {
+              for(var i = 0; i < start.length; i++) { if(start[i]==compl) { return true } }
+              return false
+                  }
+          this.end = function(compl) {
+              for(var i = 0; i < end.length; i++) { if(end[i]==compl) { return true } }
+              return false
+              }
+          this.recall = recall
+          }
+       }
+         var keywords = []
+         function pushkeyword(start_symbol, end_symbol, result) {
+           keywords.push( new keyword(start_symbol, end_symbol, result) )
+            }
+         function read(data) {
+           awaitload()
+           var iteration = null
+           var res = ""
+           var pos = -1; while(data[pos+1]) {
+                 pos++; var change = null
+                 for(var i = 0; i < keywords.length; i++) {
+                   if(iteration && keywords[i] == iteration && keywords[i].end( data[pos] )) {
+                      iteration.recall(res); res = ""; iteration = null;
+                       }
+                   if(!iteration && keywords[i].start( data[pos] )) { 
+                     iteration = keywords[i]; change = true;
+                       }
+                     }
+                  
+                   if(iteration && !change) { res += data[pos] }
+                   if(change) { change = null }
+    
+                   }; if(iteration) { iteration.recall(res) }
+                    awaitload(true)
+                } 
+            var tempovar = null
+            var tempotext = null
+            var tempotype = null
+            var tempowrite = null
+            pushkeyword(["&"], [":"], function(res) { tempovar = res; })
+            pushkeyword(["("], [")"], function(res) { 
+                  try { 
+                    eval("window." + tempovar + " = " + res);
+                  } catch { 
+                     console.error("Invalid variable: ", tempovar, "=", res)
+                       }
+                   tempovar = null
+               }) 
+            pushkeyword(["#"], ["*"], function(res) { tempotext = res; })
+            pushkeyword(["*"], [" ", `
+`], function(res) { tempotype = res;  })
+            pushkeyword(["@"], [" ", "{"], function(res) {
+                try {
+                  tempowrite = write(tempotext, tempotype, eval(res))
+                  tempotext = null; tempotype = null;
+                  } catch { console.error("Can't find link @" + res) }
+               })
+            pushkeyword(["{"], ["}"], function(res) {
+                 if(tempowrite) {
+                  tempowrite.attribute(res)
+                      }
+               })
+            pushkeyword(["["], ["]"], function(res) {
+             if(tempowrite) { onResize(tempowrite, function(e) {
+                try {
+                    var padding = eval(res)
+                    e.style.marginLeft = 2*padding
+                    e.style.width = (hand.offsetWidth-padding) + "px"
+                      } catch { console.error("Invalid spec: ", res) }
+                   }); tempowrite = null; }
+               })
+  
+         function write(text, type, style) { 
+          var element = (function () {
+             try { 
+                var res = document.createElement(type)
+                if(res.tagName == "IMG") {
+                    awaitload()
+                    res.onload = function() { awaitload(true) }
+                  }
+                if(text) { res.innerHTML = text }
+                return res
+                 } catch { 
+                      console.warn("Element creation failed *" + type)
+                      var err = document.createElement("p"); err.innerHTML = "creation error"
+                      return err
+                   }
+               })()
+              element.style = style
+              truewrite(element)
+              return element
+          }
+         HTMLElement.prototype.attribute = function(data) {
+              try {
+                   eval("this." + data)
+                 } catch { console.error("Can't declare attribute: ", data) }
+          }
+        function truewrite(e) { hand.append(e) }
+    </script>
+    <script type="text/javascript">
+        read(__manual__.innerHTML)
+      </script>
+   </body>
+ </html>

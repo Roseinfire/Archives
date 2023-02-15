@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+ <html>
+   <head> 
+      <title>Manual Guide</title>
+      <link rel="icon" id="favicon"/>
+      <style type="text/css">
+       .headlines {
+        padding: 10px;
+        font-size: 170%;
+          }
+       .strings {
+        font-size: 130%;
+        padding: 25px;
+        padding-right: 120px;
+         }
+       .centralLine {
+         text-align: center;
+         padding: 10px;
+         font-size: 180%;
+         }
+        .paper {
+         background-color: white;
+         border-radius: 20px;
+         padding-bottom: 10px;
+         padding-top: 15px;
+         border: 1px dotted;
+          }
+         #Info {
+           cursor: pointer;
+           text-align: center;
+           font-size: 135%;
+           margin-top: 8px;
+           mardin-bottom: 20px;
+           }
+         #Info:active {
+           border-bottom: 2px solid;
+           }
+      </style>
+     </head>
+   <body style="background-color: #af9820">
+    <div class="paper"></div>
+    <div class="paper" id="Info">Learn more about Manual Guide App</div>
+    <script type="text/javascript">
+       var resizebase = new Array()
+       function onResize(e, f) { resizebase.push({ func: f, elem: e }); return resizebase }
+       window.onresize = function() {
+        for(var i = 0; i < resizebase.length; i++) { resizebase[i].func(resizebase[i].elem); } 
+         }
+         var paperWidth = 1920
+         onResize(document.getElementsByClassName("paper")[0], function(e) { 
+           var k = screen.availWidth/paperWidth
+           if(screen.availWidth > paperWidth) { k = 1/k }
+           if(screen.availHeight < screen.availWidth) {
+           e.style.marginLeft = (innerWidth-innerHeight)/2*k + "px"
+           e.style.width = (innerWidth-2*e.offsetLeft)+"px"
+            } else {
+               e.style.width = innerWidth-80+"px"
+               e.style.marginLeft = 40 + "px"
+              }
+          })
+         onResize(document.getElementsByClassName("paper")[1], function(e) { 
+           var k = screen.availWidth/paperWidth
+           if(screen.availWidth > paperWidth) { k = 1/k }
+           if(screen.availHeight < screen.availWidth) {
+           e.style.marginLeft = (innerWidth-innerHeight)/2*k + "px"
+           e.style.width = (innerWidth-2*e.offsetLeft)+"px"
+            } else {
+               e.style.width = innerWidth-80+"px"
+               e.style.marginLeft = 40 + "px"
+              }
+          })
+        document.getElementsByClassName("paper")[1].onclick = function() {
+           window.open("https://github.io/Roseinfire")
+          }
+  
+  
+       function intializeStyle(element, style, dynamic_style) {
+        if(style) {
+         var css = ""
+         for(var i = 0; i < style.length; i++) {
+           css += style[i]
+             }; element.style = css
+           }
+           if(dynamic_style) {
+               onResize(element, dynamic_style)
+             }
+         }
+      </script>
+    <script type="text/javascript">
+         var documentProgression = -1
+         var documentList = []
+         function continueReading() {
+           if(documentList.length) { 
+            documentProgression++
+            if(documentList[documentProgression]) { documentList[documentProgression]() }
+              } else { 
+                 var hand = document.getElementsByClassName("paper")[0]
+                 var string = document.createElement("p")
+                 string.innerHTML = "Nothing to explore.."
+                 hand.append(string)
+                 intializeStyle(string, ["font-size: 130%; text-align: center"])
+              }; window.onresize()
+            }
+         function write(text, type, style, recall=function() {}) {
+           var hand = document.getElementsByClassName("paper")[0]
+           documentList.push(function() {
+           var string = document.createElement(type)
+           string.innerHTML = text
+           hand.append(string)
+           intializeStyle(string, style)
+           recall(string)
+           continueReading()
+               })
+             }
+         function image(src, fullwidth, style, recall=function() {}) {
+            var hand = document.getElementsByClassName("paper")[0]
+            documentList.push(function() {
+            var img = new Image()
+            img.src = src
+            img.onload = function() {
+              hand.append(img)
+                 intializeStyle(img, style, function(im) { if(fullwidth) {
+                   im.width = hand.offsetWidth-fullwidth; 
+                   im.style.marginLeft = fullwidth/2+"px"
+                    } });
+                 recall(img);
+                 continueReading()
+                 }
+               })
+             }
+         function background(color, imageSource, paper_width) {
+           var background=document.body //document.getElementById("background")
+           background.style.backgroundColor = color
+           if(imageSource) { background.style.backgroundImage = "url('" + imageSource + "')" }
+           if(paper_width) { paperWidth = paper_width }
+             }
+     </script>
+    <script type="text/javascript">
+      var manual = window.content
+       var script = document.createElement("script")
+       script.innerHTML = manual
+       document.body.append(script); continueReading();
+      </script>
+   </body>
+ </html>
