@@ -1,0 +1,284 @@
+<html>
+<head>
+<title>Server.txt</title>
+<body style="margin: 0; background-image: url(S1.png)">
+  <div id="all" style="display: none">
+  <div id="stats" style="width: 40%; text-align: center; position: fixed;">
+  <canvas></canvas>
+  <p class="stats"></p>
+  <p class="stats">Loading..</p>
+  <button class="ctrl" onclick="clearRubbish()">Take the Rubbish</button><br/>
+  <!--button class="ctrl" onclick="clearCoockies()" style="margin-top: 10px;"> Clear Cookies </button--!>
+  <button class="ctrl" onclick="openText()" style="margin-top: 10px;">Create Document</button><br/>
+  <!--button class="ctrl" onclick="uploadTheme()" style="margin-top: 15px;">add Theme</button--!>
+</div>
+  <div id="loads" style="display: none; position: absolute; left: 0; top: 0; margin-left: 40%; width: 50%;margin-top: 80px;" >
+<input class="cnts" style="width: 300px;" oninput="find()" placeholder=" Search.."/>
+<button class="cnts" onclick="sett()">[ :active ]</button>
+<div id="activePs" style="overflow-y: scroll; margin-top: 20px;"></div>
+ </div>
+  </div>
+  <script type="text/javascript">
+  window.onresize=function() {
+ // rown()
+   }
+ function rown() {
+ document.getElementById('activePs').style.height=innerHeight-184+'px'
+ //if(document.getElementById('stats').offsetWidth < canv.width) { canv.width=300; canv.height=300 }
+ if(innerHeight < 600) { canv.width=300; canv.height=300 }
+ else if(innerHeight > 1300) { /*something*/ }
+  }
+
+  var __BasePage__= true
+  function RunInstall() {
+localStorage.setItem(':openChanel.codes',__LastValue__)
+var Cod = ""
+function install() {
+  window.ins = document.createElement('div')
+  ins.innerHTML=`<p class="prevent" style="margin-bottom: 0px; ">Save File to " helper.html " </p><p class="prevent" style="border-bottom: 1px dotted; margin-top: 0px;"> When file loaded, click to " Install "</p>
+  <p style="text-align: center;"><button onclick="endInstall()" style="font-size: 120%; padding-left: 15px; padding-right: 15px;"> Install </button>`
+  document.body.append(ins)
+  ins.style.marginTop=(innerHeight-ins.offsetHeight)/2 - 50 + 'px'
+  Cod = `var Codes = []
+  __Domain__Lik = ` + generateRandomNumber() + `
+  const EndScrpt = 0`
+  Enter()
+}
+ function restore() {
+  window.ins = document.createElement('div')
+  ins.innerHTML=`<p class="prevent" style="margin-bottom: 0px; "> Maybe File defected, </p><p class="prevent" style="border-bottom: 1px dotted; 
+ margin-top: 0px;">Liks will be Restored.</p>
+  <p style="text-align: center;"><button onclick="endInstall()" style="font-size: 120%; padding-left: 15px; padding-right: 15px;"> Restore </button>`
+  document.body.append(ins)
+  ins.style.marginTop=(innerHeight-ins.offsetHeight)/2 - 50 + 'px'
+  Cod = __LastValue__
+  Enter()
+ }
+  var s = document.createElement('script')
+  s.innerHTML = __LastValue__
+  s.className = "check_the_correct"
+  document.body.append(s)
+    try {
+  if(EndScrpt == 0 && !!Codes) { restore() }
+  else { install() }
+  }
+   catch { install() }
+ function Enter() {
+
+ }
+    }
+  function endInstall() {
+  window.onfocus=function() {
+  var a = document.createElement('a')
+  a.href = document.URL
+  a.click()
+     }
+window.open(getURL() + 'helper.html')
+    }
+  function GoLoadTheme() {
+  window.text = localStorage.getItem(':openChanel.page')
+  var p = localStorage.getItem(':' + __Domain__Link) 
+  if(p == null || p == "s") { 
+   localStorage.setItem(':' + __Domain__Link,"");
+   write('Hello World') 
+      }
+  else { document.getElementById('all').style.display="block"; rown(); EnterLoad(0); console.group("Links:") }
+ /*
+  var f = localStorage.getItem('theme' + __Domain__Link)
+  if(f != null || f != 'null') { document.body.style.backgroundImage="url('" + f + "')"; alert("") }
+*/
+  }
+  function write(text) {
+  var p = document.createElement('p')
+  p.style = `font-size: 300%; position: fixed; width: auto; font-family: CrackMan`
+  document.body.append(p)
+  var i = 0; R()
+  function R() { 
+  if(i < text.length) { i++; p.innerHTML = p.innerHTML+text[i-1]; 
+  p.style.marginLeft = (innerWidth - p.offsetWidth)/2 + 'px';
+  p.style.marginTop = (innerHeight - p.offsetHeight)/2 + 'px' 
+  setTimeout(R,150)  }
+  else { 
+  setTimeout(function() {
+  document.body.removeChild(p); document.getElementById('all').style.display = 'block'; rown(); EnterLoad(0)
+  },600)   }
+       }
+  }
+var workingCodes=[]
+var failedCodes=[]
+  function EnterLoad(x) {
+  if(Codes[x] != undefined) {
+  connectPage(Codes[x],x)
+    }
+  else { strokeAppanded() }
+  }
+  function connectPage(UrlArray,x) {
+  localStorage.setItem(':openChanel',"a")
+  Load___(UrlArray[0],function() {
+  var D = localStorage.getItem(":openChanel")
+  if(D == "a") { UrlArray[2]="empty"; Bpand(UrlArray) }
+  else if(D == "visited") { Append(UrlArray) }
+  setTimeout(function() { EnterLoad(x+1) },0)
+  progress(x)
+ },0)
+   }
+  function Append(arr) { console.log(arr[1]); 
+  var p = document.createElement('p')
+  p.innerHTML = arr[1]
+  p.className="Codes"
+  p.onclick=function() {
+  window.open(arr[0])
+     }
+ workingCodes.push(p)
+   } 
+function Bpand(arr) {
+  var p = document.createElement('p')
+  p.innerHTML = arr[1]
+  p.className="Codes"
+  failedCodes.push(p)
+ }
+  function strokeAppanded(m) {
+  console.groupEnd('Links:')
+  document.getElementById('loads').style.display="block"
+  document.getElementById('activePs').innerHTML=""
+  if(!m) {  setTimeout(function() { viewMemory() },200)
+  for(var i = 0; i < workingCodes.length; i++) { 
+ document.getElementById('activePs').append(workingCodes[i])
+ } 
+   }
+ else {  
+  for(var i = 0; i < failedCodes.length; i++) {
+  document.getElementById('activePs').append(failedCodes[i])
+ } }
+ /**/
+ if( document.getElementById('activePs').innerHTML == "") {  document.getElementById('activePs').innerHTML=`<p class="alrt">It's empty here</p>` }
+   }
+  var emps=0
+  function progress(prs) {
+  if(Codes[prs][2] == 'empty') { emps++ }
+  var p = ( ( (prs+1)/Codes.length) * 100).toFixed(0)
+  drawStatus(p)
+  console.warn('    Load: '+  p + '%')
+  }
+  function viewMemory() {
+  var p = (emps/Codes.length * 100).toFixed(0)
+  if(p.toString() == 'NaN') { p = "0"; strokeDiagramm() }
+  document.getElementsByClassName('stats')[1].innerHTML = 'Rubbish: ' + p + ' %'
+  document.getElementsByClassName('stats')[0].innerHTML = 'Pages: ' + Codes.length //+ ' (active ' + (Codes.length - emps) + ')'
+  ctx.strokeStyle="#4c0d0d"
+  ctx.beginPath()
+  ctx.arc(canv.width/2,canv.height/2,80, 0 - Math.PI/2, 2 * Math.PI *p/100 - Math.PI/2,false)
+  ctx.stroke()
+  console.log('Rubbish: ' + p + ' %')
+  }
+  var canv = document.getElementsByTagName('canvas')[0]
+  var ctx = canv.getContext('2d')
+  canv.width=400
+  canv.height=400
+  function drawStatus(p) {
+  ctx.lineWidth=20
+  ctx.clearRect(0,0,canv.width,canv.height)
+  ctx.beginPath()
+  ctx.strokeStyle="brown"
+  ctx.arc(canv.width/2,canv.height/2,80, 0 - Math.PI/2, 2 * Math.PI *(2-p/100) - Math.PI/2,true)
+  ctx.stroke()
+ /* ctx.fill()
+  ctx.beginPath()
+  ctx.fillStyle="white"
+  ctx.arc(canv.width/2,canv.height/2,40,0,Math.PI*2,false)
+  ctx.fill() */
+   }
+  function strokeDiagramm() {
+ctx.lineWidth=1
+ctx.strokeStyle="black"
+ctx.beginPath()
+ctx.arc(canv.width/2,canv.height/2,80, 0 , 2 * Math.PI,true)
+ctx.stroke()
+ctx.beginPath()
+ctx.arc(canv.width/2,canv.height/2,60, 0 , 2 * Math.PI,true)
+ctx.stroke()
+    }
+  function clearRubbish() {
+  var C = ""
+  var x = 0; 
+  for(var i = 0; i < Codes.length; i++) { 
+  var f = 'Codes['+(i-x)+`] = new Array();
+  `+'Codes[' + (i-x)  + '][0] = "' + Codes[i][0] + `"; 
+  ` + 'Codes[' + (i-x)  + '][1] = "' + Codes[i][1] + `";
+  `
+  if(Codes[i][2] != 'empty') { C=C+ f}
+    else { x++ }
+  }
+  var f = getStroke('Codes[0] = new Array()',window.text,'window.P1')
+  var Text = P1 + C + getSecondPath()
+  console.log(Text)
+  download(Text,'helper.html','allfiles')
+  function getSecondPath() {
+  var F = ""
+  var f = getStroke('const EndScrpt=0',window.text,'window.P_null')
+  for(var i = f; i < text.length; i++) { F=F+text[i] }
+  console.warn(F)
+  return F
+       }
+    }
+  function clearCookies() {
+  localStorage.clear()
+  setTimeout(function() { alert("all cookies deleted.") } ,100)
+   }
+  function sett() {
+  var button =  document.getElementsByClassName('cnts')[1]
+  if(button.innerHTML == "[ :active ]") { button.innerHTML="[ :passive ]"; strokeAppanded(true) }
+  else { button.innerHTML="[ :active ]"; strokeAppanded() }
+   }
+  function find() {
+ var full = document.getElementsByTagName('input')[0].value
+ var some = document.getElementById('activePs').children
+ for(var i = 0; i < some.length; i++) {
+if(some[i].className != "alrt") {
+ if(is(full,some[i].innerHTML)) { some[i].style.display="block" }
+ else { some[i].style.display="none" }
+}
+if(full == "") { document.getElementsByTagName('input')[0].blur() }
+   }
+ function is(a,b) {
+ var F=""
+ for(var i = 0; i < a.length; i++) {
+F=F+b[i]
+}
+if(a == F) { return true }
+  }
+    }
+ canv.onclick=function() { copyLink() }
+  function copyLink() {
+  var R = getURL() + 'NEW_Script.txt'
+  var Link = '<script database="use" type="text/javascript" src="' + R + '"></scri' + 'pt>'
+  navigator.clipboard.writeText(Link)
+  .then(() => {
+
+   })
+  .catch(err => {
+  alert(R)  
+      });
+   }
+function openText() {
+var d = window.open("newFile.html")
+  }
+
+var moving=false
+document.getElementById('activePs').onmousedown=function(e) {
+moving=[e.y,document.getElementById('activePs').scrollTop]
+console.log(moving)
+ }
+document.onmouseup=function() {
+moving=false
+} 
+document.onmousemove=function(e) {
+if(moving != false) {
+var p = document.getElementById('activePs')
+p.scrollTop=moving[1] - (e.y-moving[0])
+  }
+}
+  </script>
+<script database="base-only" type="text/javascript" src="Script.txt"></script>
+</body>
+</html>

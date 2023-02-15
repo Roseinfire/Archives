@@ -1,0 +1,299 @@
+var due = { base: false, menu: false, script: null, href: document.URL }
+for(var i = 0; i < document.getElementsByTagName('script').length; i++) { 
+var s = document.getElementsByTagName('script')[i]
+var a = s.attributes
+for(var e = 0; e < a.length; e++) {
+var t = a[e]
+if(t.name == 'database' && t.value == 'menu-only') { due.script=s; due.menu=true }
+else if(t.name == 'database' && t.value == 'base-only') { due.script=s; due.base=true; }
+else if(t.name == 'database' && t.value == 'use') { due.script=s; due.base=true; due.menu=true  }
+   }
+ if(due.script) {
+var u = due.script.src;
+var F=""
+var f=""
+for(var i = 0; i < u.length; i++) {
+if(u[i] == '/') { F=F+f+'/'; f="" }
+else { f=f+u[i] }
+     }
+due.href = F
+    }
+ }
+
+if(document.body) {
+ if( preventLoad() ) {
+Onload(due.menu,due.base)
+  }
+}
+else if( preventLoad() ) {
+window.addEventListener("DOMContentLoaded",(event) => {
+console.log("working..")
+Onload(due.menu,due.base)
+  })
+ }
+function preventLoad() {
+if(due.base && localStorage.getItem(":openChanel") == "a") {
+localStorage.setItem(":openChanel",document.URL)
+var a = document.createElement("a")
+a.href=due.href + "Form.html"
+a.click()
+return false
+}
+else { return true }
+ }
+function Load___(src,callback,took) {
+  /* took > 50 */
+  var f = document.createElement('iframe')
+  f.style.display="none"
+  f.onload=function() { 
+  console.log('loading sourse: ' + f.src)
+  setTimeout(function() {
+  document.body.removeChild(f)
+  callback.call()
+          },took)
+       }
+  f.src = src
+  document.body.append(f)
+ }
+
+function Onload(menu,base) {
+  if(menu) { getKeyCodes() }
+  if(base) { sendSignal() }
+}
+function getParametres(caller) {
+  var v = caller.toString()
+  var I=0
+   for(var f = 0; v[I] != '('; I++) {  }
+  I++
+  var S = [""]
+   for(var f = 0; v[I] != ')'; I++) { 
+     if(v[I] != ',') { S[S.length-1]=S[S.length-1]+v[I] } 
+     else { S.push("") }
+   }
+return S
+}
+function getKeyCodes() {
+document.addEventListener('keydown',function(e) { 
+if(e.code == "Period" && e.ctrlKey) { strokeMenu() } 
+},true)
+console.warn('  ctrl + "." to use menu')
+}
+var _alreadyOpenedMenu_ = false
+function strokeMenu() {
+function getAbout() {
+var d = document.createElement('div')
+var a = __about__
+var active=document.createElement('p')
+for(var i = 0; i< a.length; i++) { if(a[i] == `
+`) { d.append(active);
+var p=document.createElement('p')
+p.style=`margin: 4px;`
+active=p 
+
+} else { active.innerHTML = active.innerHTML+a[i]; } }
+return d
+}
+
+ try {
+ if(!_alreadyOpenedMenu_) { _alreadyOpenedMenu_=true;
+var block=document.createElement('div')
+block.style=`top: 0; left: 0; width: 100%; height: 100%; position: fixed; z-index: 100001; background-color: rgba(255,255,255,0.4)`
+var cont = document.createElement('div')
+cont.style=`left: 0; top: 0; border-left: 1px solid;
+padding: 0;
+padding-top: 20px;
+border-right: 1px solid;
+background-color: white; width: 80%; margin-left: 10%; height: 100%; 
+text-align: center; font-size: 125%;`
+block.append(cont)
+cont.append(getAbout())
+document.body.append(block)
+block.onclick = function() {
+_alreadyOpenedMenu_ = false
+document.body.removeChild(this)
+}
+document.body.append(block)
+this.Block=block
+//console.log(this.Block)
+    }
+else { document.body.removeChild(this.Block); _alreadyOpenedMenu_ = false }
+   }
+ catch { console.log('.Add `__about__` constant For put text into Menu.') }
+}
+
+
+function sendSignal() {
+window.__LastValue__= localStorage.getItem(":openChanel.codes")
+localStorage.setItem(`:openChanel.codes`,"")
+Load___(due.href + "helper.html",function() {
+var script = document.createElement('script')
+script.innerHTML = localStorage.getItem(":openChanel.codes")
+ document.body.append(script) 
+if(window.__Domain__Link == undefined && window.__BasePage__) {
+RunInstall()
+  }
+else if(!window.__BasePage__ && window.__Domain__Link != undefined) {
+if(get_URLs() == 'have not' && get_Names() == 'have') { tryMove() }
+else if(get_URLs() == 'have not') { trySave() }
+else { console.warn('.server connection turned on.') }
+  }
+else if(window.__BasePage__) {
+GoLoadTheme()
+   }
+else { setTimeout(function() { 
+/*alert('You must run Base Page')*/ console.error(" >> Server Isn't Connected ") },500) }
+   },150)
+}
+
+function getStroke(code,sfear,p1,p2) {
+function whole(x) {
+var R = ""
+for(var i = 0; i < x.length-1; i++) {
+R=R+x[i]
+  }
+return R
+}
+var f=sfear
+var F=""
+for(var I = 0; I < f.length; I++) { F=F+f[I]; var X=""; for(var e=0; e<code.length;e++) { X=X+f[I+e] }
+if(X == code) {
+var Result = whole(F)
+eval(p1 + '=`' + Result + '`')
+console.group('Paths:')
+console.log(Result)
+var F2=""
+for(var i = I; i < f.length; i++) { F2=F2+f[i] }
+eval(p2 + '=`' + F2 + '`')
+console.log(F2)
+console.groupEnd('Paths:')
+return I; } }
+console.error('   .stroke not found. >> ' + code)
+return false
+}
+
+function download(data, filename, type) {
+console.log(`Data to Download: 
+` + data)
+    var file = new Blob([data], {type: type});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);  
+   }
+}
+
+function get_URLs() {
+var u = document.URL
+for(var i = 0; i < Codes.length; i++) { 
+if(Codes[i][0] == u) { return 'have' }
+ }
+return 'have not'
+}
+function get_Names(s) {
+var n = getFileName()
+for(var i = 0; i < Codes.length; i++) { 
+if(Codes[i][1] == n) { if(!s) { return 'have' } else { return i } }
+ }
+return 'have not'
+}
+
+
+function updateData() {
+localStorage.setItem(':' + __Domain__Link,"s")
+setTimeout(function() {
+var a = document.createElement('a')
+a.href = document.URL
+a.click()
+},100)
+window.open(due.href + 'helper.html')
+}
+function getFileName() {
+var f = document.URL
+var p = 0;
+for(var i = 0; i < f.length; i++) { if(f[i] == '/') { p = i } }
+var name=""
+for(var e = p+1; e < f.length; e++) { name=name+f[e] }
+return name
+}
+
+function generateRandomNumber() {
+var F = ""
+for(var i = 0; i < 9; i++) { F=F+Math.round(Math.random()*9) }
+console.log("Your Server's link: " + F)
+return F
+}
+
+/* 26.09 2020 This Path moved to "Drive.html" 
+____________________________________________*/
+var keydowns=null
+function stopAll() {
+/* clear setTimeouts
+clearAll() */
+keydowns = document.onkeydown
+document.onkeydown=function(e) {
+console.log(e.key)
+if(e.key == 'Escape') { document.body.removeChild(window.f) }
+  }
+}
+function clearAll() {
+  for (var i = setTimeout(function() {}, 0); i > 0; i--) {
+    window.clearInterval(i);
+    window.clearTimeout(i);
+    if (window.cancelAnimationFrame) window.cancelAnimationFrame(i);
+    }
+ }
+
+// Stroke, URL, Name, Command
+function trySave() {
+ if( createSave() ) {
+stopAll()
+var Result= Codes.length + '*' + document.URL + '*' + getFileName() + '*' + 'save'
+localStorage.setItem(':openChanel',Result)
+window.f = document.createElement('iframe')
+f.src = due.href + 'Drive.html'
+f.style=`position: fixed; z-index: 100002; top: 0; left: 0; border: 0px solid; width: 100%; height: 100%; padding: 0;`
+document.body.append(f)
+wait_Answer()
+   }
+ }
+function tryMove() {
+if( createSave() ) {
+stopAll()
+var Result= get_Names(true) + '*' + document.URL + '*' + getFileName() + '*' + 'move'
+localStorage.setItem(':openChanel',Result)
+window.f = document.createElement('iframe')
+f.src = due.href + 'Drive.html'
+f.style=`position: fixed; z-index: 100002; top: 0; left: 0; width: 100%; height: 100%; padding: 0;`
+document.body.append(f)
+wait_Answer()
+    }
+ }
+function wait_Answer() {
+var a = localStorage.getItem(':openChanel')
+if(a == 'true') { updateData() }
+else if(a == 'false') { //document.body.removeChild(window.f); localStorage.setItem(document.URL + ':' + __Domain__Link,"notNow"); 
+document.onkeydown=keydowns
+document.body.removeChild(window.f);
+   }
+else { setTimeout(function() { wait_Answer() },100) }
+ }
+function createSave() {
+var root = ""
+var f = ""
+for(var i = 0; i < document.URL.length; i++) {
+if(document.URL[i] == "/") { root+=(f+"/"); f="" }
+else { f += document.URL[i] }
+ }
+console.log(root)
+if(root != due.href) {
+return true
+}
+else { return false }
+  }

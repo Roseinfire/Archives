@@ -1,0 +1,39 @@
+
+ <html>
+   <head> 
+     </head>
+   <body>
+  <script type="text/javascript">
+
+ function changeOnload(eventList,options) {
+   if(options && window.onload != null) {
+     var f = window.onload.toString()
+     var inner = function() {
+       for(var i=0; i < eventList.length; i++) { 
+        if(typeof eventList[i] == "function") { eventList[i].call() } 
+        else if(typeof eventList[i] == "string") { eval(eventList[i]) }
+           }
+        }
+   var F = ""
+   for(var i = 0; i < f.length-1; i++) {
+    F=F+f[i]
+    }
+    F=F+`
+    inner() }`
+    eval('window.onload = ' + F)
+  }
+ else { 
+   window.onload=function() {
+   for(var i=0; i < eventList.length; i++) { 
+   if(typeof eventList[i] == "function") { eventList[i].call() } 
+    else if(typeof eventList[i] == "string") { eval(eventList[i]) }
+      }
+    }
+  }
+}
+   window.onload = function() {  }
+   changeOnload(["console.log('a')"],true)
+   make()
+     </script>
+   </body>
+ </html>

@@ -1,0 +1,31 @@
+
+ <html>
+   <head> 
+      <title>Say Hello</title>
+     </head>
+   <body>
+  <div></div>
+  <script type="text/javascript">
+   function load(src,callback,took) {
+  /* took > 50 */
+  var f = document.createElement('iframe')
+  f.style.display="none"
+  f.onload=function() { 
+  console.log('loading sourse: ' + f.src)
+  setTimeout(function() {
+  document.body.removeChild(f)
+  callback.call()
+          },took)
+       }
+  f.src = src
+  document.body.append(f)
+   }
+  
+  setTimeout(function() { localStorage.setItem(':openChanel.codes',"Empty")
+ load('helper.html',function() {
+  document.getElementsByTagName('div')[0].innerHTML = 
+  localStorage.getItem(':openChanel.codes') },50)
+  },100)
+     </script>
+   </body>
+ </html>

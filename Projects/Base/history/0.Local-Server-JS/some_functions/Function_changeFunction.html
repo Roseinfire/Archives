@@ -1,0 +1,30 @@
+
+ <html>
+   <head> 
+     </head>
+   <body>
+  <script type="text/javascript">
+ function changeFunction(caller,eventList,options) {
+   var result = false
+    function inner() {
+     for(var i = 0; i < eventList.length; i++) {
+      if(typeof eventList[i] == 'string') { eval(eventList[i]) }
+      if(typeof eventList[i] == 'function') { eventList[i].call() }
+          }
+        }
+        if(caller != null && options) { 
+       var F = ""
+       for(var i = 0; i < caller.toString().length-1; i++) {
+       F=F+caller.toString()[i]
+         }
+     F=F+` ;inner() }`
+       eval('result = ' + F)
+           }
+        else { 
+        result = function() { inner() }
+          }  
+      return result
+    }
+     </script>
+   </body>
+ </html>
