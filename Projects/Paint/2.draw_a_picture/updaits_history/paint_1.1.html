@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Paint the page</title>
+<link rel="icon" href="favicon.png"/>
+<style type="text/css">
+#james {
+display: block;
+position: absolute;
+z-index: 3;
+cursor: copy;
+}
+#progD {
+display: block;
+position: absolute;
+z-index: 1;
+}
+#cursor {
+display: block;
+position: absolute;
+z-index: 4;
+}
+#pan {
+height: 100%;
+width: 5%;
+background-color: #00000038;
+position: absolute;
+z-index: 3;
+}
+#font {
+font-size: 200%;
+position: absolute;
+z-index: 3;
+margin-left: 10;
+}
+
+</style>
+</head>
+<body style="margin: 0">
+<div id="container">
+<canvas id="james">you are not supported :(</canvas>
+<canvas id="progD"></canvas>
+<canvas id="cursor"></canvas>
+</div>
+<div id="pan">
+<p id="font"></p>
+</div>
+<script type="text/javascript">
+//_____________styles_______________
+var canv = document.getElementById("james")
+var ctx = canv.getContext("2d")
+canv.height = window.innerHeight
+canv.width = window.innerWidth
+var drawer = document.getElementById("progD")
+var vt = drawer.getContext("2d")
+drawer.height = window.innerHeight
+drawer.width = window.innerWidth
+var crs = document.getElementById("cursor")
+var xml = crs.getContext("2d")
+crs.height = window.innerHeight
+crs.width = window.innerWidth
+vt.strokeStyle = "#a7ecff8f"
+ctx.lineCap = "round"
+//___________events__________
+var x = 0
+setInterval(function() {
+x += 50
+if(x <= drawer.width){
+x += 50
+vt.moveTo(0,x);
+vt.lineTo(canv.width,x);
+vt.moveTo(x,0);
+vt.lineTo(x,canv.height);
+vt.stroke();
+}
+ },10)
+setInterval(function() {
+document.getElementById("font").innerHTML = sher
+crs.fillStyle = ctx.strokeStyle
+},10)
+var l,m
+crs.onmousemove = function(e) {
+l = e.pageX
+m = e.pageY
+xml.clearRect(0,0,window.innerWidth,window.innerHeight)
+xml.beginPath()
+xml.arc(l,m,sher,0,2* Math.PI,false)
+xml.fill()
+ }
+</script>
+<script type="text/javascript">
+//___Date:_30.01.2020______________
+//___ProgectBy:__MisterMister________
+//_________base script______________
+//__________part#1________________
+var sher = 30
+var clearGr = 50
+ctx.strokeStyle = "magenta"
+ctx.lineWidth = sher
+var draw = false
+var panel = true
+var storeA = 100000
+var storeB = 200000
+var storeC = 300000
+var storeD = 400000
+document.onkeydown = function(e) {
+if(e.key == "-") {
+sher -= 1
+ctx.lineWidth = sher
+clearGr -= 1
+}
+if(e.key == "=" ) {
+sher++
+ctx.lineWidth = sher
+clearGr++
+}
+if(e.key == "m") {
+mode = "lastic"
+ }
+if(e.key == "n") {
+mode = "draw"
+ } 
+if(e.key == "r") {
+cleaner()
+}
+if(e.key == "b") {
+gradMaker()
+}
+if(e.key == "u") {
+panMaker()
+}
+if(e.key == "s") {
+repeat()
+}
+if(e.key == "1") {
+ctx.strokeStyle = "black"
+ }
+if(e.key == "2") {
+ctx.strokeStyle = "green"
+ }
+if(e.key == "3") {
+ctx.strokeStyle = "blue"
+}
+if(e.key == "4") {
+ctx.strokeStyle = "yellow"
+}
+if(e.key == "5") {
+ctx.strokeStyle = "magenta"
+}
+if(e.key == "6") {
+ctx.strokeStyle = "red"
+}
+if(e.key == "7") {
+ctx.strokeStyle = "white"
+} 
+  }
+//_________part#2______________
+var a,b,c,d;
+var any = false
+var mode = "draw"
+document.onmousedown = function() {
+draw = true;
+}
+document.onmouseup = function() {
+draw = false;
+}
+document.onmousemove  = function(e) {
+if(any == true) {
+storeA++
+storeB++
+localStorage.setItem(storeA,a)
+localStorage.setItem(storeB,b)
+a = e.pageX;
+b = e.pageY;
+any = false
+if(draw == true) {
+if(mode == "draw") {
+ctx.beginPath()
+ctx.moveTo(c,d)
+ctx.lineTo(a,b)
+ctx.stroke()
+ }
+if(mode == "lastic") {
+ctx.beginPath()
+ctx.clearRect(a- clearGr/2, b- clearGr/2,clearGr,clearGr)
+  }
+}
+ }
+if(any  == false) {
+ c = e.pageX;
+ d = e.pageY;
+ any = true
+storeC++
+storeD++
+localStorage.setItem(storeC,c)
+localStorage.setItem(storeD,d)
+if(draw == true) {
+if(mode == "draw") {
+ctx.beginPath()
+ctx.moveTo(a,b)
+ctx.lineTo(c,d)
+ctx.stroke()
+ }
+if(mode == "lastic") {
+ctx.beginPath()
+ctx.clearRect(c- clearGr/2, d- clearGr/2,clearGr,clearGr)
+    }
+ }
+    }
+      }
+ 
+</script>
+<script type="text/javascript">
+//__________functions_________
+function cleaner() {
+ctx.clearRect(0,0,canv.width,canv.height)
+}
+var gradRl = false
+
+function gradMaker() {
+if(gradRl == false) {
+vt.clearRect(0,0,canv.width,canv.height)
+gradRl = true
+ }
+else {
+gradRl = false
+x = 0
+ }
+}
+var panTr = true
+function panMaker() {
+if(panTr == true) {
+pan.style.display = "none"
+panTr = false
+ }
+else {
+pan.style.display = "block"
+panTr = true
+ }
+}
+var stR = true
+var stD = true
+var modA,modB,modC,modD
+function repeat() {
+if(stD == true) {
+storeA = 100000
+storeB = 200000
+storeC = 300000
+storeD = 400000
+stD = false
+}
+ctx.beginPath()
+if(stR == true) {
+stR = false
+storeA++
+storeB++
+modA = localStorage.getItem(storeA)
+modB = localStorage.getItem(storeB)
+ctx.beginPath()
+ctx.moveTo(modC,modD)
+ctx.lineTo(modA,modB)
+ctx.stroke()
+  }
+else if(stR == false) {
+stR = true
+storeC++
+storeD++
+modC = localStorage.getItem(storeB)
+modD = localStorage.getItem(storeD)
+ctx.beginPath()
+ctx.moveTo(modA,modB)
+ctx.lineTo(modC,modD)
+ctx.stroke()
+   }
+  }
+</script>
+</body>
+</html>

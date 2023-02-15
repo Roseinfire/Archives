@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Paint 4.0 Perfect</title>
+<link id="til" rel="icon"/>
+<style type="text/css">
+::-webkit-scrollbar { 
+width: 6px;
+height: 6px;
+background-color: white;
+}
+::-webkit-scrollbar-thumb { 
+background-color: grey;
+border-radius: 10px;
+}
+.inps {
+width: 400px;
+height: 30px;
+position: absolute;
+z-index: 10;
+}
+.swh {
+width: 26px;
+height: 26px;
+border-radius: 13px;
+border: solid;
+border-width: 2px;
+margin-left: 8px;
+}
+.ves {
+cursor: pointer;
+}
+.ves:hover {
+border: solid;
+border-width: 1px;
+}
+#cont3 {
+display: none;
+width: 300px;
+height: 150px;
+position: fixed;
+z-index: 5;
+background-color: #ffffffe3;
+border: solid;
+border-width: 1px;
+border-radius: 40px/150px;
+top: 0px;
+}
+#pmasc {
+display: none;
+width: 300px;
+height: 150px;
+position: fixed;
+z-index: 10;
+background-color: #ffffffb5;
+border: solid;
+border-width: 1px;
+border-radius: 40px/150px;
+top: 0px;
+}
+#fonter {
+font-size: 200%;
+margin-top: 25px;
+text-align: center;
+}
+#grafic {
+background-color: yellow;
+height: 5px;
+margin-top: 130px;
+border-radius: 3px;
+width: 280px;
+margin-left: 10px;
+}
+#dn {
+background-color: #e2c0c0;
+border: solid;
+border-width: 1px;
+width: 200px;
+height: 25px;
+text-align: center;
+margin-left: 80px;
+border-radius: 12px;
+font-size: 110%;
+cursor: pointer;
+margin-top: 20px;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+}
+#cont2 {
+display: none;
+}
+.sizes {
+margin-left: 55px;
+font-size: 130%;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+}
+#bb {
+width: 500px;
+height: 30px;
+background-color: #8bc34a;
+cursor: pointer;
+text-align: center;
+font-size: 150%;
+padding: 10px;
+position: absolute;
+z-index: 11;
+}
+#bb:hover {
+background-color: #4caf50;
+}
+#base {
+position: absolute;
+z-index: 2;
+display: block;
+border: solid;
+border-width: 1px;
+background-color: white;
+}
+#prog {
+position: fixed;
+z-index: 4;
+display: block;
+border: solid;
+border-width: 1px;
+margin-left: -50px;
+background-color: #ffffffb5;
+}
+.toog:hover {
+border: solid;
+border-width: 1px;
+}
+.toog {
+width: 20px;
+height: 20px;
+margin-left: 55px;
+margin-top: 10px;
+border-radius: 5px;
+}
+.guc {
+margin-left: 50px;
+margin-top: 40px;
+}
+#view {
+border: solid;
+border-width: 1px;
+width: 120px;
+height: 120px;
+margin-top: 10px;
+margin-bottom: 10px;
+overflow: hidden;
+}
+.butt {
+width: 140px;
+height: 25px;
+text-align: center;
+font-size: 115%;
+margin-bottom: 5px;
+cursor: pointer;
+color: white;
+}
+#but1 {
+background-color: #7b9a1ded;
+margin-left: 340px;
+}
+#but2 {
+position: absolute;
+background-color: #6d4c4c;
+margin-left: 190px;
+margin-top: -30px;
+}
+#k {
+position: absolute;
+width: 280px;
+height: 180px;
+border: solid;
+margin-left: 200px;
+margin-top: -200px;
+border-width: 1px;
+border-radius: 10px;
+}
+.in {
+margin-bottom: 5px;
+height: 27px;
+}
+#cont4 {
+border-radius: 20px;
+width: 500px;
+background-color: #e5fba9;
+height: 350px;
+position: fixed;
+ z-index: 200;
+ display: none;
+}
+</style>
+<body style="margin: 0px;background-color: #88a04617">
+<!--Fill Circles, save colors and more...-->
+<!--------------------------Open code-----------------------------> 
+<div id="cont1">
+<div id="bb" onclick="begin()">begin work</div>
+<input id="inp1" class="inps" placeholder="canvas width"/>
+<input id="inp2" class="inps" placeholder="canvas height"/>
+<canvas id="nws" style="display: block; "></canvas>
+</div>
+<div id="cont2">
+<canvas id="base"></canvas>
+<canvas id="prog" style="display: none;"></canvas>
+<input id="filltext"style="position: fixed; display: none; z-index: 90; width: auto; background-color: #fff0;">
+<div style="z-index: 76; position: fixed; border: 1px solid;  width: 100px; margin-left: -50px; background-color: #fff;" id="ra">
+ <div style="z-index: 77; position: fixed; width: 100px; margin-left: 0px; "id="re">
+</div>       
+    </div>
+</div>
+<div id="cont3">
+<div id="red" class="swh" onmousedown="startChange('red')"></div>
+<div id="green" class="swh" onmousedown="startChange('green')"></div>
+<div id="blue" class="swh" onmousedown="startChange('blue')"></div>
+<div id="dn" onclick="save()">s a v e</div>
+</div>
+<canvas id="pmasc"></canvas>
+<fieldset id="cont4">
+<div id="colon1" style="margin-top: 40px;">
+<legend><input type="file" style="margin-top: 10px" id="s"/></legend>
+<legend><div id="view"></div></legend>
+<legend><input id="inpL" class="in" type="number" placeholder=" Left (auto)"/></legend>
+<legend><input id="inpT" class="in" type="number"  placeholder=" Top (auto)"/></legend>
+</div>
+<div id="k"></div>
+<div class="butt" id="but1" onclick="pastImage()">Past</div>
+<div class="butt" id="but2" onclick="canselImage()">Break</div>
+</fieldset>
+<script id="script_1" type="text/javascript">
+//Put Images
+const _favicon_ = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkW
+g2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAtSU
+RBVDhPY/hPIqCnBga8AKoITUM/jxBWNKoBStNJAx4AVYSsgUhAaw3//wMAXWT9fGFvOcIAAAAASUVO
+RK5CYII=`
+
+const _sqr_ = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAA1SURBVDhP7dWhAQAwDAJB0v23gr3aiG4AklOot8xdCJGE83dMg74GfQ36GvTFg0MydgEA8ACKpwm3iwFeXgAAAABJRU5ErkJggg==`
+
+const _obl1_ = `data:image/png;base64,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`
+
+
+const _obl2_ = `` 
+
+
+var g; var j;
+     function ravn(name,width,height,rel) {
+var f = document.getElementById(name).style
+	if(rel == undefined) {
+	f.marginLeft = (g - width)/2 + 'px'
+	f.marginTop = (j - height)/2 + 'px'
+	  }
+ if(rel == 'w') { var F = notNull((g - width)/2); f.marginLeft = F + 'px'; return F } 
+ if(rel == 'h') { var F = notNull((j - height)/2); f.marginTop = F + 'px'; return F }
+	}
+   function notNull(hand) {
+	if(hand  > 0) { return hand - 1 } else { return 0
+	      } 
+	   }
+                               function get(name,text,context) { //Get Elements with this function
+                               if(context == 'get') { var f =  'window.' + name + '= document.getElementById("' + text + '")'; eval(f) 
+	                        }
+                               if(context == undefined) { var f = document.getElementById(text).style; return f
+	                        } 
+                               if(context == 'em') { var f = document.getElementById(text); return f 
+	                        } 
+                               if(context == 'var') { eval('window.' + name + ' = "' + text + '"'); 
+	                            } 
+	                          }
+var R = 0; 
+var G = 0;
+var B = 0;
+var A = 1;
+     function nowC(r,g,b,a) { //Move handler
+     R = r; G = g; B = b; A = a;
+        var f = 'rgba(' + R + ',' + G + ',' + B + ',' + A + ')'
+   ctx.strokeStyle = f; ctx.fillStyle = f; prg.fillStyle = f; prg.fillRect(0,0,300,j); prg.clearRect(0,0,300,ra)
+      get('','filltext').color = f;
+   nbn.fillStyle = "rgba(279,271,182,1)";
+   ctx.lineWidth = wd;
+   ctx.lineCap = 'round';
+   return f
+        }
+	function line(s1,s2,s3,s4) { //Line handler
+	ctx.beginPath(); ctx.moveTo(s1,s2); ctx.lineTo(s3,s4); ctx.stroke()
+		 }
+     window.onresize = function() { figure() } // Resize handler
+     var rnd = 'not created'
+	window.onload = function() { 
+	rnd = 0//Math.floor(Math.random() * 2); 
+                if(localStorage.getItem('lastWidth') != null) { get(null,'inp1','em').value = localStorage.getItem('lastWidth') }
+                if(localStorage.getItem('lastHeight') != null) { get(null,'inp2','em').value = localStorage.getItem('lastHeight') }
+	get('','til','em').href = _favicon_
+	figure() }
+function figure() { //<-------------------- Function resize handler
+j = innerHeight
+g = innerWidth
+   if(made == true) { standart() } //Canvas created
+   function standart() {
+   pc.height = (j - 2); pc.width = 100;
+   pc.style.borderRadius = '100px/' + j + 'px'
+   get(null,'ra').height = j - 2 + 'px'
+   get(null,'ra').borderRadius = '100px/' + j + 'px'
+   get(null,'re').height = j * 0.85 + 'px'
+   get(null,'re').marginTop = j * 0.15 + 'px'
+   ravn('cont3',300,j); ravn('pmasc',300,j); ravn('cont4',500,400)
+lf = ravn('base',bc.width,null,'w')
+tp = ravn('base',null,bc.height,'h')
+}
+	if(made == 3) { //input text
+	standart()
+	//get(null,'filltext').marginTop ====================================
+	    }
+           if(made == 2) { //input Image
+           standart()
+               } 
+     if(made == false) { //Canvas not created
+       standart()
+     get('fornews','nws','get'); 
+     fornews.height = j;fornews.width = g; var loadcanv  = fornews.getContext('2d')
+     var today = new Image();
+     if(rnd == 'not created') {
+     today.src = ``
+     }
+     if(rnd == 0) {
+     today.src = _obl1_
+     }
+    if(rnd == 1) {
+    today.src = ``
+    }
+  ravn('bb',500,-40); ravn('inp1',320,220); ravn('inp2',400,80);
+  today.onload = function() {
+ for(var x = 0 - today.width/2; x < innerWidth; x += today.width) {
+ for(var y = 0 - today.height/2; y < innerHeight; y += today.height) {
+       loadcanv.drawImage(today,x,y)
+           } }     }     //'onload'
+                     }   //case 'false'
+	       } //end Function
+</script>
+<script id="script_2" type="text/javascript">
+
+//______________________________________Getting Canvases___________________________________
+get('bc','base','get'); get('pc','prog','get'); get('bn','pmasc','get');
+var ctx = bc.getContext('2d'); var prg = pc.getContext('2d'); var nbn = bn.getContext('2d')
+//_________________________________________________________________________________________
+var made = false; var lf = 0,tp = 0; var imgDatas = []
+function begin() { made = true; //Function to start
+get(null,'cont1').display = 'none'
+get(null,'cont2').display = 'block'
+get(null,'cont3').display = 'none'
+bc.style.backgroundImage = 'none'
+//______________________Width__________________________________________________________
+get('w','inp1','get'); 
+    if(w.value == "") { 
+    bc.width = g - 2; localStorage.setItem('lastWidth',""); lf = ravn('base',bc.width,null,'w')
+      }
+   else { 
+    bc.width =  eval(w.value);
+    localStorage.setItem('lastWidth',w.value); lf = ravn('base',bc.width,null,'w')
+      }
+//_______________________Hight_________________________________________________________
+ get('h','inp2','get');
+   if(h.value == "") { 
+   bc.height = j - 2; localStorage.setItem('lastHeight',""); tp = ravn('base',null,bc.height,'h')
+     } 
+   else {
+   bc.height = eval(h.value);
+   localStorage.setItem('lastHeight',h.value);  tp = ravn('base',null,bc.height,'h')
+   }
+//_______________________________________________________________________________________________________________
+   imgDatas[0] = []; t = []
+   t[0] = ctx.getImageData(0,0,bc.width,bc.height); t[1] = 'bc.width=' + bc.width + ';bc.height=' + bc.height
+   imgDatas[0][0] = ctx.getImageData(0,0,bc.width,bc.height); imgDatas[0][1] = 'bc.width = ' + bc.width + '; bc.height = ' + bc.height + ';'
+   //save first Data (avoid 'undefined')
+		} //<-------------------------------------End Function--------------------------------------------
+
+var a,b,c,d,celector,draw,obj,jud,ra,wd = 10,mode = 'draw',fixA,fixB;
+document.ondragstart = function() {
+return false
+} 
+document.onmousemove = function(e) {
+fixA = e.pageX; fixB = e.pageY
+	if(made == true) { nowC(R,G,B,A) }
+if(jud == true) { 
+ra = e.y; for(var z = 0; (z * j)/10 < e.y; z++) { A = 1 - z/10;
+	}
+		 }
+if(obj != undefined) { 
+if(Math.floor(e.x - g/2 + 150) > -1) {
+if(Math.floor(e.x - g/2 + 150) < 301) { 
+get(null,obj).marginLeft = e.x - g/2 + 135 + "px"
+if(get(null,'prog').display == 'none') { get(null,'prog').display = 'block'; get(null,'ra').display = 'none' }
+switch(obj) { 
+case 'red': 
+R = Math.floor(e.x - g/2 + 130) //150
+break
+case 'blue': 
+B = Math.floor(e.x - g/2 + 130) //150 
+break
+case 'green': 
+G = Math.floor(e.x - g/2 + 130) //150 
+}
+	}  }  }
+
+if(draw == 'delete') { 
+for( var i = 0 ; i < Math.round( Math.PI * wd) ; i++ ){
+ 
+var angle = ( i / Math.round( Math.PI * wd )) * 360;
+ 
+ctx.clearRect(e.pageX-lf,e.pageY-tp,Math.sin(angle*(Math.PI/180))*wd,Math.cos(angle*(Math.PI/180))*wd) 
+
+	} 
+		}
+if(celector == undefined) { celector = null; a = e.pageX - lf; b = e.pageY - tp
+if(draw == 'draw') { line(c,d,a,b) } }
+if(draw == 'sp') { line(a,b - wd,c,d) }
+if(celector == null) { celector = undefined;c = e.pageX - lf; d = e.pageY - tp; 
+if(draw == 'sp') { line(a,b - wd,c,d) }
+if(draw == 'draw') { line(a,b,c,d) } 
+	} 
+		}
+function startChange(thisObject) { obj = thisObject }
+document.onmouseup = function() { if(draw == mode) { savecanv(); draw = null } obj = undefined; jud = false }
+bc.onmousedown = function() { draw = mode; }
+bc.onclick = function(e) { if(mode == 'Insert') { oborot(e.layerX,e.layerY) } }
+pc.onmousedown = function() { jud = true }
+var colorClicker = false
+document.onkeyup = function(e) { 
+	if(e.code == 'KeyW') { get(null,'pmasc').display = 'none'; }
+	if(e.code == 'KeyC') { clearImage = false; colorClicker = false } 
+	if(e.code == 'KeyD') { mode = 'draw'; draw = null; bc.style.cursor = 'default' }
+	if(e.code == 'KeyQ') { mode = 'draw'; draw = null; bc.style.cursor = 'default' }
+	if(e.code == 'KeyF') { mode = 'draw'; draw = null; savecanv() } }
+
+document.getElementById('pmasc').onmousemove = function(e) { 
+changeTo(e.layerX)
+}
+function changeTo(width) {
+nbn.fillRect(0,0,300,150)
+nbn.clearRect(300,0,0 - (300 - width),150)
+wd = width;
+}
+</script>
+<script id="script_3" type="text/javascript">
+//__________________________Key__________________________________________________
+document.onkeydown = function(e) { 
+if(made == false) { 
+if(e.key == 'Enter') { begin() } 
+if(e.key == ' ') { begin() }
+}
+if(made == true) { 
+if(e.code == 'KeyW') { get(null,'pmasc').display = 'block'; }
+if(e.code == 'KeyR') { fd = 0; ctx.clearRect(0,0,bc.width,bc.height); savecanv() }
+if(e.code == 'KeyE') { ctx.fill(); savecanv() }
+if(e.code == 'KeyG') { createFigure('circle') }
+if(e.code == 'KeyX') { if(get('','cont3').display == 'none') { get('','cont3').display = 'block' } else { get('','cont3').display = 'none' } }
+if(e.code == 'KeyP') { repeatImage() }
+if(e.code == 'KeyO') { get(null,'cont4').display = 'block'; made = 2; }
+if(e.code == 'KeyU') { contrLeftPanel() }
+if(e.code == 'KeyD') { mode = 'delete'; bc.style.cursor = 'not-allowed' }
+if(e.code == 'KeyQ') { mode = 'Insert'; bc.style.cursor = 'pointer' }
+if(e.code == 'KeyF') { mode = 'sp' }
+if(e.code == 'KeyL') { trytext() }
+if(e.key == '1') { changeTo(1) }
+if(e.key == '5') { changeTo(5) }
+if(e.key == '=') { contrast('+') }
+if(e.key == '-') { contrast('-') }
+if(e.code == 'KeyS') { t[0] = ctx.getImageData(0,0,bc.width,bc.height); t[1] = 'bc.width = ' + bc.width + '; bc.height = ' + bc.height + ';' }
+if(e.code == 'KeyZ') { canselCanv() }
+if(e.code == 'KeyC') { colorClicker = true;  }
+if(e.code == 'KeyA') { putImage() }
+if(e.code == 'KeyY') { createFigure('square') } 
+if(e.code == 'KeyT') { createFigure('fullSquare') } 
+if(e.code == 'KeyV') { ctx.drawImage(im,fixA-im.width/2-lf,fixB-im.height/2-tp); savecanv() }
+if(e.code == 'KeyK') { if(bc.style.backgroundImage != "none") { bc.style.backgroundImage = 'none' } else { bc.style.backgroundImage = "url('" + _sqr_ + "')" } }
+ }; if(made == 2) { if(e.key == 'Enter') { pastImage() } 
+if(e.key == 'Escape') { get(null,'cont4').display = 'none'; made = true }
+	} 
+if(made == 3) { 
+if(e.key == 'Enter') { textFill() } 
+if(e.key == 'Shift') { trytext() } 
+if(e.code == 'KeyU') { contrLeftPanel() }
+if(e.key == 'Escape') { document.getElementById('filltext').style.display = 'none'; made = true } }
+	    }
+
+</script>
+<script id="script_4" type="text/javascript">
+    var im = new Image();
+     var isformat = '(1)';var fd = 0; var Url; 
+      function pastImage() { get(null,'cont4').display = 'none'; made = true;
+        im.src = Url
+         im.onload = function() { loadBoofer() } 
+           }
+      function canselImage() { 
+      get(null,'cont4').display = 'none'; made = true; foo = 'no'; im.src = Url 
+           }
+
+  var imLeft;
+  var imTop;
+  function leftCh() { if(imLeft != "") { return eval(imLeft) } else { return (bc.width - im.width)/2 } }
+  function topCh() { if(imTop != "") { return eval(imTop) } else { return (bc.height - im.height)/2 } } 
+  function obForm(form) { if(form == "") { return 0 } else { return eval(form) } }
+ function loadBoofer() { console.log('load image.. ' + im.src)
+ imLeft = document.getElementById('inpL').value
+ imTop = document.getElementById('inpT').value
+ if(isformat == '(1)') { ctx.drawImage(im,leftCh(),topCh()); } 
+ if(isformat == '(2)') { for(var x = obForm(imTop); x < bc.height; x += im.height) { 
+ 	for(var y = obForm(imLeft); y < bc.width; y+=im.width) { ctx.drawImage(im,y,x) } } } 
+ if(isformat == '(3)') { bc.height = im.height * bc.width/im.width; 
+	ctx.drawImage(im,0,0,bc.width,im.height * bc.width/im.width)
+	tp = ravn('base',null,bc.height,'h')
+           }
+ if(isformat == '(4)') { bc.width = im.width; bc.height = im.height;
+	tp = ravn('base','',bc.height,'h'); lf = ravn('base',bc.width,'','w');
+	ctx.drawImage(im,0,0) } 
+	savecanv(); t[0] = ctx.getImageData(0,0,bc.width,bc.height); t[1] = 'bc.width=' + bc.width + ';bc.height=' + bc.height
+		       }
+    function formt() { var w = document.getElementById('view').style;
+    if(isformat == '(1)') {
+    isformat = '(2)'; w.border = 'dotted'; w.borderWidth = '1px'; 
+     } 
+    else if(isformat == '(2)') { 
+    isformat = '(3)'; w.border = 'solid'; w.borderWidth = '2px';
+     } 
+    else if(isformat == '(3)') {
+    isformat = '(4)'; w.borderRadius = '60px'; w.borderWidth = '2px'; get('','inpL').color = 'grey'; get('','inpT').color = 'grey'
+       } 
+    else if(isformat == '(4)') {
+    isformat = '(1)'; w.borderRadius = ''; w.borderWidth = '1px'; get('','inpL').color = ''; get('','inpT').color = ''
+       } 
+    return isformat
+         }
+
+function contrastImage(imageData, contrast) {  // contrast input as percent; range [-1..1]
+
+    var data = imageData.data;  // Note: original dataset modified directly!
+    contrast *= 255;
+    var factor = (contrast + 255) / (255.01 - contrast);  //add .1 to avoid /0 error.
+    for(var i=0;i<data.length;i+=4)
+    {
+        data[i] = factor * (data[i] - 128) + 128;
+        data[i+1] = factor * (data[i+1] - 128) + 128;
+        data[i+2] = factor * (data[i+2] - 128) + 128;
+        data[i+3] = factor * (data[i+3] - 128) + 128;
+    }
+    return imageData; 
+}
+
+function contrLeftPanel() {
+var e = document.getElementById('prog')
+if(e.style.display == 'none') { e.style.display = 'block'; get(null,'ra').display = 'none' }
+else { e.style.display = 'none'; get(null,'ra').display = 'block' 
+  }
+    }           //Save colors Handler
+                      function dodo(nameOf) { 
+                      var aC,bC,cC,dC
+                      function f(e,name) { var g = ' '; sp = e; for(var t = e; localStorage.getItem(name)[t] != ","; t++) { sp++
+                      g = g + localStorage.getItem(name)[t] } return eval(g) }
+                      aC = f(0,nameOf); bC = f(sp + 1,nameOf); cC = f(sp + 1,nameOf); dC = f(sp + 1,nameOf); 
+                      return 'rgba(' + aC + ',' + bC + ',' + cC + ',' + dC + ')'
+                        }
+                var i; hm()
+                function hm() {
+                var D = ' '; search()
+                function search() {
+                for(i = 1;localStorage.getItem('t' + i) != null; i++) {
+                if(localStorage.getItem('t' + i) != " ") {
+                D = D + `<div class="toog" id="t`+i+`" style="background-color: `+ dodo('t' + i) + `; color:`+dodo('t' + i) +`"onclick="handle('t` + i + `')"></div>`
+                   } } }
+                 if(D == ' ') { D = `` 
+               }
+                    document.getElementById('re').innerHTML = D 
+                           } //<-------------------------------------
+
+          function handle(name) {
+          if(colorClicker == false) {
+          dydy(name); nowC(R,G,B,A) }
+          else {
+          localStorage.setItem(name," ")
+          hm()
+           }
+               }
+         function save() {
+         localStorage.setItem("t" + i,R + ',' + G + ',' + B + ',' + A + ',')
+         get(null,'cont3').display = 'none';
+         hm()
+           }
+         function dydy(nam) {
+                   function f(e,name) { var g = ' '; sp = e; for(var t = e; localStorage.getItem(name)[t] != ","; t++) { sp++
+           g = g + localStorage.getItem(name)[t] } return eval(g) }
+           R = f(0,nam); G = f(sp + 1,nam); B = f(sp + 1,nam); A = f(sp + 1,nam); 
+           ra = (1- A) * j
+           return 'rgba(' + R + ',' + G + ',' + B + ',' + A + ')'
+              }
+                         // Handler of panel 
+                      pc.ondblclick = function() { pc.style.display = 'none' }
+                      get(null,'ra','em').ondblclick = function() { get(null,'ra','em').style.display = 'none' }
+     
+                          //______________________File and fileReader_____________________________________________
+                         document.getElementById('s').oninput = function() {
+                         var file = document.getElementById('s').files[0]
+                         let reader = new FileReader()
+                         reader.readAsDataURL(file)
+                         reader.onloadend = function() { Url = reader.result; previewImage(Url) }
+                               }
+                        function previewImage(Src) {
+		var image = new Image();
+		image.src = Src
+		image.onload = function() {
+                        get('','view','em').innerHTML = `<img width="120" height="120" onclick="formt()" src="` + Src + `"/>`
+		get('','inpL','em').placeholder = ' Left (w ' + image.width + 'px)'
+		get('','inpT','em').placeholder = ' Top (h ' + image.height + 'px)'
+                                   }  } //<--------------------------------------
+
+                        //__________________Drag and drop________________//________Taken from Internet________________
+                         ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                        document.getElementById('k').addEventListener(eventName, preventDefaults, false)
+                                })
+                        function preventDefaults (e) {
+                          e.preventDefault()
+                          e.stopPropagation()
+                               }
+                       document.getElementById('k').addEventListener('drop', handleDrop, false)
+                      function handleDrop(e) {
+                        let dt = e.dataTransfer
+                        let files = dt.files
+                        handleFiles(files)
+                             }
+                        function handleFiles(files) {
+                          files = [...files]
+                          files.forEach(previewFile)
+                               }
+                       function previewFile(file) {
+                       let reader = new FileReader()
+                       reader.readAsDataURL(file)
+                       reader.onloadend = function() {
+                       Url = reader.result; previewImage(Url)
+                                 }
+                              }
+//_______________________Returner_________________________
+         var fute = 0;
+         function savecanv() {
+	fute++
+	imgDatas[fute] = []
+	imgDatas[fute][0] = ctx.getImageData(0,0,bc.width,bc.height) 
+	imgDatas[fute][1] = 'bc.width = ' + bc.width + '; bc.height = ' + bc.height+ ';'
+	}
+	function canselCanv() { if(fute > 0) { fute--; 
+	eval(imgDatas[fute][1]); 
+	tp = ravn('base',null,bc.height,'h')
+	lf = ravn('base',bc.width,null,'w')
+        ctx.putImageData(imgDatas[fute][0],0,0); 
+             }
+		}
+	//________________________Other Functions________________________
+	var ffa,ffb; var de = 2
+	function trytext() {
+	var tf = document.getElementById('filltext')
+	ffa = (fixA - 30) 
+	ffb = (fixB)
+	tf.style.height = (wd/de - 4) + 'px'
+	tf.style.fontSize = (wd/de - 10) + 'px'
+	tf.style.font = 'Verdana'
+	tf.style.marginLeft = ffa + 'px'
+	tf.style.marginTop = (ffb - (wd/de - 4)/2) + 'px'
+	tf.style.display = 'block'; made = 3
+	}
+	function textFill() {
+	document.getElementById('filltext').style.display = 'none'; made = true
+	ctx.font = (wd/de - 10) + 'px' + ' Ekaterina Velikaya Two'//' Arial'//' Lil Ghosts'//' Ekaterina Velikaya Two'//' Coronet'
+	ctx.fillText(document.getElementById('filltext').value,ffa - lf + 4,(ffb + (wd/de - 4)/2) - tp - 6)
+	savecanv()
+	}
+	function repeatImage() {fd = 0; 
+	if(isformat == '(1)') { ctx.drawImage(im,leftCh(),topCh()); } 
+                if(isformat == '(3)') { bc.height = im.height * bc.width/im.width; 
+		ctx.drawImage(im,0,0,bc.width,im.height * bc.width/im.width) 
+                     tp = ravn('base',null,bc.height,'h')  } 
+ 	if(isformat == '(2)') { for(var x = obForm(imTop); x < bc.height; x += im.height) { 
+ 	for(var y = obForm(imLeft); y < bc.width; y+=im.width) { ctx.drawImage(im,y,x) } 
+	        } 
+		} 
+	if(isformat == '(4)') { bc.width = im.width; bc.height = im.height;
+	tp = ravn('base','',bc.height,'h'); lf = ravn('base',bc.width,'','w');
+	ctx.drawImage(im,0,0) 
+		     } 
+		savecanv(); t[0] = ctx.getImageData(0,0,bc.width,bc.height); t[1] = 'bc.width = ' + bc.width + '; bc.height = ' + bc.height + ';'
+			}
+              function contrast(operator) {
+              if(operator == '+') { var f = t[0]; if(fd < 9) { fd++ } else { fd = 0 }; ctx.putImageData(contrastImage(f,fd/10),0,0) }
+              if(operator == '-') { var f = t[0]; if(fd > -9) { fd-- } else { fd = 0 }; ctx.putImageData(contrastImage(f,fd/10),0,0) }
+              savecanv()
+            }
+         function createFigure(name) {
+           if(name == 'fullSquare') { var n1 = window.prompt('width?'); var n2 = window.prompt('height?'); ctx.fillRect(fixA - n1/2 - lf,fixB - n2/2 - tp,n1,n2) }
+           if(name == 'square') { var n1 = window.prompt('width?'); var n2 = window.prompt('height?'); ctx.strokeRect(fixA - n1/2 - lf,fixB - n2/2 - tp,n1,n2) }
+           if(name == 'circle') { var f = prompt('Radius?'); if(f != null) { ctx.beginPath(); ctx.arc(fixA - lf,fixB - tp,f,0,2 * Math.PI,false); ctx.stroke(); } }
+          savecanv()
+                       }
+	function putImage() {
+	eval(t[1]); lf = ravn('base',bc.width,null,'w'); tp = ravn('base',null,bc.width,'h'); ctx.putImageData(t[0],0,0); savecanv();
+	}
+	
+	function oborot(x,y) { 
+	var sea,flot,metr,mets,ships,riffes
+	metr = ctx.getImageData(x,y,1,1); mets = metr.data
+	ctx.fillRect(x,y,1,1)
+	flot = ctx.getImageData(x,y,1,1); ships = flot.data
+	sea = ctx.getImageData(0,0,bc.width,bc.height); riffes = sea.data
+	var pixel = mets[0] + ',' + mets[1] + ',' + mets[2] + ',' + mets[3]
+	for(var i = 0; i < riffes.length; i += 4) { 
+	var handler = riffes[i] + ',' + riffes[i + 1] + ',' + riffes[i + 2] + ',' + riffes[i + 3]
+	if(handler == pixel) {
+	riffes[i] = ships[0]
+	riffes[1 + i] = ships[1]
+	riffes[2 + i] = ships[2]
+	riffes[3 + i] = ships[3]
+                        }
+	    }
+	ctx.putImageData(sea,0,0); savecanv()
+	 }
+</script> 
+<script type="text/javascript" id="ControlsJS" src="file:///E:/Vsevolod/HTML/Domination/controlsJS.txt"></script>
+</body>
+</html>

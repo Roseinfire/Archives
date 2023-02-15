@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Paint Perfect</title>
+<link id="til" rel="icon"/>
+<style type="text/css">
+::-webkit-scrollbar { 
+width: 6px;
+height: 6px;
+background-color: white;
+}
+::-webkit-scrollbar-thumb { 
+background-color: grey;
+border-radius: 0px;
+}
+* {
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+}
+#bb {
+width: 500px;
+position: fixed;
+text-align: center;
+padding-top: 10px;
+padding-bottom: 10px;
+border: 1px solid;
+cursor: pointer;
+background-color: white;
+}
+.inps {
+width: 350px;
+position: fixed;
+height: 25px;
+}
+</style>
+<body style="margin: 0;">
+<!--Fill Circles, save colors and more...-->
+<!--------------------------Open code-----------------------------> 
+<div id="cont1">
+<input class="inps" placeholder="canvas width"/>
+<input class="inps" placeholder="canvas height"/>
+<div id="bb" >begin work</div>
+<canvas id="nws" style="display: block; "></canvas>
+</div>
+<div id="cont2">
+<canvas id="base" style="border: 1px solid; background-color: white; poisition: absolute; display: block"></canvas>
+</div>
+<div id="cont3" class="palette" style="background-color: white;">
+<!--#ffffffe3--!>
+<div class="swch"></div>
+<div class="swch"></div>
+<div class="swch"></div>
+</div>
+<fieldset id="cont4">
+<div id="colon1" style="margin-top: 40px;">
+<legend><input type="file" style="margin-top: 10px" id="s"/></legend>
+<legend><div id="view"></div></legend>
+<legend><input id="inpL" class="in" type="number" placeholder=" Left (auto)"/></legend>
+<legend><input id="inpT" class="in" type="number"  placeholder=" Top (auto)"/></legend>
+</div>
+<div id="k"></div>
+<div class="butt" id="but1" onclick="pastImage()">Past</div>
+<div class="butt" id="but2" onclick="canselImage()">Break</div>
+</fieldset>
+<script id="nameSpase" type="text/javascript">
+
+/*
+New Methods: 
+LineJoin
+GlobalAlfa
+TextMetrics
+*/
+
+//Put Images
+const _favicon_ = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkW
+g2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAtSU
+RBVDhPY/hPIqCnBga8AKoITUM/jxBWNKoBStNJAx4AVYSsgUhAaw3//wMAXWT9fGFvOcIAAAAASUVO
+RK5CYII=`
+
+var inputs=false
+var Inputs=document.getElementsByTagName('input')
+for(var i = 0; i < Inputs.length; i++) {
+Inputs[i].onclick=function() { inputs=true }
+Inputs[i].onblur=function() { inputs=false }
+}
+document.onkeydown=function() {
+if(!inputs) {
+
+   }
+}
+function ravn(element,fixedLeft,fixedTop,absoluteLeft,absoluteTop,only) {
+var t = element.style
+var s = t.display
+var z = t.zIndex
+//console.log(z)
+t.display='block'
+var left=(innerWidth-element.offsetWidth)/2
+if(left < 0) { left=0 }
+var top = (innerHeight - element.offsetHeight)/2
+if(top < 0) { top = 0 }
+if(fixedLeft != undefined || fixedLeft != null) { left=(left+fixedLeft) }
+else if(absoluteLeft != undefined || absoluteLeft != null) { left = absoluteLeft }
+ if(fixedTop != undefined || fixedTop != null) { top =(top+fixedTop) }
+else if(absoluteTop != undefined || absoluteTop != null) { top = absoluteTop }
+
+t.marginLeft=left+'px'; t.marginTop=top+'px'
+t.display=s
+return left + ' / ' + top
+}
+
+function get(name,style) {
+if(style==true) {
+return document.getElementById(name).style
+}
+else {
+return document.getElementById(name)
+  }
+}
+for(var i = 1; i <= 4; i++) {
+   try {
+var f =  get('cont'+ i)
+eval('window.F'+i+'= f')
+var j = eval('F'+i+'')
+j.close = function() {
+this.style.display="none"
+}
+j.open = function() {
+this.style.display="block"
+  }
+   }
+ catch { console.log(`.Containers not Created.`) }
+}
+
+function pxToNum(text) {
+var F=""
+for(var i = 0; i < text.length; i++) { for(var e = 0; e < 10; e++) { 
+if(text[i]==e.toString()) { F=F+text[i] }
+ }; if(text[i] == '.') { F=F+"." } }
+var x = eval(F)
+return x
+}
+
+function build() {
+ravn(get('bb'),null,get('bb').offsetHeight+20)
+ravn(Inputs[0],25,-70); ravn(Inputs[1],null,-10)
+}
+window.onload=function() { 
+F4.close()
+F3.close()
+F2.close()
+build() }
+</script>
+<script type="text/javascript" id="content">
+get('bb').onclick=function() { begin() }
+function begin() {
+try { 
+var width = Inputs[0].value
+var height = Inputs[1].value
+if(width == "") { width=innerWidth+'' }
+if(height == "") { height=innerHeight+'' }
+F1.close()
+F2.open()
+window.canv=get('base')
+canv.width = width-6
+canv.height = height-6
+ravn(canv)
+ }
+catch {  }
+}
+
+var draw=false
+var mode='line'
+class canvasDrawController {
+constructor(canvas) {
+this.buffer=[]
+this.lastImages=[canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height)]
+this.activeColor=""
+this.canv=canvas
+this.path=[0,0,0]
+this.lineWidth=20
+this.start=function(absolute_x,absolute_y) {
+var x = absolute_x.toElement(this.canv)
+var y = absolute_y.toElement(this.canv,true)
+draw=mode;
+var copy = document.createElement('canvas')
+copy.width=this.canv.width
+copy.height=this.canv.width
+copy.style='z-index: 10001; top: 0; left: 0; position: fixed; border: 1px solid;'
+//background-color: rgba(150,150,150,0.1)
+F2.append(copy)
+copy.style.marginLeft=this.canv.style.marginLeft
+copy.style.marginTop=this.canv.style.marginTop
+this.copy = copy
+this.path=[x,y,this.path[2]]
+}
+this.move=function(absolute_x,absolute_y,radius) {
+var x = absolute_x.toElement(this.canv)
+var y = absolute_y.toElement(this.canv,true)
+if(draw == 'line') {
+var ctx = this.copy.getContext('2d')
+ctx.lineWidth=this.lineWidth
+ctx.lineCap='round'
+ctx.strokeStyle=this.activeColor
+var p = new Path2D()
+p.moveTo(this.path[0],this.path[1])
+p.lineTo(x,y)
+ctx.stroke(p)
+this.path=[x,y,this.path[2]+1]
+  }
+}
+this.end=function() {
+  draw=false
+  var ctx = this.copy.getContext('2d')
+  if(this.path[2] < 10) {
+ctx.beginPath()
+ctx.arc(this.path[0],this.path[1],this.lineWidth/2,0,2*Math.PI,false)
+ctx.fill()
+       }
+this.lastImages.push(this.canv.getContext('2d').getImageData(0,0,this.canv.width,this.canv.height))
+this.path[2]=0
+ try {
+var copy=this.copy
+var d = this.canv.getContext('2d')
+var f = new Image()
+f.src=copy.toDataURL()
+f.onload=function() {
+d.drawImage(f,0,0)
+F2.removeChild(copy)
+  }
+    }
+ catch {  }
+}
+this.save=function() {
+buffer[0]=this.canv.getContext('2d').getImageData(0,0,ctx.canvas.width,ctx.canvas.height)
+}
+this.back=function() {
+var f = lastImages[lastImages.length-2]
+if(lastImages.length-2 >= 0) {
+this.ctx.putImageData(f,0,0)
+lastImages = lastImages.slice(0, -1);
+console.log(lastImages)
+}
+  }
+this.pust=function() {
+this.canv.getContext('2d').putImageData(buffer[0],0,0)
+this.end()
+     }
+   }
+}
+Number.prototype.toElement=function(element,useY) {
+if(useY != true) {
+var elementLeft=pxToNum(element.style.marginLeft)
+return this - elementLeft
+  }
+else {
+var elementTop=pxToNum(element.style.marginTop)
+return this - elementTop
+  }
+}
+</script>
+<script type="text/javascript" id="Listeners">
+var t = false
+var D = new canvasDrawController(get('base'))
+function wayStart(ax,ay,fx,fy,target) { 
+t = target
+if(t.id == 'base') { D.start(ax,ay) }
+console.log(t.id)
+ }
+function wayMove(ax,ay,fx,fy,radius) { 
+if(t.id == 'base') { D.move(ax,ay,radius) }
+ }
+function wayEnd() { 
+if(t.id == 'base') { D.end() }
+ }
+
+document.onmousedown=function(e) { wayStart(e.pageX,e.pageY,e.x,e.y,e.target) }
+document.onmousemove=function(e) { wayMove(e.pageX,e.pageY,e.x,e.y) }
+document.onmouseup=function() { wayEnd() }
+</script>
+</body>
+</html>

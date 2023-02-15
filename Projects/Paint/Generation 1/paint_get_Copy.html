@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Paint the page</title>
+<link rel="icon" href="favicon.png"/>
+<style type="text/css">
+#james {
+display: block;
+position: absolute;
+z-index: 3;
+cursor: copy;
+}
+#progD {
+display: block;
+position: absolute;
+z-index: 1;
+}
+#pan {
+height: 100%;
+width: 5%;
+background-color: #00000038;
+position: absolute;
+z-index: 3;
+}
+#font {
+font-size: 200%;
+position: absolute;
+z-index: 3;
+margin-left: 10;
+}
+
+</style>
+</head>
+<body style="margin: 0">
+<div id="container">
+<canvas id="james">you are not supported :(</canvas>
+<canvas id="progD"></canvas>
+</div>
+<div id="pan">
+<p id="font"></p>
+</div>
+<script type="text/javascript">
+//_____________styles_______________
+var canv = document.getElementById("james")
+var ctx = canv.getContext("2d")
+canv.height = window.innerHeight
+canv.width = window.innerWidth
+var drawer = document.getElementById("progD")
+var vt = drawer.getContext("2d")
+drawer.height = window.innerHeight
+drawer.width = window.innerWidth
+vt.strokeStyle = "#00bcd4"
+//#8bc34a
+ctx.lineCap = "round"
+//___________events__________
+var aa,bb
+var x = -10
+setInterval(function() {
+if(x <= drawer.width){
+x += 25
+vt.moveTo(0,x);
+vt.lineTo(canv.width,x);
+vt.moveTo(x,0);
+vt.lineTo(x,canv.height);
+vt.stroke();
+}
+ },10)
+setInterval(function() {
+document.getElementById("font").innerHTML = sher
+document.getElementById("pan").style.backgroundColor = ctx.strokeStyle
+if(ctx.strokeStyle == "#000000") {
+document.getElementById("font").style.color = "yellow"
+ }
+else if(ctx.strokeStyle == "#8bc34a") {
+document.getElementById("font").style.color = "white"
+}
+else {
+document.getElementById("font").style.color = "black"
+ }
+},10)
+</script>
+<script type="text/javascript">
+//base script
+//___Date:_30.01.2020______________
+//___PogectBy:__MisterMister________
+//_________base script______________
+//__________part#1________________
+var sher = 30
+var clearGr = 50
+ctx.strokeStyle = "#8bc34a"
+ctx.lineWidth = sher
+var draw = false
+var panel = true;
+document.onkeydown = function(e) {
+if(e.key == "-") {
+sher -= 1
+ctx.lineWidth = sher
+clearGr -= 1
+}
+if(e.key == "=" ) {
+sher++
+ctx.lineWidth = sher
+clearGr++
+}
+if(e.key == "m") {
+mode = "lastic"
+ }
+if(e.key == "n") {
+mode = "draw"
+ } 
+if(e.key == "r") {
+cleaner()
+}
+if(e.key == "b") {
+gradMaker()
+}
+if(e.key == "u") {
+panMaker()
+}
+if(e.key == "1") {
+ctx.strokeStyle = "black"
+ }
+if(e.key == "2") {
+ctx.strokeStyle = "#8bc34a"
+ }
+if(e.key == "3") {
+ctx.strokeStyle = "#2196f3"
+}
+if(e.key == "4") {
+ctx.strokeStyle = "yellow"
+}
+if(e.key == "5") {
+ctx.strokeStyle = "magenta"
+}
+if(e.key == "6") {
+ctx.strokeStyle = "red"
+}
+if(e.key == "7") {
+ctx.strokeStyle = "white"
+} 
+  }
+//_________part#2______________
+var a,b,c,d;
+var any = false
+var mode = "draw"
+document.onmousedown = function() {
+draw = true;
+}
+document.onmouseup = function() {
+draw = false;
+}
+document.onmousemove  = function(e) {
+if(any == true) {
+a = e.pageX;
+b = e.pageY;
+any = false
+if(draw == true) {
+if(mode == "draw") {
+ctx.beginPath()
+ctx.moveTo(c,d)
+ctx.lineTo(a,b)
+ctx.stroke()
+ }
+if(mode == "lastic") {
+ctx.beginPath()
+ctx.clearRect(a- clearGr/2, b- clearGr/2,clearGr,clearGr)
+  }
+}
+ }
+if(any  == false) {
+ c = e.pageX;
+ d = e.pageY;
+ any = true
+if(draw == true) {
+if(mode == "draw") {
+ctx.beginPath()
+ctx.moveTo(a,b)
+ctx.lineTo(c,d)
+ctx.stroke()
+ }
+if(mode == "lastic") {
+ctx.beginPath()
+ctx.clearRect(c- clearGr/2, d- clearGr/2,clearGr,clearGr)
+    }
+ }
+    }
+      }
+ 
+</script>
+<script type="text/javascript">
+//__________functions_________
+function cleaner() {
+ctx.clearRect(0,0,canv.width,canv.height)
+}
+var gradRl = false
+
+function gradMaker() {
+if(gradRl == false) {
+vt.clearRect(0,0,canv.width,canv.height)
+gradRl = true
+ }
+else {
+gradRl = false
+x = -10
+ }
+}
+var panTr = true
+function panMaker() {
+if(panTr == true) {
+pan.style.display = "none"
+panTr = false
+ }
+else {
+pan.style.display = "block"
+panTr = true
+ }
+}
+</script>
+</body>
+</html>

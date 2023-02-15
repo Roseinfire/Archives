@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Paint 3.0 Speshical</title>
+<link rel="icon" href="iconf.png"/>
+<style type="text/css">
+::-webkit-scrollbar { 
+width: 8px;
+height: 0px;
+background-color: white;
+}
+::-webkit-scrollbar-thumb { 
+background-color: orange;
+border-radius: 10px;
+}
+.inps {
+width: 400px;
+height: 30px;
+position: absolute;
+z-index: 10;
+}
+.swh {
+width: 26px;
+height: 26px;
+border-radius: 13px;
+border: solid;
+border-width: 2px;
+margin-left: 8px;
+}
+.ves {
+cursor: pointer;
+}
+.ves:hover {
+border: solid;
+border-width: 1px;
+}
+#cont3 {
+display: none;
+width: 300px;
+height: 150px;
+position: fixed;
+z-index: 5;
+background-color: #ffffffe3;
+border: solid;
+border-width: 1px;
+border-radius: 40px/150px;
+top: 0px;
+}
+#pmasc {
+display: none;
+width: 300px;
+height: 150px;
+position: fixed;
+z-index: 10;
+background-color: #ffffffb5;
+border: solid;
+border-width: 1px;
+border-radius: 40px/150px;
+top: 0px;
+}
+#fonter {
+font-size: 200%;
+margin-top: 25px;
+text-align: center;
+}
+#grafic {
+background-color: yellow;
+height: 5px;
+margin-top: 130px;
+border-radius: 3px;
+width: 280px;
+margin-left: 10px;
+}
+#dn {
+background-color: #e2c0c0;
+border: solid;
+border-width: 1px;
+width: 200px;
+height: 25px;
+text-align: center;
+margin-left: 80px;
+border-radius: 12px;
+font-size: 110%;
+cursor: pointer;
+margin-top: 20px;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+}
+#cont2 {
+display: none;
+}
+.sizes {
+margin-left: 55px;
+font-size: 130%;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+}
+#bb {
+width: 500px;
+height: 30px;
+background-color: #8bc34a;
+cursor: pointer;
+text-align: center;
+font-size: 150%;
+padding: 10px;
+position: absolute;
+z-index: 11;
+}
+#bb:hover {
+background-color: #4caf50;
+}
+#base {
+position: absolute;
+z-index: 2;
+display: block;
+background-image: url('CLE.png');
+background-repeat: repeat;
+border: solid;
+border-width: 1px;
+}
+#prog {
+position: fixed;
+z-index: 4;
+display: block;
+border: solid;
+border-width: 1px;
+width: 101px;
+margin-left: -50px;
+background-color: #ffffffb5;
+}
+</style>
+<body style="margin: 0px;background-color: #88a04617">
+<div id="cont1">
+<div id="bb" onclick="begin()">begin work</div>
+<input id="inp1" class="inps" placeholder="canvas width"/>
+<input id="inp2" class="inps" placeholder="canvas height"/>
+<canvas id="nws" style="display: block; "></canvas>
+</div>
+<div id="cont2">
+<canvas id="base"></canvas>
+<canvas id="prog"></canvas>
+</div>
+<div id="cont3">
+<div id="red" class="swh" onmousedown="startChange('red')"></div>
+<div id="green" class="swh" onmousedown="startChange('green')"></div>
+<div id="blue" class="swh" onmousedown="startChange('blue')"></div>
+<div id="dn" onclick="hide()">done!</div>
+</div>
+<canvas id="pmasc"></canvas>
+<div id="cont4" style="display: none; z-index: 100; position: fixed; height: 400px;width: 500px;border: solid; background-color: #dcbfbfe3; border-width: 1px; border-radius: 20px">
+<p style="font-size: 120%; margin-left: 20px;margin-top: 5px;">Images - show all</p>
+<input id="baseInput" style="width: 310.99306px;height: 25.99306px;margin-left: 50px;" placeholder=" Add addres or select"> <input style="display: none; position: absolute;" type="file" id="picField" placeholder="choose file">
+<input id="imInput1" style="position: absolute;margin-top: 270px;left: 0px;margin-left: 30px; height: 20px" placeholder=" Left (auto)">
+<input id="imInput2" style="position: absolute;left: 0px;margin-left: 30px;margin-top: 310px; height: 20px" placeholder=" Top (auto)">
+<div id="k" style="width: 400px; height: 200px;border: solid;border-width: 1px;margin-left: 50px;margin-top: 20px;"></div>
+<div style="position: absolute; width: 200px; height: 20px; margin-left: 230px; margin-top: 20px; background-color: white; border-radius: 10px; text-align: center; cursor: pointer;" id="formb" onclick="formt()">no format</div>
+<div onclick="pastImage()" style="width: 100px;background-color: #8BC34A;margin-left: 350px;margin-top: 60px;position: absolute;text-align: center;cursor: pointer;">Enter</div>
+<div onclick="canselImage()" style="width: 100px;background-color: #9E9E9E;margin-left: 230px;margin-top: 60px;text-align: center;cursor: pointer;">Break</div>
+</div>
+<script type="text/javascript">
+var g = innerWidth
+var j = innerHeight
+function ravn(name,width,height) {
+var f = document.getElementById(name).style
+f.marginLeft = (g - width)/2 + 'px'
+f.marginTop = (j - height)/2 + 'px'
+}
+function get(name,text,context) { if(context == 'var') { var f =  'window.' + name + '= "' + text + '"'
+eval(f)
+return name 
+  } if(context == 'get') { var f =  'window.' + name + '= document.getElementById("' + text + '")'
+eval(f)
+return name 
+ } if(context == 'numb') { var f =  'window.' + name + '= document.getElementById(' + text + ')'
+eval(f)
+return name
+ } if(context == 'style') { return document.getElementById(text).style
+ } }
+ravn('bb',500,-40); ravn('inp1',320,220); ravn('inp2',400,80);  ravn('cont4',500,400)
+get(null,'prog','style').height = j - 2 + 'px' 
+get(null,'prog','style').borderRadius = 100 + 'px/' + j + 'px'
+if(localStorage.getItem('lastHeight') != null) { document.getElementById('inp2').value = localStorage.getItem('lastHeight') }
+if(localStorage.getItem('lastWidth') != null) { document.getElementById('inp1').value = localStorage.getItem('lastWidth') }
+ravn('cont3',300,j); ravn('pmasc',300,j); get('fornews','nws','get'); fornews.width = g; 
+fornews.height = j; var loadcanv  = fornews.getContext('2d')
+var today = new Image(); 
+var rnd = 0//Math.floor(Math.random() * 2)
+switch(rnd) { 
+case 0: today.src = 'applegreen.png'; break; case 1: today.src = 'covid19.jpg'; break;
+  }
+today.onload = function() {
+for(var x = 0 - today.width/2; x < innerWidth; x += today.width) {
+for(var y = 0 - today.height/2; y < innerHeight; y += today.height) {
+loadcanv.drawImage(today,x,y)
+} } }
+//_____________________________________________________________________________________________________
+//_____________________________________________________________________________________________________
+get('bc','base','get'); get('pc','prog','get'); var ctx = bc.getContext('2d'); var prg = pc.getContext('2d')
+get('bn','pmasc','get'); var nbn = bn.getContext('2d')
+nbn.fillStyle = 'rgba(252,239,115,0.9)'
+nbn.fillRect(0,0,300,150); var made = false; var lf = 0,tp = 0;
+function begin() { made = true; 
+get(null,'cont1','style').display = 'none'
+get(null,'cont2','style').display = 'block'
+get(null,'cont3','style').display = 'none'
+get('w','inp1','get'); get('h','inp2','get'); pc.height = j
+if(w.value == "") { bc.width = g - 2; localStorage.setItem('lastWidth',"") }
+else { bc.width =  eval(w.value); localStorage.setItem('lastWidth',w.value); if(eval(w.value) < innerWidth) { bc.style.marginLeft = (g - eval(w.value))/2 + 'px'; lf = (g - eval(w.value))/2 } }
+if(h.value == "") { bc.height = j - 2; localStorage.setItem('lastHeight',"") }
+if(h.value != "") { bc.height = eval(h.value);localStorage.setItem('lastHeight',h.value); if(h.value < innerHeight) { bc.style.marginTop = (j - eval(h.value))/2 + 'px'; tp = (j - eval(h.value))/2
+nowC = "rgba(141,207,160,1)"; prg.fillStyle = nowC; prg.fillRect(0,0,300,innerHeight) } } }
+//_____________________________________________________________________________________________________________________
+var a,b,c,d,celector,draw,obj,jud,ra,nowC,R = 0,G = 0,B = 0,A = 1,wd = 10,mode = 'draw',fixA,fixB;
+document.onmousemove = function(e) {
+ctx.lineCap = 'round'; ctx.strokeStyle = nowC; prg.fillStyle = nowC; ctx.lineWidth = wd; fixA = e.pageX; fixB = e.pageY
+if(jud == true) { for(var z = 0; z * j/10 < e.y; z++) { A = 1 - z/10; 
+nowC = "rgba(" + R + "," + G + "," + B + "," + A + ")"
+ra = e.y
+prg.fillRect(0,0,300,j)
+prg.clearRect(0,0,300,ra) } }
+if(obj != undefined) { 
+if(Math.floor(e.x - g/2 + 150) > -1) {
+if(Math.floor(e.x - g/2 + 150) < 301) { 
+get(null,obj,'style').marginLeft = e.x - g/2 + 135 + "px"
+switch(obj) { 
+case 'red': 
+R = Math.floor(e.x - g/2 + 150)
+break
+case 'blue': 
+B = Math.floor(e.x - g/2 + 150) 
+break
+case 'green': 
+G = Math.floor(e.x - g/2 + 150) 
+}
+nowC = "rgba(" + R + "," + G + "," + B + "," + A + ")" 
+prg.fillRect(0,0,300,innerHeight)
+prg.clearRect(0,0,300,ra)
+ } } }
+
+if(draw == 'delete') { for( var i = 0 ; i < Math.round( Math.PI * wd) ; i++ ){
+ var angle = ( i / Math.round( Math.PI * wd )) * 360;
+ ctx.clearRect( e.pageX - lf, e.pageY - tp, Math.sin( angle * ( Math.PI / 180 )) * wd , Math.cos( angle * ( Math.PI / 180 )) * wd );
+ 
+} }
+if(celector == undefined) {
+celector = null; a = e.pageX - lf; b = e.pageY - tp
+if(draw == 'draw') { ctx.beginPath(); ctx.moveTo(c,d); ctx.lineTo(a,b); ctx.stroke() } }
+if(draw == 'sp') { ctx.beginPath(); ctx.moveTo(c,d); ctx.lineTo(a,b - wd - 20); ctx.stroke() }
+if(celector == null) { celector = undefined;c = e.pageX - lf; d = e.pageY - tp; 
+if(draw == 'sp') { ctx.beginPath(); ctx.moveTo(a,b - wd - 20); ctx.lineTo(c,d); ctx.stroke(); }
+if(draw == 'draw') { ctx.beginPath(); ctx.moveTo(a,b); ctx.lineTo(c,d); ctx.stroke(); } } }
+
+
+
+function startChange(thisObject) { obj = thisObject }
+document.onmouseup = function() { obj = undefined; draw = null; jud = false }
+bc.onmousedown = function() { draw = mode }
+pc.onmousedown = function() { jud = true }
+document.onkeyup = function(e) { if(e.key == 'w') { get(null,'pmasc','style').display = 'none' }
+if(e.key == 'c') { clearImage = false } if(e.key == 'd') { mode = 'draw' } if(e.key == 'f') { mode = 'draw' } }
+document.getElementById('pmasc').onmousemove = function(e) { 
+nbn.clearRect(0,0,300,150)
+nbn.fillRect(0,0,300,150)
+nbn.clearRect(300,0,0 - (300 - e.layerX),150)
+wd = e.layerX
+}
+function hide(type) { if(type == 'make') { get(null,'cont3','style').display = 'block' } else { get(null,'cont3','style').display = 'none' } }
+//____________________________________________________________________________________________________________________________________________
+var im = new Image; var lastImage,q,D,clearImage; findImages()
+var isformat = false; var nfh
+function findImages() { D = ""; for(q = 0; localStorage.getItem(q + 'img') != null; q++) { 
+if(localStorage.getItem(q + 'img') != "") {
+D = D + '<img id="' + q + '"class="ves" onclick="tookImage(' + q + ')" src=' + localStorage.getItem(q + 'img') + ' width="99" height="99"/>' } }
+if(D == "") { D = 'No Images saved.' } document.getElementById('k').innerHTML = D; }
+function tookImage(celect) { if(clearImage != true) {
+document.getElementById('baseInput').value = document.getElementById(celect).src }
+if(clearImage == true) { localStorage.setItem(celect + 'img',""); findImages() } }
+function checkURL(url) { for(var i = 0; i < q; i++) { if(localStorage.getItem(i + 'img') == url) {
+if(url != null) { return false } } }  }
+document.onkeydown = function(e) { if(made == false) { 
+if(e.key == 'Enter') { begin() } 
+if(e.key == ' ') { begin() }
+}
+if(made != 2) { if(e.key == 'w') { get(null,'pmasc','style').display = 'block' }
+if(e.key == 'r') { ctx.clearRect(0,0,bc.width,bc.height) }
+if(e.key == 'e') { ctx.fillStyle = nowC; ctx.fillRect(0,0,bc.width,bc.height) }
+if(e.key == 'g') { ctx.beginPath(); ctx.arc(fixA - lf,fixB - tp,prompt('Radius?'),0,2 * Math.PI,false); ctx.stroke(); }
+if(e.key == 'x') { if(get(null,'cont3','style').display == 'none') { hide('make') } else { hide() } }
+if(e.key == 'o') { var t = prompt('URL? (only real addres)'); if(t != null) { im.src = t; }
+if(checkURL(t) != false) { localStorage.setItem(q + 'img',im.src); } 
+im.onload = function() { ctx.drawImage(im,(g - im.width)/2,(j - im.height)/2)  } }
+if(e.key == 'p') { if(isformat == false) { ctx.drawImage(im,leftCh(),topCh()); } if(isformat == true) { nfh = bc.height; bc.height = im.height * bc.width/im.width; ctx.drawImage(im,0,0,bc.width,im.height * bc.width/im.width) }  }
+if(e.key == 'P') { get(null,'cont4','style').display = 'block'; findImages(); made = 2 }
+if(e.key == 'u') { contrLeftPanel() }
+if(e.key == 'd') { mode = 'delete' }
+if(e.key == 'f') { mode = 'sp' }
+if(e.key == 'v') { ctx.drawImage(im,fixA - im.width/2 - lf,fixB - im.height/2 - tp) }
+if(e.key == 'k') { if(bc.style.backgroundImage != 'none') { bc.style.backgroundImage = "none"} else { bc.style.backgroundImage = "url('CLE.png')" } }
+if(e.key == 'h') { if(nfh != undefined) { bc.height = nfh; bc.style.marginTop = (innerHeight - nfh)/2 + 'px'; tp = (innerHeight - nfh)/2 } }
+ } if(made == 2) { if(e.key == 'Enter') { pastImage() } if(e.key == 'c') { clearImage = true;  } } } 
+var foo = 'do'
+function pastImage() { get(null,'cont4','style').display = 'none'; made = true; foo = 'do'
+im.src = document.getElementById('baseInput').value;
+if(checkURL(document.getElementById('baseInput').value) != false) { localStorage.setItem(q + 'img',im.src); } }
+im.onload = function() { if(foo == 'do') { loadBoofer() } }
+function loadBoofer() { console.log('load image.. ' + im.src)
+var imLeft = document.getElementById('imInput1').value
+var imTop = document.getElementById('imInput2').value
+function leftCh() { if(imLeft != "") { return eval(imLeft) } else { return (bc.width - im.width)/2 } }
+function topCh() { if(imTop != "") { return eval(imTop) } else { return (bc.height - im.height)/2 } } 
+if(isformat == false) { ctx.drawImage(im,leftCh(),topCh()); } if(isformat == true) { nfh = bc.height; bc.height = im.height * bc.width/im.width; ctx.drawImage(im,0,0,bc.width,im.height * bc.width/im.width)
+if(bc.height < innerHeight) { bc.style.marginTop = (innerHeight - bc.height)/2 + 'px'; tp = (innerHeight - bc.height)/2; } else { tp = 0; bc.style.marginTop = '0px'  } } }
+function canselImage() { get(null,'cont4','style').display = 'none'; made = true; foo = 'no'; if(document.getElementById('baseInput').value != "") { im.src = document.getElementById('baseInput').value; } }
+function formt() { var w = document.getElementById('formb'); if(isformat == false) { 
+isformat = true; w.style.backgroundColor = 'black'; w.innerHTML = 'auto'; w.style.color = 'white' 
+ } else {
+ isformat = false; w.style.backgroundColor = 'white'; w.innerHTML = 'no format'; w.style.color = 'black' 
+} }
+function contrLeftPanel() {
+var e = document.getElementById('prog')
+if(e.style.display == 'none') { e.style.display = 'block' }
+else { e.style.display = 'none' }
+}
+document.getElementById('picField').onclick = function (evt) {
+    var tgt = evt.target || window.event.srcElement,
+        files = tgt.files;
+    if (FileReader && files && files.length) {
+        var fr = new FileReader();
+        fr.onload = function () {
+            document.getElementById('baseInput').value = fr.result;
+        }
+        fr.readAsDataURL(files[0]);
+    }
+}
+window.onresize = function() {
+j = innerHeight
+g = innerWidth
+if(made == true) {
+lf = (g - bc.width)/2
+tp = (j - bc.height)/2
+ravn('cont4',500,400); ravn('cont3',300,j); ravn('pmasc',300,j);
+get(null,'prog','style').height = j - 2 + 'px'
+get(null,'prog','style').borderRadius = 100 + 'px/' + j + 'px'
+prg.fillRect(0,0,300,innerHeight)
+if(bc.height < innerHeight) { document.getElementById('base').style.marginTop = (innerHeight - bc.height)/2 + 'px' }
+if(bc.width < innerWidth) { document.getElementById('base').style.marginLeft = (innerWidth - bc.width)/2 + 'px' }
+} 
+if(made == 2) { ravn('cont4',500,400); } 
+if(made == false) { 
+fornews.height = j; var loadcanv  = fornews.getContext('2d')
+var today = new Image(); today.src = 'applegreen.png';ravn('bb',500,-40); ravn('inp1',320,220); ravn('inp2',400,80);
+today.onload = function() {
+for(var x = 0 - today.width/2; x < innerWidth; x += today.width) {
+for(var y = 0 - today.height/2; y < innerHeight; y += today.height) {
+loadcanv.drawImage(today,x,y)
+} } } } }
+</script> 
+</body>
+</html>

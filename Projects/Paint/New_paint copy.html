@@ -1,0 +1,1201 @@
+
+<!DOCTYPE html>
+ <html>
+   <head> 
+      <title>Paint</title>
+<script database="base-only" type="text/javascript" src="file:///C:/html/0.Local-Server-JS/Script.txt"></script>
+      <link rel="icon" id="favicon"/>
+      <style type="text/css">
+  ::-webkit-scrollbar { 
+width: 0px;
+height: 0px;
+background-color: white;
+}
+::-webkit-scrollbar-thumb { 
+background-color: grey;
+border-radius: 10px;
+ }
+      .canvas {
+     position: absolute;
+   border: 1px dotted;
+   }
+ #start {
+width: 500px;
+border: 1px dotted;
+padding: 8px;
+text-align: center;
+cursor: pointer;
+position: fixed;
+font-family: Century Gothic;
+border-bottom: 2px solid;
+background-color: #e89e99;
+  }
+#start:hover {
+background-color: #d8736c;
+ }
+#start:active {
+border: 1px dotted;
+border-top: 2px solid;
+}
+.swch {
+width: 26px;
+height: 26px;
+border-radius: 13px;
+border: solid;
+border-width: 2px;
+margin-left: 8px;
+}
+.palet {
+width: 300px;
+height: 150px;
+position: fixed;
+z-index: 5;
+background-color: #ffffffe3;
+border: solid;
+border-width: 1px;
+border-radius: 40px/150px;
+top: 0px;
+}
+#event {
+color: grey;
+margin-left: 25px;
+position: fixed;
+z-index: 10;
+margin-top: 15px;
+ }
+#color {
+width: 20px; 
+height: 20px;
+border-radius: 12px;
+ }
+* {
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+}
+#save {
+border-radius: 12px;
+border: 1px solid;
+padding-left: 50px; 
+padding-right: 50px;
+font-size: 105%;
+position: fixed;
+margin-left: 120px;
+padding-top: -2px;
+padding-bottom: 2px;
+margin-top: 4px;
+background-color: white;
+cursor: pointer;
+ }
+#save:active {
+background-color: grey;
+ }
+.inf {
+position: fixed;
+ }
+ #control {
+  position: fixed;
+  width: 120px;
+  border: 2px outset; 
+  background-color: white;
+ }
+.Tooc {
+width: 20px;
+height: 20px;
+border-radius: 5px;
+border: 1px solid;
+margin-bottom: 8px;
+ }
+.Tooc:hover {
+border-radius: 12px;
+}
+.Tooc:active {
+border-width: 2px;
+ }
+#colrs {
+margin-top: 160px;
+margin-left: 35px;
+position: absolute;
+top: 0;
+}
+#transp {
+background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAUCAIAAAAoW3v1AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAcSURBVBhXYzx8+DADAwPj////gRQTEA8UxcAAAM3mBW28ah4UAAAAAElFTkSuQmCC')
+ }
+ #images {
+border: 2px solid;
+width: 550px;
+height: 400px;
+background-color: white;
+position: fixed;
+display: none;
+text-align: center;
+}
+ #putImage {
+margin-top: 15px;
+border: 1px solid;
+padding: 12px;
+cursor: pointer;
+width: 150px;
+margin-left: 310px;
+ }
+#putImage:active {
+border: 2px solid;
+ }
+#concreteImage {
+width: 250px;
+height: 250px;
+margin-top: 20px;
+border: 1px dotted;
+margin-left: 25px;
+ }
+ #imageMode {
+width: 40px;
+height: 40px;
+border: 1px solid;
+margin-left: 10px;
+margin-top: 55px;
+ }
+.imageMargin {
+margin-top: 10px; 
+width: 235px;
+height: 26px;
+ }
+.cHolder {
+position: fixed;
+width: 350px;
+height: 25px;
+}
+  .bookmark {
+  background-color: white;
+  position: fixed;
+  border-radius: 12px;
+  border: 1px solid;
+  z-index: 10;
+   }
+      </style>
+     </head>
+   <body style="margin: 0; background-color: rgba(94,197,255,0.01)">
+   <div id="canvs" style="display: none">
+  <div id="event" class="inf" margin-left: 30px;>The Winter is Coming...</div>
+  <canvas class="canvas" style="background-color: white"></canvas>
+
+  <div id="palette" class="palet">
+ <div style="margin-top: 5px" id="0" class="swch"></div>
+ <div id="1" class="swch"></div>
+ <div id="2" class="swch"></div>
+<p>
+ <div onclick="bookmark1.open()" style="width: 280px;height: 34px; margin-left: 9px; border-radius: 15px; position: absolute"></div>
+ <div id="save">s a v e</div>
+    </p>
+  </div>
+
+ <div id="control" style="overflow: hidden">
+<canvas id="transp" style="border: 1px dotted"></canvas>
+<div id="colrs"></div>
+  </div>
+<div id="images" ondblclick= "bookmark2.open()">
+ <div id="concreteImage"></div>
+<div style="position: absolute; margin-left: 286px; top: 25px;">
+ <div onclick="bar.change()" id="imageMode"></div>
+ <input class="imageMargin" />
+ <input class="imageMargin" />
+</div>
+ <div id="putImage" onclick="bar.input()">add Image</div>
+  </div>
+     <!-- buttons --!>
+      <div id="palet_button" style="display: none; width: 150px; height: 25px;" class="bookmark"></div>
+      <div id="menu_button" style="display: block; width: 25px; height: 130px;" class="bookmark"></div>
+    </div>
+
+ <div id="prel">
+  <input class="cHolder" placeholder=" Canvas Width"/>
+    <input class="cHolder" placeholder=" Canvas Height"/>
+  <div id="start" onclick="begin()">Start Work</div>
+  <canvas id="animation" stle="position: fixed" onclick="useAnimate()"></canvas>
+</div>
+  <script type="text/javascript">
+var _sqr_ = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAA1SURBVDhP7dWhAQAwDAJB0v23gr3aiG4AklOot8xdCJGE83dMg74GfQ36GvTFg0MydgEA8ACKpwm3iwFeXgAAAABJRU5ErkJggg==`
+var _icon_ = `
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAtSURBVDhPY/hPIqCnBga8AKoITUM/jxBWNKoBStNJAx4AVYSsgUhAaw3//wMAXWT9fGFvOcIAAAAASUVORK5CYII=
+`
+var _obl_ = `
+data:image/png;base64,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
+`
+var _obl2_ = `
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAHy0lEQVR4Xu1dgXUURwz9ew3EqSCkgjgV4FSAUwFOBXYqwFQAVICpAKgAUwGkAkwFQAO7eX9XS9YX7lbSaHbn7s28x8Pg2VmNvrQjaTSaBrUVxYGmKGoqMaiAFCYEFZAKSGEcKIycqiEVkMI4UBg5VUMqIIVxoDByqoZUQNwceADgFwCnG+CEo3TAmYx20gCn8n8fAXzlzw1wy7/b4d/8/88A7twULPBg6RrycAOcd8B5AxCQ5NYBHwlUC7wB8D55wOABSgOEkv9oA5wJCL0m5God8LUB3rSDJr0dNSvX+zTjlgLIyQa47ICrRj5HGuIj+wg4z1vgxZrAlADIZQNcrwXENqgEpgOuMQCzeFsTkMcCRMjaEM25DrgTYF5Fj71vvDUAOWuAZ6NVtORkPe+iEdABf0MsNs8YlmeWBuRiA7y0EFhK3xb4C8BNbnoWA0SAuMg9oczj3wgw2V6zBCB02l43/zlx2SazxMAdcNsBf+ayxHIDctoALw9lvdACKusKP2H0/kNbTkC4eFMzQp27DnjbCCPEoSNDxtAIf2YIpX8nHUz+3QEUjEeRnBPzmJrSh2eiWi5AyIB3EWB0wOdJqIOT7+NUjkaQziQUQ2FhXCypCSh/RGpKDkC4ZnxKBaMD3osfECqBEwQICh3ShymoCCi/JgjKvddHA0IwqBl95NXTqBECRHYTU+i7EGDcGiNrCjXFq73fWRUKSIpp2wHfGMtawtbfISgE5nkD/OQRJNIdYRKHAbIZ4j9PPJPpgH9kbyNZwjzvnzxDDb9tgN+c4zxtBz64WxQgKR74q3bQjLXBGJnIyPNzAI89XE316CMASVnEkyXKwzTNM16NT13kkwHZDPEdszSlSpKGqQF9vJpPrXeFiVIBebABPlknfiBgjNNygdICNIXN+/dJgDi1wy09VuCj+i85zxRA6PW+s0xanL0xU8Ty6Op9xfoyOZEtQN/E5Ni6AREHUM3cgkxbL7hmk1giwwRF3byAmLWjBX6PjPmoZxjbkTlhHyxDWrXEBQhTZ4zR04NbN3Yx3bqeMDrNlCYtiC5ANn1EW9+8Fof+DYv2NFuWbZ9EqWvqjpPhzjfAa93wfa9inT/DHO51FU/+Uvt8O+wwMlNytpkBsaisBAyZ5lNKWGSWIcoOXODvDIFI9SfbDIjsdWhzqV5InEo5z8PpZtESyfGiozjbrICYrAyrhTFLbVkdTJ9urZVpAsQScJPPVeh+ell49Cs1k7VV+yftkGzHKPLeZgLE6K2qv5tzRJb6e4v5r41SWAH5oN2ePbAAohdzdeBRtnnpHMdpiMX/aIGfj9C62mYmN7O+zDF5/L3GHzFpiBEQ09jaSZXWL5onFqapPVQJJLozT0pj+j56xB9RZaxoIhYWQNQBRe0CdkiM30WrxdDRuAEVkESpWBOQqw3wTEn/0cWvds3b4rFrfBG1hlicwmMMKO4BxJKPNiuoFRClyhenIZI5rtpDr4v6j+Gri3qi9GseX3NRV0d6tWECzYRL72PZjoj2Q3giSb11qwkTlM5sDX3RPFEv6iTO+PIay9pCVCOkJkCMYYJFznVrpDhjH0u0l0cuZsNJVkB4dkKVvWdNf8nItGxDr74fYnEOJS2fn62jbQ3wRXuWUuOlk1EmDZFqburMPY3dfcBorb+nLggy/UUVbmaJo5p10pumPMiqytSxaggtLfUBndTTRAVrj/XUmFowzYAAMKnqMWqJJcJLocqauWj1R4Qg12miQjVEvXM60q/xP8a+Hg2hJVCz35XSYjX/XYBYIr8TKTmG8yHqbezJvE2nqLyA9EWKtU4iiYssP6EUzuhuXMiZl6aylmTOrNeiPmXm8UOmkzRLi+eIVzRXveNZj/DJ2mnSjlRATCbwhBEhNUG8jPU856zh4kqldX+yZGJmi0Mk55ACj+oA4hRszd7Hj4QjFRCvltA2PwRQXGCk+F7JgLCcnvE00VQwrlvgqeczkvuZzVDZyFzZJ/XUWAQg5I1Xkvgs1xSenSjl2BsTqJl/5qpVkqr5UYDw02XJT7on4AWZxKkV8WbzruY0OwwQCamoA4/bhEkgknWzFq21PqEj9VIAl1W1zYdQQGQ9SanIRgdy6SL4yZcCRJYNiQaEgKcs8t8FRpxILvim4i1zn4TJ71mV9Elqxe3URTy3hozjs24vNUV1IHIfEye34IxXFHkXfx5AnV6hlHwgVcBgaCSswnUODRn5SwlkVDgZlClg3TBmz4BJZetvE6Yws6N/51Zla3W9EY2WCRgcM1SDcwLCeVFTbhKqfGp4s3gfWTNoFodpxjiJ3ICMawqlWpU+tDh3jS+URHJqhvfTufeNSwDSE2DZizfyaMnuIabtPoIXA0SISPHol2T8/96V6oFriV8aENLFxZ4lvb3Vo7VzC+m3wKUA9+hcA5CRgOQi+CEc3zHICpcC9JSsCcjICl4myWsjQs1jL1hizjIuN1soxvuOktaQXbQwwnolN32uAgyB4Ke0HYDIYkFpACxBQ6Z00ntmIt54F25WcASE8S5cRgJWA2JJP0QjGLv6TK8oCjEC6NTJFUqMTIc7dimTLWUN0c6B6Tf8s+s+9R4wMnzPfeqsxW6ux64lMKJfaZ+siDkd9BgVkMLgq4BUQArjQGHkVA2pgBTGgcLIqRpSASmMA4WRUzWkMED+BUlYL4Nrhcq9AAAAAElFTkSuQmCC
+`
+/*  function asBlob(dataURI) {
+       var dataTYPE = ""
+     for(var i = 0; i < dataURI.length; i++) {
+       if(dataURI[i] == ":") {
+          var F = ""
+	  for(var e = i+1; e < dataURI.length; e++) {
+            if(dataURI[e] == ";") { dataTYPE = F; break }
+	    else { F = F+ dataURI[e] }
+		}
+		 break
+             }
+	  }
+        var binary = atob(dataURI.split(',')[1]), array = [];
+        for(var i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));
+       return new Blob([new Uint8Array(array)], {type: dataTYPE});
+    }
+ _sqr_ = asBlob(_sqr_)
+ _icon_ = asBlob(_icon_)
+ _obl_ = asBlob(_obl_)
+ _ob2_ = asBlob(_ob2_)
+ */
+window.onresize=function() { build() }
+   var image = new Image()
+window.onload=function() {
+document.getElementById("favicon").href = _icon_
+  image.src= _obl_
+  image.onload = function() {
+build() 
+} }
+   function build() {
+var a = document.getElementById("animation")
+a.width=innerWidth
+a.height=innerHeight
+
+   for(var i = -image.width*1.2; i < innerWidth; i+= image.width* 1.5) {
+for(var e = -image.height*1; e < innerHeight; e+= image.height * 1.5) {
+  a.getContext("2d").drawImage(image, i, e)
+       }
+   //rotate(a.getContext("2d"),this,20,innerWidth*0.81,innerHeight*0.40)
+ }
+
+var cs = document.getElementsByClassName("cHolder")
+cs[0].style.left = "30px"
+state( cs[0], false, innerHeight/2-100 )
+state( cs[1], false, innerHeight/2-50 )
+state( document.getElementById("images"), false )
+state( document.getElementById("start"), false, innerHeight/2 )
+state( document.getElementsByTagName('canvas')[0], true,  );
+state( document.getElementById("palette"), true, 0 )
+state( bookmark1.handler, true, 0 )
+  document.getElementById("menu_button").style.marginTop = (innerHeight - 200) + "px" 
+stylePannel( 190 );
+   } 
+ var activeElement={ close: function() {} }
+     var draw = {
+  handler:   document.getElementById("canvs"),
+  ctx: document.getElementsByTagName('canvas')[0].getContext('2d'),
+  active: false,
+  color: [1,1,1,1],
+  width: 20,
+  mode: "line",
+  levels: [],
+  checkPoint: null,
+  last: {x: NaN,y: NaN},
+  start: function(ax,ay) { 
+ if(!draw.active) { 
+draw.save()
+  draw.active=true; 
+  draw.last.x = ax; draw.last.y = ay
+  draw.act = document.createElement("canvas")
+  var canv = draw.act
+  canv.width=draw.ctx.canvas.width
+  canv.height=draw.ctx.canvas.height
+  if(draw.ctx.canvas.style.marginTop) { canv.style.marginTop=draw.ctx.canvas.style.marginTop }
+  if(draw.ctx.canvas.style.marginLeft) { canv.style.marginLeft=draw.ctx.canvas.style.marginLeft }
+  canv.className="canvas"
+  draw.handler.append(canv)
+  var ctx = canv.getContext("2d")
+  draw.act_ctx = ctx
+  ctx.beginPath()
+  ctx.strokeStyle="rgba(" + draw.color[0] + "," + draw.color[1] + "," + draw.color[2] + ")"
+  ctx.lineWidth=draw.width
+  ctx.lineCap="round"
+ draw.ctx.globalAlpha = draw.color[3]
+      }
+    },
+  move: function(ax,ay) {
+ if(draw.active) {
+  var brush = brushes[active_brush].content
+  var path = brush({ lx: draw.last.x, ly: draw.last.y, x: ax, y: ay, width: draw.width })
+    draw.act_ctx.stroke(path)
+    draw.last.x = ax; draw.last.y = ay
+     }
+   },
+  end: function(ax,ay) {
+console.log("end")
+  if(draw.active) {
+    draw.active=false;
+  var image = new Image()
+  image.src = draw.act.toDataURL()
+  var ctx = draw.ctx
+  var handler = draw.handler
+  var canv = draw.act
+   image.onload = function() {
+  ctx.drawImage(this,0,0)
+  handler.removeChild(canv)
+         }
+       }
+     },
+  clear: function(s) {
+ if(s) { draw.save() }
+  this.ctx.clearRect(0,0,this.ctx.canvas.width,this.ctx.canvas.height)
+     },
+ updateColor: function(t) {
+ var color = "rgba(" + this.color[0] + "," + this.color[1] + "," + this.color[2] + "," + this.color[3] + ")"
+if(t) { color =  "rgba(" + this.color[0] + "," + this.color[1] + "," + this.color[2] + ")" }
+// document.getElementById("save").style.borderColor = color
+ return color
+    },
+ back: function() {
+ var data = draw.levels[draw.levels.length-1]
+ if(typeof data == "object") {
+draw.ctx.canvas.width = data.width
+draw.ctx.canvas.height = data.height
+state( draw.ctx.canvas,true )
+try { draw.ctx.putImageData(data,0,0);  draw.levels = draw.levels.delete(1) }catch {}
+     }
+else { draw.ctx.clearRect(0,0,draw.ctx.canvas.width,draw.ctx.canvas.height) }
+   },
+save: function() {
+var data = draw.ctx.getImageData(0,0,draw.ctx.canvas.width,draw.ctx.canvas.height)
+draw.levels.push(data)
+  },
+ cansel: function() {
+if(draw.active) {
+ draw.end()
+ draw.last = {x: NaN,y: NaN}
+    }
+  },
+ pust: function() {
+  try {
+draw.save()
+var data = draw.checkPoint
+draw.ctx.canvas.width = data.width
+draw.ctx.canvas.height = data.height
+draw.ctx.putImageData(data,0,0)
+   }
+ catch {
+ console.log("checkPoint isn't imageData!")
+    }
+  },
+ savePoint: function() {
+var canv = draw.ctx.canvas
+draw.checkPoint = draw.ctx.getImageData(0,0,canv.width,canv.height)
+console.log("point saved")
+  }
+}
+var mode = {
+weapons: [
+{ name: "Line", content:  function line() {
+   draw.ctx.moveTo(mode.points[0].x,mode.points[0].y)
+   draw.ctx.lineTo(mode.points[1].x,mode.points[1].y)
+   draw.ctx.stroke()
+},
+ demo: function() {
+  var p = new Path2D()
+  p.moveTo(20,80)
+  p.lineTo(80,20)
+   return p
+      }
+    },
+  { name: "circle", content: function circle() {
+    var a = mode.points[0].x - mode.points[1].x
+    var b = mode.points[0].y - mode.points[1].y
+    var Radius = Math.sqrt(a * a + b * b)
+    draw.ctx.arc(mode.points[0].x,mode.points[0].y,Radius,0,2 * Math.PI,false)
+    draw.ctx.stroke()
+    draw.save()
+} ,
+  demo: function() {
+    var p = new Path2D()
+    p.arc(50,50,40,0,2 * Math.PI,false)
+    return p
+       }
+     },
+  { name: "triangle", content: function triangle() {
+     for(var i = 0; i < 2; i++) {
+     draw.ctx.moveTo(mode.points[i].x,mode.points[i].y)
+     draw.ctx.lineTo(mode.points[i+1].x,mode.points[i+1].y)
+       }
+    draw.ctx.moveTo(mode.points[2].x,mode.points[2].y)
+    draw.ctx.lineTo(mode.points[0].x,mode.points[0].y)
+    draw.ctx.stroke()
+  } ,
+    demo: function() {
+    var p = new Path2D()
+     p.moveTo(20,80)
+    p.lineTo(80,80)
+     p.moveTo(80,80)
+    p.lineTo(50,20)
+     p.moveTo(50,20)
+    p.lineTo(10,90)
+     return p
+      }
+   },
+ { name: "square", content: function square() {
+   for(var i = 0; i < 3; i++) {
+    draw.ctx.moveTo(mode.points[i].x,mode.points[i].y)
+    draw.ctx.lineTo(mode.points[i+1].x,mode.points[i+1].y)
+      }
+    draw.ctx.moveTo(mode.points[3].x,mode.points[3].y)
+    draw.ctx.lineTo(mode.points[0].x,mode.points[0].y)
+    draw.ctx.stroke()
+  } ,
+    demo: function() {
+     var p = new Path2D()
+      p.moveTo(20,20)
+     p.lineTo(80,20)
+      p.moveTo(90,10)
+     p.lineTo(90,90)
+      p.moveTo(80,80)
+     p.lineTo(80,20)
+      return p   
+     }
+  }],
+points: [],
+canvas: null,
+active: false,
+ complete: function(whats) {
+if(mode.active) {
+ draw.save()
+draw.ctx.beginPath() 
+draw.ctx.lineWidth = draw.width
+draw.ctx.lineCap="round"
+draw.ctx.strokeStyle=draw.updateColor()
+ whats()
+ draw.handler.removeChild(mode.canvas)
+ mode.points = []
+ mode.active = false
+ mode.canvas = null
+ bookmark2.cansel_select()
+    }
+  },
+ start: function(f) {
+if(!mode.active) {
+mode.active = f
+draw.cansel()
+  mode.canvas = document.createElement("canvas")
+  var canv = mode.canvas
+  canv.width=draw.ctx.canvas.width
+  canv.height=draw.ctx.canvas.height
+  if(draw.ctx.canvas.style.marginTop) { canv.style.marginTop=draw.ctx.canvas.style.marginTop }
+  if(draw.ctx.canvas.style.marginLeft) { canv.style.marginLeft=draw.ctx.canvas.style.marginLeft }
+  canv.className="canvas"
+  draw.handler.append(canv)
+ var ctx = canv.getContext("2d")
+ ctx.lineWidth = draw.width
+ ctx.fillStyle = draw.updateColor()
+ canv.onmousedown=function(e) {
+  mode.add_point(e.layerX,e.layerY)
+      }
+    }
+  },
+ add_point: function(x,y) {
+if(mode.active) {
+var ctx = mode.canvas.getContext("2d")
+ctx.beginPath()
+ctx.arc(x,y,ctx.lineWidth/2,0,2*Math.PI,false)
+ctx.fill()
+mode.points.push({ x: x, y: y })
+ if(mode.active == "circle" && mode.points.length >= 2) { mode.complete(mode.weapons[1].content) }
+ if(mode.active == "Line" && mode.points.length >= 2) { mode.complete(mode.weapons[0].content) }
+ if(mode.active == "triangle" && mode.points.length >= 3) { mode.complete(mode.weapons[2].content) }
+ if(mode.active == "square" && mode.points.length >= 4) { mode.complete(mode.weapons[3].content) }
+}
+  },
+ cansel: function() {
+if(mode.canvas) {
+ draw.handler.removeChild(mode.canvas)
+ mode.points = []
+ mode.active = false
+ mode.canvas = null
+    }
+  }
+}
+
+Array.prototype.delete = function(pos) {
+var arr = new Array()
+for(var i = 0; i < this.length-pos; i++) {
+arr.push(this[i])
+}
+return arr
+ }
+var palette = {
+ opened: true,
+ active: false,
+ start: function(color) {
+  if(!palette.active) {
+palette.active = color
+  }
+ },
+ end: function() {
+palette.active = false
+},
+ move: function(x) {
+if(palette.active) {
+var left = (x - palette.active.offsetWidth/2)-20
+ if(left < -38) { left = -38 } 
+ if(left > 268) { left = 268 }
+palette.active.style.marginLeft = left+20 + 'px'
+if(left > 255) { left = 255 }
+if(left < 1) { left = 1 }
+  left = Math.round(left)
+draw.color[palette.active.id] = left
+var color = [0,0,0]; color[this.active.id] = left
+palette.active.style.color="rgb(" + color[0] + "," + color[1] + "," + color[2] +")"
+panel.update()
+	}
+   },
+  start_width: function() {
+if(!palette.active) {
+ palette.active = document.createElement("canvas")
+ palette.active.className="palet"
+ palette.active.style="background-color: rgba(0,0,0,0); border-color: rgba(0,0,0,0)"
+// this.active.width="300"
+// this.active.height="150"
+ document.getElementById("palette").append(palette.active)
+ var ctx = palette.active.getContext("2d")
+ ctx.fillStyle=draw.updateColor()
+ ctx.fillRect(0,0,draw.width,ctx.canvas.width)
+      }
+    },
+  end_width: function() {
+ if(palette.active) {
+  console.log("end")
+  document.getElementById("palette").removeChild(palette.active)
+  palette.active=false
+   }
+ },
+  change_width(w) {
+w = Math.round(w)
+ if(this.active) {
+var ctx = this.active.getContext("2d")
+ctx.fillStyle=draw.updateColor()
+ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height)
+ctx.fillRect(0,0,w,ctx.canvas.width)
+draw.width = w
+	}
+    },
+open: function() {
+document.getElementById("palette").style.display="block"
+  state( document.getElementById("palette"), true, 0 )
+},
+close: function() {
+//document.getElementById("palette").style.display="none"
+  bookmark1.open()
+},
+ control: function() {
+  /*
+if(palette.opened) { palette.close() }
+else { palette.open() }
+palette.opened=!palette.opened
+  */
+  if(palette.opened) { bookmark1.open() }
+  else { bookmark1.close() }
+   }
+ }
+  var bookmark1 = {
+  active: false,
+  book: document.getElementById("palette"),
+  handler: document.getElementById("palet_button"),
+  clicks: { x: NaN, y: NaN },
+  down: function(e) {
+   bookmark1.active=true
+   bookmark1.clicks.x = e.pageX
+   bookmark1.clicks.y = e.pageY
+    },
+  up: function(e) {
+   if(bookmark1.active) {
+    bookmark1.active = false
+    if(e.pageY - bookmark1.clicks.y > 50) { bookmark1.close() }
+    else if(bookmark1.clicks.x > innerWidth/2 && e.pageY - bookmark1.clicks.y < 50) { control_brush(1) }
+    else if(bookmark1.clicks.x < innerWidth/2 && e.pageY - bookmark1.clicks.y < 50) { control_brush(-1) }
+         }
+       },
+   move: function(e) {
+    if(bookmark1.active) {
+      bookmark1.handler.style.backgroundColor="rgba(255,255,255," + (1 - (e.pageY - bookmark1.clicks.y)/150) + ")"
+        }
+      },
+     open: function() {
+      bookmark1.handler.style.backgroundColor = "white"
+      //palette.close()
+      bookmark1.handler.style.display="block"
+      bookmark1.book.style.display="none"
+      if(bar.opened) { bar.open(); bookmark1.In = true }
+       },
+     close: function() {
+     if(bookmark1.In) { bookmark1.In = false; bar.close() }
+       bookmark1.handler.style.display="none"; bookmark1.book.style.display="block";
+      }
+    }
+  var bookmark2 = {
+  handler: document.getElementById("menu_button"),
+  book:  document.getElementById("images"),
+  active: false,
+  selected: false,
+  position: 0,
+  select_mode: function() {
+   if(!bookmark2.selected) { 
+   var dm = document.createElement("canvas")
+    dm.width = 100; dm.height = 100
+    dm.onclick = function() { bookmark2.cansel_select() }
+    dm.style="border: 1px dotted; background-color: white; z-index: 10"
+     dm.style.marginLeft="30px"
+     dm.style.marginTop =  (innerHeight - 190) + "px"
+    document.body.append(dm)
+     var ctx = dm.getContext("2d")
+       ctx.lineCap = "round"
+       ctx.lineWidth = 8
+       ctx.strokeStyle= draw.updateColor()
+       ctx.stroke( mode.weapons[bookmark2.position].demo() )
+       mode.start( mode.weapons[bookmark2.position].content )
+      bookmark2.selected = ctx
+     }
+   else {
+    mode.cansel()
+    bookmark2.position++
+    if(bookmark2.position == mode.weapons.length) { bookmark2.position = 0 }
+     var ctx = bookmark2.selected
+     ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height)
+     ctx.strokeStyle= draw.updateColor()
+     ctx.stroke( mode.weapons[bookmark2.position].demo() )
+     mode.start( mode.weapons[bookmark2.position].name )
+      }
+   },
+  cansel_select: function() {
+   if(bookmark2.selected) {
+    document.body.removeChild(bookmark2.selected.canvas)
+    bookmark2.selected = false
+    mode.cansel()
+         }
+      },
+    clicks: { x: NaN, y: NaN },
+    down: function(e) {
+     bookmark2.clicks.x = e.pageX
+     bookmark2.clicks.y = e.pageY
+     bookmark2.active = true
+      },
+     up: function(e) {
+    if(bookmark2.active) {
+     bookmark2.active = false
+     if(e.pageX - bookmark2.clicks.x > 50) { bookmark2.close() }
+     else { bookmark2.select_mode() }
+         }
+      },
+    move: function(e) {
+     if(bookmark2.active) {
+    bookmark2.handler.style.backgroundColor="rgba(155,155,155," + (1 - (e.pageX - bookmark2.clicks.x)/150) + ")"
+         }
+      }, 
+    close: function() {
+     bookmark2.handler.style.display = "none"
+     bookmark2.book.style.display = "block"
+     if(bookmark2.In) { bookmark1.open() }
+     window.onresize()
+      }, 
+    open: function() {
+     bookmark2.handler.style.display = "block"
+     bookmark2.book.style.display = "none"
+     bookmark2.handler.style.backgroundColor="white"
+     if(palette.opened) { palette.close(); bookmark2.In = true }
+      window.onresize()
+      }
+   }
+  
+function toNumb(text) {
+var res = ""
+for(var i = 0; i < text.length; i++) {
+ for(var e = 0; e < 9; e++) { if(text[i] == e.toString()) { res = res+text[i] } }
+   }
+  var result = eval(res)
+ return result
+ }
+function toElement(x,y,element) {
+ if(element.style) {
+var a = element.getBoundingClientRect()
+var left = a.left*(-1)
+var top = a.top*(-1)
+if(a.left < 0) { left = 0 }
+if(a.top < 0) { top = 0 }
+ left +=  x
+ top += y
+
+//x = (x - left)
+//y = (y - top)
+   }
+return { x: left, y: top }
+ }
+ function state(element,not_null,y,ax) {
+ var left = (innerWidth-element.offsetWidth)/2
+ var top = (innerHeight-element.offsetHeight)/2
+  if(left < 0 && not_null) { left = 0 }
+  if(top <  0 && not_null) { top = 0 }
+if(typeof y == "number") { top=y }
+if(ax) { left += ax }
+ element.style.marginLeft = left + 'px'
+ element.style.marginTop = top + 'px'
+  return [left,top]
+  }
+  function begin() {
+document.getElementById("prel").style.display="none"
+document.getElementById('canvs').style.display="block"
+ var canv =  document.getElementsByTagName('canvas')[0]
+ var inps = document.getElementsByClassName("cHolder")
+if(inps[0].value) { canv.width = inps[0].value }
+ else { canv.width = (innerHeight-innerHeight%20) }
+if(inps[1].value) { canv.height = inps[1].value }
+ else { canv.height = (innerHeight-innerHeight%20) }
+draw.levels.push({ width: canv.width, height: canv.height })
+state( document.getElementsByTagName('canvas')[0], true,  ); grade()
+state( document.getElementById("palette"), true, 0 )
+stylePannel(190); strokeColors(); panel.update()
+//document.getElementById("contol").sty
+  }
+  
+  var brushes = [
+  { name: "Default line", 
+  content: function(event) {
+    var path = new Path2D()
+    path.moveTo(event.lx,event.ly)
+    path.lineTo(event.x,event.y)
+   return path
+       }
+    },
+  { name: "Eraser",
+   content: function(event) {
+   var width = event.width
+   draw.ctx.beginPath()
+   draw.ctx.save()
+   draw.ctx.arc(event.x,event.y,width,0,2 * Math.PI,false)
+   draw.ctx.clip()
+   draw.clear()
+   draw.ctx.restore()
+  return new Path2D()
+      }
+   }]
+  var active_brush = 0
+  
+  function control_brush(nav) {
+   var res = true
+   if(brushes[active_brush + nav]) {
+     active_brush =  active_brush + nav
+      console.log(active_brush)
+    }
+   else { res = false }
+       messange(brushes[active_brush].name)
+       return res
+    }
+  
+  
+    document.onkeydown = function(e) {
+ if(e.key == "Delete") { draw.clear(true) }
+ if(e.code == "KeyK") { grade() }
+ if(e.code == "KeyZ") { draw.back() }
+ if(e.code == "KeyO") { bar.open() }
+ if(e.code == "KeyG") { draw.mode="circle" } 
+ if(e.code == "KeyM") { draw.mode="line" }
+ if(e.code == "KeyX") { palette.control() }
+ if(e.code == "KeyS") { draw.savePoint() }
+ if(e.code == "KeyP") { draw.pust() }
+  if(e.key == "=") { control_brush(1) }
+  if(e.key == "-") { control_brush(-1) }
+ if(e.key == "2") {  mode.start("Line") }
+ if(e.key == "3") {  mode.start("triangle") }
+ if(e.key == "4") {  mode.start("square") }
+ if(e.key == "5") {  mode.start("circle") }
+ if(e.key == "Escape") { activeElement.close() }
+     }
+
+ document.onkeyup=function(e) {
+ if(e.key == "2" || e.key=="3" || e.key=="4" || e.key == "5") {  mode.cansel() }
+  }
+
+
+
+  function grade() {
+var dod = document.getElementsByTagName("canvas")[0].style
+if(dod.backgroundImage) { dod.backgroundImage = "" }
+else { dod.backgroundImage="url('" + _sqr_ + "')" } 
+   }
+
+var panel = {
+t: 0,
+active: false,
+start: function() {
+if(!panel.active) {
+panel.active = document.getElementById("transp").getContext("2d")
+  }
+},
+move: function(y) {
+if(panel.active) {
+var ctx = panel.active
+ctx.fillStyle = draw.updateColor(true)
+ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height)
+ctx.clearRect(0,0,ctx.canvas.width,y)
+document.getElementById("control").style.borderColor=ctx.fillStyle
+panel.t = y
+ var a = (1 - panel.t/innerHeight).toFixed(1)
+ a = eval(a)
+ if(a > 1) { a = 1 }
+ draw.color[3] = a
+ messange("Alpha " + a)
+}
+  },
+end: function() {
+if(panel.active) {
+panel.active=false
+      } 
+   },
+ update: function() {
+panel.t = (1-draw.color[3]) * innerHeight
+var ctx = document.getElementById("transp").getContext("2d")
+ctx.fillStyle = draw.updateColor(true)
+ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height)
+ctx.clearRect(0,0,ctx.canvas.width,panel.t)
+document.getElementById("control").style.borderColor=ctx.fillStyle
+  }
+}
+  document.getElementById("control").ondblclick=function() { 
+  var data = draw.updateColor()
+   navigator.clipboard.writeText(data)
+  .then(() => {
+  messange("Active color coppied!")
+   })
+  .catch(err => {
+  messange("failed to copy color!!")
+      })
+     }
+  
+function stylePannel(width) { 
+var t = document.getElementById("control");
+t.style.width=width+'px';
+t.style.height=(/*document.body.offsetHeight*/innerHeight-2) + 'px'
+t.style.marginLeft=(document.body.offsetWidth-t.offsetWidth*0.52) + 'px'; 
+t.style.borderRadius=t.offsetWidth+"px/" + t.offsetHeight + 'px'
+var canv = document.getElementById('transp')
+canv.height=innerHeight-2
+canv.width=width*0.1
+canv.style.marginLeft = (width*0.38) + 'px'
+ }
+
+function messange(mess) {
+document.getElementById("event").innerHTML=mess
+ }
+
+var bar = {
+opened: false,
+image: null,
+type: 0,
+events: [[function(image) {
+var left = (draw.ctx.canvas.width-image.width)/2
+var top = (draw.ctx.canvas.height-image.height)/2
+if(left < 0) { left = 0 }
+if(top < 0) { top = 0 }
+var ins = document.getElementsByClassName("imageMargin")
+if(ins[0].value) { left = toNumb(ins[0].value) }
+if(ins[1].value) { top = toNumb(ins[1].value) }
+draw.ctx.drawImage(image,left,top)
+},function() {
+document.getElementById("imageMode").style.border="1px solid"
+},],[function(image) {
+draw.ctx.canvas.width = image.naturalWidth
+draw.ctx.canvas.height = image.naturalHeight
+state( draw.ctx.canvas,true )
+draw.ctx.drawImage(image,0,0)
+ },function() { 
+document.getElementById("imageMode").style.border="2px solid"
+ }],[function(image) {
+//image.width=draw.ctx.canvas.width
+draw.ctx.canvas.height = image.naturalHeight * (draw.ctx.canvas.width / image.naturalWidth)
+state( draw.ctx.canvas,true )
+draw.ctx.drawImage(image,0,0,draw.ctx.canvas.width,draw.ctx.canvas.height)
+  },function() { 
+document.getElementById("imageMode").style.border="1px dotted"
+document.getElementById("imageMode").style.borderLeft="2px solid"
+document.getElementById("imageMode").style.borderRight="2px solid"
+ }],[function(image) {
+  draw.save()
+  var top = 0;
+  var left = 0;
+  var ins = document.getElementsByClassName("imageMargin")
+ if(ins[0].value) { left = toNumb(ins[0].value) }
+ if(ins[1].value) { top = toNumb(ins[1].value) }
+  for(var x = left; x < draw.ctx.canvas.width; x+= image.width) {
+  for(var y = top; y < draw.ctx.canvas.height; y+= image.height) { draw.ctx.drawImage(image,x,y) }
+    }
+ },function() {
+document.getElementById("imageMode").style.border="1px dotted"
+}]],
+open: function() {
+var d = document.getElementById("images")
+d.style.display="block"
+state( d )
+activeElement=bar
+  bar.opened = true
+   },
+put: function() {
+var input = document.createElement("input")
+input.type="file"
+input.click()
+input.oninput = function() {
+var pan = document.getElementById("concreteImage")
+pan.innerHTML=""
+if(this.files[0]) {
+bar.image = input.files[0]
+var image = new Image()
+image.src = URL.createObjectURL(this.files[0])
+image.onclick=function() { bar.put() }
+image.width = pan.offsetWidth-2
+image.height = pan.offsetHeight-2
+pan.append(image)
+document.getElementById("putImage").innerHTML="Draw!"
+     }
+   }
+ },
+draw: function() {
+ draw.ctx.save()
+ document.getElementById("images").style.display="none"
+var image = new Image()
+image.src = URL.createObjectURL(bar.image)
+image.onload=function() {
+ bar.events[bar.type][0](this)
+}
+   },
+change: function() {
+if(bar.type < bar.events.length-1) { bar.type++; bar.events[bar.type][1]() }
+else { bar.type=0; bar.events[0][1]() }
+   },
+ close: function() {
+document.getElementById("images").style.display="none"
+  bar.opened = false
+   },
+input: function() {
+if(document.getElementById("putImage").innerHTML == "add Image") {
+bar.put()
+    }
+else { bar.draw() }
+   }
+ }
+var Input = {
+active: false,
+font: "Verdana",
+create: function() {
+
+   },
+moveAt: function(x,y) {
+
+   },
+Pust: function() {
+
+  },
+close: function() {
+
+   }
+ }
+
+</script>
+<script type="text/javascript">
+ function edit(colorRGB,Then) {
+var c = []
+var i = 0;
+for(i = i; i < colorRGB.length; i++) {
+if(colorRGB[i] == "(") { break }
+}
+var f = ""
+for(i = i+1; i < colorRGB.length; i++) {
+if(colorRGB[i] != ")") {
+if(colorRGB[i] == ",") { c.push(f); f="" }
+else { f = f + colorRGB[i] }
+ }
+else { break }
+}
+c.push(f)
+for(i = 0; i < c.length; i++) {
+c[i] = eval( c[i] )
+}
+ Then(c)
+  }
+function save() {
+var col = draw.updateColor()
+var num = strokeColors()
+localStorage.setItem("paint.color_" + num,col)
+strokeColors()
+ }
+function strokeColors() {
+document.getElementById("colrs").innerHTML=""
+var i = 1
+for(i = i; localStorage.getItem("paint.color_" + i) != null; i++) {
+var id = localStorage.getItem("paint.color_" + i)
+if(id != "") {
+var d = document.createElement("div")
+d.className="Tooc"
+d.style.backgroundColor=id
+d.id="t" + i
+d.onclick=function(e) {
+if(e.ctrlKey != true) {
+ toColor(this.id)
+}
+ else { deleteColor(this) }
+ }
+document.getElementById("colrs").append(d)
+     }
+   }
+return i
+ }
+function deleteColor(element) {
+var e = document.getElementsByClassName("Tooc")
+for(var i = 0; i < strokeColors(); i++) {
+if(element.id == "t" + i) { localStorage.setItem("paint.color_" + i,""); break }
+   }
+strokeColors()
+ }
+function toColor(element) {
+var c = ""
+c= localStorage.getItem("paint.color_" + eval(element[1]) );
+edit(c,function(color) {
+draw.color = color
+draw.updateColor()
+panel.update()
+  })
+ }
+document.getElementById("save").onclick = function() { save() }
+</script>
+<script type="text/javascript">
+ function corePixels(x,y) {
+ draw.save()
+var put = prompt("paint colors in Range..")
+var Range = ""
+if(put) { Range = toNumb( put ) 
+if(!Range) { Range = 0 }
+var canv = draw.ctx.canvas
+var Data = draw.ctx.getImageData(0,0,canv.width,canv.height)
+var data = Data.data
+// Get color
+var S = draw.ctx.getImageData(x,y,1,1).data
+console.log(S)
+// Handing..
+for(var i = 0; i < data.length; i+=4) {
+ var p = ""
+ for(var e = 0; e < 4; e++) {
+  if(data[i+e] >= S[e]-Range && data[i+e] <= S[e]+Range) { p += "." }
+      }
+  if(p.length == 4) { 
+    for(var e = 0; e < 3; e++) {
+     data[i+e] = draw.color[e]
+         }
+     if(draw.color[3] == 0) { data[i+3]=0 }
+       else { data[i+3] = draw.color[3]*255 }
+       }
+     }
+ Data.data = data
+ draw.ctx.putImageData(Data,0,0)
+ draw.mode = setMode
+      }
+   }
+function rotate(ctx,image,angle,x,y) {
+ctx.beginPath()
+ctx.save()
+ctx.translate(x,y)
+ctx.rotate(angle * Math.PI/180)
+ctx.drawImage(image,-(image.width/2),-(image.height/2))
+ctx.restore()
+ }
+function useAnimate() {
+console.log("!")
+ }
+var Move = {
+active: false,
+ts: { x: NaN, y: NaN },
+take: function(x,y) {
+Move.active = true
+Move.ts.x = x
+Move.ts.y = y
+   },
+at: function(x,y) {
+if(Move.active) {
+document.scrollingElement.scrollTop -= (y - Move.ts.y)
+document.scrollingElement.scrollLeft -= (x - Move.ts.x)
+ }
+   },
+end: function() {
+Move.active = false
+   }
+ }
+ </script>
+<script type="text/javascript">
+  var events = {
+  ids: [],
+   Downs: [],
+   Moves: [],
+   Ups: [],
+  addListener: function(element,down,move,up) {
+function p(e) { 
+var result=e
+if(typeof e == "string") { result = function() { eval(e) } }
+return result
+ }
+events.ids.push(element)
+events.Downs.push( p(down) )
+events.Moves.push( p(move) )
+events.Ups.push( p(up) )
+    }
+  }
+var active = {}
+  document.onmousedown=function(e) {
+  if(e.altKey) { Move.take(e.pageX,e.pageY); console.log("s") }
+else {
+if(e.which == 1) {
+active = e.target
+for(var i = 0; i < events.ids.length; i++) {
+if(active == events.ids[i]) { events.Downs[i](e) }
+         }
+      }
+   }
+}
+  document.onmousemove = function(e) {
+//console.log(e)
+ Move.at(e.pageX,e.pageY)
+if(active) {
+for(var i = 0; i < events.ids.length; i++) {
+if(active == events.ids[i]) { events.Moves[i](e) }
+    }
+  }
+}
+  document.onmouseup=function(e) {
+  Move.end()
+if(active) { 
+for(var i = 0; i < events.ids.length; i++) {
+if(active == events.ids[i]) { events.Ups[i](e) }
+    }
+active = { }
+  }
+}
+	/* x, y, ax, ay */
+	events.addListener(document.getElementsByTagName("canvas")[0],
+function(e) {
+console.log(mode.active)
+var a = toElement(e.pageX,e.pageY,document.getElementsByTagName("canvas")[0])
+ if(e.shiftKey) { corePixels(a.x,a.y) }
+//else if(mode.active) { mode.add_point(a.x,a.y) }
+else if(draw.mode == "line") {
+  console.log("start")
+  draw.start(a.x,a.y) 
+ }
+
+   messange("canvas " + draw.ctx.canvas.width + "/" + draw.ctx.canvas.height + ": " + brushes[active_brush].name)
+},
+function(e) { 
+var c = toElement(e.pageX,e.pageY,document.getElementsByTagName("canvas")[0]); 
+ draw.move(c.x,c.y); 
+  },function(e) { draw.end() })
+
+        events.addListener(document.getElementById("palette"),palette.start_width,function(e) { var a = toElement(e.x,0,document.getElementById("palette")).x; palette.change_width(a); messange("Line Width " + draw.width) },palette.end_width)
+        var swchs = document.getElementsByClassName("swch")
+        events.addListener(swchs[0],function() {  palette.start(swchs[0]) },function(e) { palette.move( toElement(e.x,0,document.getElementById("palette")).x ); messange("color #red " + draw.color[0]) },palette.end)
+        events.addListener(swchs[1],function() {  palette.start(swchs[1]) },function(e) { palette.move( toElement(e.x,0,document.getElementById("palette")).x ); messange("color #green " + draw.color[1]) },palette.end)
+	events.addListener(swchs[2],function() {  palette.start(swchs[2]) },function(e) { palette.move( toElement(e.x,0,document.getElementById("palette")).x ); messange("color #blue " + draw.color[2]) },palette.end)
+	events.addListener( document.getElementById("transp"), panel.start,function(e) { panel.move(e.y); messange("Alpha " + draw.color[3]) },panel.end)
+        events.addListener( bookmark1.handler, bookmark1.down, bookmark1.move, bookmark1.up )
+        events.addListener( bookmark2.handler, bookmark2.down, bookmark2.move, bookmark2.up )
+     </script>
+    <script type="text/javascript" src="weapons.txt"></script>
+   </body>
+ </html>

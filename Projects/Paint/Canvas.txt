@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+ <html>
+   <head> 
+      <title></title>
+      <link rel="icon" id="favicon"/>
+      <style type="text/css">
+ 
+      </style>
+     </head>
+   <body style="margin: 0">
+
+    <script type="text/javascript">
+  
+  class EventDataBase  {
+  constructor() {
+    const that = this
+    this.DataBase = []
+    this.setItem = function(Class, item) {
+     var t = { type: Class, item: item }
+     that.DataBase.push(t)
+       }
+    this.getClass = function(Class) {
+     var Result = []
+     for(var i = 0; i < that.DataBase.length; i++) {
+      if(that.DataBase[i].type == Class) { Result.push(that.DataBase[i].item) }
+         }
+    return Result
+         }
+    this.restoreDefault = function() { that.DataBase = [] }
+     }
+   }
+     document.addEventListener("mousedown",function(e) {
+  var object = e.target
+  var downs = EventBase.getClass("mousedown")
+  for(var i = 0; i < downs.length; i++) {
+   if(downs[i].object == object) { EventBase.active = object; downs[i].event(e) }
+     }
+  })
+ document.addEventListener("mousemove",function(e) {
+  var moves = EventBase.getClass("mousemove")
+  for(var i = 0; i < moves.length; i++) {
+   if(moves[i].object == EventBase.active) { moves[i].event(e) }
+    }
+})
+ document.addEventListener("mouseup", function(e) {
+  var ups = EventBase.getClass("mouseup")
+  for(var i = 0; i < ups.length; i++) {
+   if(ups[i].object == EventBase.active) { ups[i].event(e); EventBase.restore() }
+    }
+})
+
+  HTMLElement.prototype.addListener = function(down, move, up) {
+   const object = this
+    EventBase.setItem("mousedown",{ object: object, event: function(e) { down(e) } })
+    EventBase.setItem("mousemove",{ object: object, event: function(e) { move(e) } })
+    EventBase.setItem("mouseup",{ object: object, event: function(e) { up(e) } })
+   }
+   
+   var EventBase = new EventDataBase()
+   EventBase.restore = function() {  this.active = {}  }  
+   EventBase.restore()
+  
+  
+class Canvas {
+  constructor(width, height) {
+  const that = this
+  const style = `
+  border: 1px dotted;
+  position: fixed;
+  margin: 50px; `
+  /* background-color: rgba(160,160,160,0.2) */
+  const Width = width
+  const Height = height
+  this.active = false
+  this.canvas = document.createElement("canvas")
+  this.element = document.createElement("div")
+  this.lasts = { x: NaN, y: NaN }
+  this.color = [0, 0, 0, 0.5]
+  this.width = 12
+  this.stDraw = function(e) {
+  if(!that.active) {
+   var canv = document.createElement("canvas")
+   canv.style = style
+   canv.width = that.canvas.width
+   canv.height = that.canvas.height
+   that.element.append(canv) 
+   that.active = canv
+   var ctx = canv.getContext("2d")
+   ctx.lineWidth = that.width
+   ctx.strokeStyle = that.getColor()
+   ctx.lineCap = "round"
+         }
+   else { that.ndDraw() }
+    }
+  this.mvDraw = function(e) {
+  if(that.active) {
+  /*
+   var ctx = that.active.getContext("2d")
+   var x = 
+   var y = 
+   Brush.use(ctx, x, y)
+  */
+   var cds = toElement(that.canvas, e.x, e.y)
+   Brush({ ctx: that.active.getContext("2d"),
+   stx: that.lasts.x, sty: that.lasts.y,
+   ndx: cds.x, ndy: cds.y })
+   that.lasts = { x: cds.x, y: cds.y }
+     }
+   }
+     this.ndDraw = function(e) {
+      var src = that.active.toDataURL()
+      var image = new Image()
+      var ctx = that.canvas.getContext("2d")
+      ctx.globalAlpha = that.color[3]
+      image.onload = function() { 
+        ctx.drawImage(image, 0, 0);
+        that.element.removeChild(that.active)
+        that.active = false
+    }
+      image.src = src
+      that.lasts = { x: NaN, y: NaN }
+      }
+    var canv = that.canvas
+    canv.width = Width
+    canv.height = Height
+    canv.addListener(that.stDraw, that.mvDraw, that.ndDraw)
+    canv.style = style
+    this.element.append(canv)
+    this.getColor = function(t) {
+     var path = that.color[0] + "," + that.color[1] + "," + that.color[2]
+     if(t) { path = "rgba(" + path + "," + color[3] + ")" }
+     else { path = "rgb(" + path + ")" } 
+      }
+    var m = onlyNumbers(this.canvas.style.margin)
+    this.element.style.width = Width + m * 2 + "px"
+    this.element.style.height = Height + m * 2 + "px"
+    }
+  }
+      var canvas = new Canvas(500, 500)
+      document.body.append(canvas.element)
+   function Brush(event) {
+    var ctx = event.ctx
+    var path = new Path2D()
+    path.moveTo(event.stx, event.sty)
+    path.lineTo(event.ndx, event.ndy)
+    event.ctx.stroke(path)
+     }
+    function toElement(element, x, y) {
+    var p = element.getClientRects()[0]
+    x = x - p.x
+    y = y - p.y
+     return { x: x, y: y }
+      }
+    function onlyNumbers(text) {
+     var res = ""
+     for(var i = 0; i < text.length; i++) {
+     for(var e = 0; e <= 9; e++) {
+     if(text[i] == e.toString()) { res += text[i]; }
+          }
+        }
+     if(res) { return eval(res) } else { return 0 }
+      }
+     </script>
+   </body>
+ </html>

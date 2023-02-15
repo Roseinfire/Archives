@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>New paint Age</title>
+<link rel="icon" href="d.txt"/>
+<style type="text/css">
+.inps {
+width: 400px;
+height: 30px;
+position: absolute;
+z-index: 10;
+}
+.swh {
+width: 26px;
+height: 26px;
+border-radius: 13px;
+border: solid;
+border-width: 2px;
+margin-left: 8px;
+}
+#cont3 {
+display: none;
+width: 300px;
+height: 150px;
+position: fixed;
+z-index: 5;
+background-color: #ffffffb5;
+border: solid;
+border-width: 1px;
+border-radius: 40px/150px;
+top: 0px;
+}
+#pmasc {
+display: none;
+width: 300px;
+height: 150px;
+position: fixed;
+z-index: 10;
+background-color: #ffffffb5;
+border: solid;
+border-width: 1px;
+border-radius: 40px/150px;
+top: 0px;
+}
+#fonter {
+font-size: 200%;
+margin-top: 25px;
+text-align: center;
+}
+#grafic {
+background-color: yellow;
+height: 5px;
+margin-top: 130px;
+border-radius: 3px;
+width: 280px;
+margin-left: 10px;
+}
+#dn {
+background-color: #e2c0c0;
+border: solid;
+border-width: 1px;
+width: 200px;
+height: 25px;
+text-align: center;
+margin-left: 80px;
+border-radius: 12px;
+font-size: 110%;
+cursor: pointer;
+margin-top: 20px;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+}
+#cont2 {
+display: none;
+}
+.sizes {
+margin-left: 55px;
+font-size: 130%;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+}
+#bb {
+width: 500px;
+height: 30px;
+background-color: #8bc34a;
+cursor: pointer;
+text-align: center;
+font-size: 150%;
+padding: 10px;
+position: absolute;
+z-index: 11;
+}
+#bb:hover {
+background-color: #4caf50;
+}
+#base {
+position: absolute;
+z-index: 2;
+display: block;
+background-image: url('CLE.png');
+background-repeat: repeat;
+}
+#prog {
+position: fixed;
+z-index: 4;
+display: block;
+border: solid;
+border-width: 1px;
+width: 101px;
+margin-left: -50px;
+}
+</style>
+<body style="margin: 0px">
+<div id="cont1">
+<div id="bb" onclick="begin()">begin work</div>
+<input id="inp1" class="inps" placeholder="canvas width"/>
+<input id="inp2" class="inps" placeholder="canvas height"/>
+<canvas id="nws" style="display: block; "></canvas>
+</div>
+<div id="cont2">
+<canvas id="base"></canvas>
+<canvas id="prog"></canvas>
+</div>
+<div id="cont3">
+<div id="red" class="swh" onmousedown="startCange('red')"></div>
+<div id="green" class="swh" onmousedown="startCange('green')"></div>
+<div id="blue" class="swh" onmousedown="startCange('blue')"></div>
+<div id="dn" onclick="hide()">done!</div>
+</div>
+<canvas id="pmasc"></canvas>
+<script type="text/javascript">
+var g,j
+window.onload = function(e) { 
+console.log('load.....' + e.timeStamp/1000 + 'ms')
+setTimeout(
+function() {yet() },10)
+ }
+function yet() {
+g = window.innerWidth
+j = window.innerHeight
+document.getElementById("bb").style.marginLeft = g/2 - 250 + "px"
+document.getElementById("bb").style.marginTop = j/2 + 30 + "px"
+document.getElementById("inp1").style.marginLeft = g/2 - 160 + "px"
+document.getElementById("inp2").style.marginLeft = g/2 - 200 + "px"
+document.getElementById("inp1").style.marginTop = j/2 - 110 + "px"
+document.getElementById("inp2").style.marginTop = j/2 - 40 + "px"
+document.getElementById("prog").style.height = j - 2 + "px"
+document.getElementById("prog").style.borderRadius = 100 + "px/" + j + "px"
+document.getElementById("cont3").style.marginLeft = g/2 - 150 + "px"
+document.getElementById("pmasc").style.marginLeft = g/2 - 150 + "px"
+var fonews = document.getElementById("nws")
+var mrCanv = fonews.getContext("2d")
+fonews.width = g
+fonews.height = j
+var rnd = localStorage.getItem('myTheme')
+if(rnd == null) {
+rnd = 'todaynews6.png'
+}
+var today = new Image()
+today.src = rnd
+today.onload = function() {
+for(var x = 0 - today.width/2; x < innerWidth; x += today.width) {
+for(var y = 0 - today.height/2; y < innerHeight; y += today.height) {
+mrCanv.drawImage(today,x,y)
+} } } }
+var bc = document.getElementById('base')
+var ctx = bc.getContext('2d')
+var pc = document.getElementById('prog')
+var prg = pc.getContext('2d')
+var bn = document.getElementById('pmasc')
+var nbn = bn.getContext('2d')
+nbn.fillStyle = 'rgba(252,239,115,0.9)'
+nbn.fillRect(0,0,300,150)
+var maked = false
+function begin() {
+maked = true
+document.getElementById('cont2').style.display = 'block'
+document.getElementById('cont1').style.display = 'none'
+document.getElementById("cont3").style.display = "block"
+var w = document.getElementById('inp1').value
+var h = document.getElementById('inp2').value
+pc.height = innerHeight
+if(w == "") {
+bc.width = g
+ }
+else { bc.width =  eval(w) 
+if(w < innerWidth) { bc.style.marginLeft = Ravn(innerWidth,w) + 'px'
+ }
+}
+if(h == "") {
+bc.height = j
+ }
+else { bc.height =  eval(h)
+if(h < innerHeight) { bc.style.marginTop = Ravn(innerHeight,h) + 'px' 
+} }
+}
+</script>
+<script type="text/javascript">
+var nowC
+var R = 0
+var G = 0
+var B = 0
+var A = 1
+var chc = "none"
+function startCange(color) {
+chc = color
+}
+CanvasRenderingContext2D.prototype.drawEllipse = function (x, y, a, b) {
+  this.save();
+  this.beginPath();
+  this.translate(x, y);
+  this.scale(a / b, 1);
+  this.arc(0, 0, b, 0, Math.PI * 2, true);
+  this.restore();
+  this.closePath();
+}
+Ravn = function(w1,w2) {
+var s = (w1 - w2)/2
+return s
+}
+var chc = "none"
+var ch = false
+var isd = 'false'
+var mod = 'draw'
+document.getElementById("prog").onmousedown = function() {
+ch = true
+}
+document.onmouseup = function() {
+ch = false
+chc = "none"
+isd = 'false'
+}
+bc.onmousedown = function() {
+isd = mod
+}
+var r;
+var a,b,c,d
+var m = true
+var wd = 20
+var lf = Ravn(innerWidth,bc.width)
+var tp = Ravn(innerHeight,bc.height)
+document.onmousemove = function(e) {
+prg.fillStyle = nowC
+ctx.strokeStyle = nowC
+ctx.fillStyle = nowC
+ctx.lineCap = 'round'
+ctx.lineWidth = wd
+if(ch == true) {
+r = e.y
+prg.fillRect(0,0,300,innerHeight)
+prg.clearRect(0,0,300,r)
+var pA = window.innerHeight/10
+for(var z = 0; z * pA < r; z++) {
+A = 1 - z/10
+}
+nowC = "rgba(" + R + "," + G + "," + B + "," + A + ")" 
+  }
+if(chc != "none") { 
+if(Math.floor(e.x - window.innerWidth/2 + 160) > -1) {
+if(Math.floor(e.x - window.innerWidth/2 + 160) < 301) { 
+document.getElementById(chc).style.marginLeft = e.x - g/2 + 135 + "px"
+switch(chc) { 
+case 'red': 
+R = Math.floor(e.x - g/2 + 160)  
+break
+case 'blue': 
+B = Math.floor(e.x - g/2 + 160) 
+break
+case 'green': 
+G = Math.floor(e.x - g/2 + 160) 
+}
+nowC = "rgba(" + R + "," + G + "," + B + "," + A + ")" 
+prg.fillRect(0,0,300,innerHeight)
+prg.clearRect(0,0,300,r)
+ } } }
+//_____________________________________________________________
+if(m == true) { m = false
+a = e.pageX
+b = e.pageY
+if(isd == 'draw') {
+ctx.beginPath()
+ctx.moveTo(c,d)
+ctx.lineTo(a,b)
+ctx.stroke()
+}
+ }
+else { m = true
+c = e.pageX
+d = e.pageY
+if(isd == 'draw') {
+ctx.beginPath()
+ctx.moveTo(a,b)
+ctx.lineTo(c,d)
+ctx.stroke()
+} }
+if(aclear == true) {
+if(bclear == false) { bclear = true; scl = e.pageX - Ravn(innerWidth,bc.width); ecl = e.pageY - Ravn(innerHeight,bc.height); } }
+clX = e.pageX - Ravn(innerWidth,bc.width)
+clY = e.pageY - Ravn(innerHeight,bc.height)
+}
+bn.onmousemove = function(e) {
+console.log(e)
+nbn.clearRect(0,0,300,150)
+nbn.fillRect(0,0,300,150)
+nbn.clearRect(300,0,0 - (300 - e.layerX),150)
+if( e.layerX > 1) {
+if(e.layerX < 300) {
+wd = e.layerX
+ } }
+} 
+//_________________________________________________________________________
+var aclear = false
+var bclear = false
+var scl,ecl,clX,clY
+var ims = []
+var a = -1
+var im = new Image; var mg = 'alert("no Images saved")'
+document.onkeydown = function(e) {
+if(e.key == 'z') { aclear = true }
+if(e.key == 'f') { aclear = true }
+if(e.key == 'w') { document.getElementById('pmasc').style.display = 'block'; }
+if(e.key == 'x') { hide('make') }
+if(e.key == 'r') { ctx.clearRect(0,0,bc.width,bc.height) }
+if(e.key == 'e') { ctx.fillRect(0,0,bc.width,bc.height) }
+if(e.key == 'o') { im.src = prompt('Add Image'); if(im.src != "") { im.onload = function() { a++
+function mChS() {
+if(im.width >= bc.width) { if(im.height > im.height) { bc.width = im.width; bc.height = im.height; pc.width = im.width; pc.height = im.height; return 0 } }
+if(im.width >= bc.width) { bc.width = im.width; pc.width = im.width; return 1 }
+if(im.height >= bc.height) { bc.height = im.height; pc.height = im.height; return 2 } }
+if(mChS() == 0) { ctx.drawImage(im,0,0) }
+if(mChS() == 1) { ctx.drawImage(im,0,Ravn(innerHeight,im.height)); mg = 'ctx.drawImage(im,0,Ravn(innerHeight,im.height))'}
+if(mChS() == 2) { ctx.drawImage(im,Ravn(innerWidth,im.width),0); mg = 'ctx.drawImage(im,Ravn(innerWidth,im.width),0)' }
+else { ctx.drawImage(im,Ravn(innerWidth,im.width),Ravn(innerHeight,im.height))
+mg = 'ctx.drawImage(im,Ravn(innerWidth,im.width),Ravn(innerHeight,im.height))' }
+function checkpos() { for(var i = -1; i < ims.length; i++) { if(ims[i] == mg) { return false } } }
+if(checkpos != false) {
+ims[a] = 'im.src=' + im.src + ' ;' + mg } else { alert('This image saved'); a-- }
+}  } }
+if(e.key == 'p') {
+eval(mg)
+}
+ }
+document.onkeyup = function(e) {
+if(e.key == 'z') { ctx.clearRect(scl,ecl,clX - scl,clY - ecl); bclear = false; aclear = false }
+if(e.key == 'f') { ctx.fillRect(scl,ecl,clX - scl,clY - ecl); bclear = false; aclear = false }
+if(e.key == 'w') { document.getElementById('pmasc').style.display = 'none'; }
+}
+function hide(j) {
+if(j == 'make') { document.getElementById('cont3').style.display = 'block' }
+else { document.getElementById('cont3').style.display = 'none' }
+}
+window.onclose = function() {
+localSorage.setItem('imgHistory',ims)
+localSorage.setItem('number',a)
+}
+</script>
+</body>
+</html>

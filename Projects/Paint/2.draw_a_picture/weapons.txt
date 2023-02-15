@@ -1,0 +1,11 @@
+brushes.push(function(e) {
+  var ctx = new Path2D()
+  })
+brushes.push(function(e) {
+
+  })
+ /* 
+     You can create own brushes!
+       use "e" object to get coordinates,
+        return path2D object.
+ */
